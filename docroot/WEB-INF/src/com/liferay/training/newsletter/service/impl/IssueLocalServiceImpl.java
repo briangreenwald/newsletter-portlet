@@ -20,6 +20,7 @@ import com.liferay.training.newsletter.model.Issue;
 import com.liferay.training.newsletter.service.IssueLocalServiceUtil;
 import com.liferay.training.newsletter.service.base.IssueLocalServiceBaseImpl;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -44,9 +45,9 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	 */
 
 	public Issue addIssue(
-		long groupId, long companyId, long userId, String userName,
-		int issueNo, String title, String description, int issueMonth,
-		int issueYear, String byline)
+			long groupId, long companyId, long userId, String userName,
+			int issueNo, String title, String description, Date issueDate, 
+			String byline)
 		throws SystemException {
 
 		long issueId = counterLocalService.increment(Issue.class.getName());
@@ -65,6 +66,14 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		issue.setIssueNo(issueNo);
 		issue.setTitle(title);
 		issue.setDescription(description);
+		
+		issue.setIssueDate(issueDate);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(issueDate);
+		int issueMonth = cal.get(Calendar.MONTH);
+		int issueYear = cal.get(Calendar.YEAR);
+		
 		issue.setIssueMonth(issueMonth);
 		issue.setIssueYear(issueYear);
 		issue.setByline(byline);
@@ -75,7 +84,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	public Issue updateIssue(
 			long issueId, long groupId, long companyId, long userId,
 			String userName, int issueNo, String title, String description,
-			int issueMonth, int issueYear, String byline)
+			Date issueDate, String byline)
 		throws SystemException, PortalException {
 
 		Issue issue = getIssue(issueId);
@@ -92,8 +101,13 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		issue.setIssueNo(issueNo);
 		issue.setTitle(title);
 		issue.setDescription(description);
-		issue.setIssueMonth(issueMonth);
-		issue.setIssueYear(issueYear);
+
+		issue.setIssueDate(issueDate);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(issueDate);
+		int issueMonth = cal.get(Calendar.MONTH);
+		int issueYear = cal.get(Calendar.YEAR);
+		
 		issue.setByline(byline);
 
 		return super.updateIssue(issue);

@@ -27,6 +27,7 @@
 		<column name="issueNo" type="int" />
 		<column name="title" type="String" />
 		<column name="description" type="String" />
+		<column name="issueDate" type="Date" />
 		<column name="issueMonth" type="int" />
 		<column name="issueYear" type="int" />
 		<column name="byline" type="String" />

@@ -59,17 +59,12 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 
 				String date = parseField(articleContent, ISSUE_DATE);
 				Date issueDate = new Date(Long.valueOf(date));
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(issueDate);
-				int issueMonth = cal.get(Calendar.MONTH);
-				int issueYear = cal.get(Calendar.YEAR);
-
 				String byline = parseField(articleContent, BYLINE);
 
 				try {
 					IssueLocalServiceUtil.addIssue(
 						groupId, companyId, userId, userName, issueNo, title, 
-						description, issueMonth, issueYear, byline);
+						description, issueDate, byline);
 				}
 				catch (Exception e) {
 					_log.error(String.format(
