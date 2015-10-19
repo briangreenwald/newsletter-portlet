@@ -113,6 +113,22 @@ public class ArticleLocalServiceClpInvoker {
 		_methodName37 = "setBeanIdentifier";
 
 		_methodParameterTypes37 = new String[] { "java.lang.String" };
+
+		_methodName42 = "addArticle";
+
+		_methodParameterTypes42 = new String[] {
+				"long", "long", "long", "long", "java.lang.String", "int",
+				"java.lang.String", "java.lang.String", "int",
+				"java.lang.String"
+			};
+
+		_methodName43 = "updateArticle";
+
+		_methodParameterTypes43 = new String[] {
+				"long", "long", "long", "long", "long", "java.lang.String",
+				"int", "java.lang.String", "java.lang.String", "int",
+				"java.lang.String"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -216,6 +232,33 @@ public class ArticleLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName42.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
+			return ArticleLocalServiceUtil.addArticle(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Long)arguments[2]).longValue(),
+				((Long)arguments[3]).longValue(),
+				(java.lang.String)arguments[4],
+				((Integer)arguments[5]).intValue(),
+				(java.lang.String)arguments[6], (java.lang.String)arguments[7],
+				((Integer)arguments[8]).intValue(),
+				(java.lang.String)arguments[9]);
+		}
+
+		if (_methodName43.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes43, parameterTypes)) {
+			return ArticleLocalServiceUtil.updateArticle(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Long)arguments[2]).longValue(),
+				((Long)arguments[3]).longValue(),
+				((Long)arguments[4]).longValue(),
+				(java.lang.String)arguments[5],
+				((Integer)arguments[6]).intValue(),
+				(java.lang.String)arguments[7], (java.lang.String)arguments[8],
+				((Integer)arguments[9]).intValue(),
+				(java.lang.String)arguments[10]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -255,4 +298,8 @@ public class ArticleLocalServiceClpInvoker {
 	private String[] _methodParameterTypes36;
 	private String _methodName37;
 	private String[] _methodParameterTypes37;
+	private String _methodName42;
+	private String[] _methodParameterTypes42;
+	private String _methodName43;
+	private String[] _methodParameterTypes43;
 }

@@ -253,4 +253,19 @@ public interface ArticleLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public com.liferay.training.newsletter.model.Article addArticle(
+		long issueId, long groupId, long companyId, long userId,
+		java.lang.String userName, int issueNo, java.lang.String title,
+		java.lang.String author, int order, java.lang.String content)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.training.newsletter.model.Article updateArticle(
+		long articleId, long issueId, long groupId, long companyId,
+		long userId, java.lang.String userName, int issueNo,
+		java.lang.String title, java.lang.String author, int order,
+		java.lang.String content)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

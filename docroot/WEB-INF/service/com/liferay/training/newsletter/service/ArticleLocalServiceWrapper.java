@@ -284,6 +284,29 @@ public class ArticleLocalServiceWrapper implements ArticleLocalService,
 		return _articleLocalService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	@Override
+	public com.liferay.training.newsletter.model.Article addArticle(
+		long issueId, long groupId, long companyId, long userId,
+		java.lang.String userName, int issueNo, java.lang.String title,
+		java.lang.String author, int order, java.lang.String content)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _articleLocalService.addArticle(issueId, groupId, companyId,
+			userId, userName, issueNo, title, author, order, content);
+	}
+
+	@Override
+	public com.liferay.training.newsletter.model.Article updateArticle(
+		long articleId, long issueId, long groupId, long companyId,
+		long userId, java.lang.String userName, int issueNo,
+		java.lang.String title, java.lang.String author, int order,
+		java.lang.String content)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _articleLocalService.updateArticle(articleId, issueId, groupId,
+			companyId, userId, userName, issueNo, title, author, order, content);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
