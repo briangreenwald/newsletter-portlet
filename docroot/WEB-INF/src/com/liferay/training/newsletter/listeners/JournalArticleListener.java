@@ -83,6 +83,13 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 				article.getArticleId()));
 		}
 	}
+	
+	@Override
+	public void onAfterUpdate(JournalArticle article) 
+		throws ModelListenerException {
+		
+		
+	}
 
 	private String getStructureName(JournalArticle article) 
 		throws PortalException, SystemException, DocumentException {
@@ -125,11 +132,11 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 	private static String DESCRIPTION = "Description";
 	private static String ISSUE_DATE = "Issue_Date";
 	private static String BYLINE = "Byline";
-	
+
 	private static String AUTHOR = "Author";
 	private static String ORDER = "Order";
 	private static String CONTENT = "Content";
-	
+
 	private static String NEWSLETTER_ISSUE = "Newsletter Issue";
 	private static String NEWSLETTER_ARTICLE = "Newsletter Article";
 }

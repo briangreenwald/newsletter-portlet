@@ -14,7 +14,12 @@
 
 package com.liferay.training.newsletter.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.training.newsletter.model.Article;
 import com.liferay.training.newsletter.service.base.ArticleLocalServiceBaseImpl;
+
+import java.util.Date;
 
 /**
  * The implementation of the article local service.
@@ -36,4 +41,63 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link com.liferay.training.newsletter.service.ArticleLocalServiceUtil} to access the article local service.
 	 */
+	
+	public Article addArticle(
+			long issueId, long groupId, long companyId, long userId, 
+			String userName, int issueNo, String title, String author, 
+			int order, String content) 
+		throws SystemException, PortalException {
+		
+		long articleId = counterLocalService.increment(Article.class.getName());
+		Article article = createArticle(issueId);
+		
+		Date now = new Date();
+		
+		article.setArticleId(articleId);
+		article.setIssueId(issueId);
+		article.setGroupId(groupId);
+		article.setCompanyId(companyId);
+		article.setUserId(userId);
+		article.setUserName(userName);
+		
+		article.setCreateDate(now);
+		article.setModifiedDate(now);
+		
+		article.setIssueNo(issueNo);
+		article.setTitle(title);
+		article.setAuthor(author);
+		article.setOrder(order);
+		article.setContent(content);
+		
+		return super.addArticle(article);
+	}
+
+	public Article updateArticle(
+			long articleId, long issueId, long groupId, long companyId, 
+			long userId, String userName, int issueNo, String title, 
+			String author, int order, String content)
+		throws SystemException, PortalException {
+
+		Article article = getArticle(articleId);
+
+		Date now = new Date();
+
+		article.setArticleId(articleId);
+		article.setIssueId(issueId);
+		article.setGroupId(groupId);
+		article.setCompanyId(companyId);
+		article.setUserId(userId);
+		article.setUserName(userName);
+
+		article.setModifiedDate(now);
+
+		article.setIssueNo(issueNo);
+		article.setTitle(title);
+		article.setAuthor(author);
+		article.setOrder(order);
+		article.setContent(content);
+
+		return super.updateArticle(article);
+	}
+	
 }

@@ -51,7 +51,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		throws SystemException {
 
 		long issueId = counterLocalService.increment(Issue.class.getName());
-		Issue issue = IssueLocalServiceUtil.createIssue(issueId);
+		Issue issue = createIssue(issueId);
 
 		Date now = new Date();
 
