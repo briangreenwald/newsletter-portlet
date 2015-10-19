@@ -117,7 +117,7 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 		_methodName19 = "addArticle";
 
 		_methodParameterTypes19 = new String[] {
-				"long", "long", "long", "java.lang.String", "int",
+				"long", "long", "long", "long", "java.lang.String", "int",
 				"java.lang.String", "java.lang.String", "int",
 				"java.lang.String"
 			};
@@ -129,6 +129,10 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 				"java.lang.String", "java.lang.String", "int",
 				"java.lang.String"
 			};
+
+		_methodName21 = "getArticleByJournalArticleId";
+
+		_methodParameterTypes21 = new String[] { "long" };
 	}
 
 	@Override
@@ -683,9 +687,9 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 
 	@Override
 	public com.liferay.training.newsletter.model.Article addArticle(
-		long groupId, long companyId, long userId, java.lang.String userName,
-		int issueNo, java.lang.String title, java.lang.String author,
-		int order, java.lang.String content)
+		long journalArticleId, long groupId, long companyId, long userId,
+		java.lang.String userName, int issueNo, java.lang.String title,
+		java.lang.String author, int order, java.lang.String content)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -694,7 +698,9 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
 					_methodParameterTypes19,
 					new Object[] {
-						groupId,
+						journalArticleId,
+						
+					groupId,
 						
 					companyId,
 						
@@ -738,7 +744,7 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 
 	@Override
 	public com.liferay.training.newsletter.model.Article updateArticle(
-		long articleId, long groupId, long companyId, long userId,
+		long journalArticleId, long groupId, long companyId, long userId,
 		java.lang.String userName, int issueNo, java.lang.String title,
 		java.lang.String author, int order, java.lang.String content)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -749,7 +755,7 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName20,
 					_methodParameterTypes20,
 					new Object[] {
-						articleId,
+						journalArticleId,
 						
 					groupId,
 						
@@ -779,6 +785,40 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 
 			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
 				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.training.newsletter.model.Article)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.training.newsletter.model.Article getArticleByJournalArticleId(
+		long journalArticleId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchArticleException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21, new Object[] { journalArticleId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof com.liferay.training.newsletter.NoSuchArticleException) {
+				throw (com.liferay.training.newsletter.NoSuchArticleException)t;
 			}
 
 			if (t instanceof RuntimeException) {
@@ -834,4 +874,6 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 	private String[] _methodParameterTypes19;
 	private String _methodName20;
 	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
 }

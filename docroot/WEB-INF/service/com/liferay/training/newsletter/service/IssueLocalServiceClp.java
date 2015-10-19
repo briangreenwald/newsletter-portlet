@@ -117,7 +117,7 @@ public class IssueLocalServiceClp implements IssueLocalService {
 		_methodName19 = "addIssue";
 
 		_methodParameterTypes19 = new String[] {
-				"long", "long", "long", "java.lang.String", "int",
+				"long", "long", "long", "long", "java.lang.String", "int",
 				"java.lang.String", "java.lang.String", "java.util.Date",
 				"java.lang.String"
 			};
@@ -130,13 +130,17 @@ public class IssueLocalServiceClp implements IssueLocalService {
 				"java.lang.String"
 			};
 
-		_methodName21 = "getIssueByIssueNo";
+		_methodName21 = "getIssueByJournalArticleId";
 
-		_methodParameterTypes21 = new String[] { "int" };
+		_methodParameterTypes21 = new String[] { "long" };
 
-		_methodName22 = "getIssuesByMonthAndYear";
+		_methodName22 = "getIssueByIssueNo";
 
-		_methodParameterTypes22 = new String[] { "int", "int" };
+		_methodParameterTypes22 = new String[] { "int" };
+
+		_methodName23 = "getIssuesByMonthAndYear";
+
+		_methodParameterTypes23 = new String[] { "int", "int" };
 	}
 
 	@Override
@@ -686,10 +690,11 @@ public class IssueLocalServiceClp implements IssueLocalService {
 	}
 
 	@Override
-	public com.liferay.training.newsletter.model.Issue addIssue(long groupId,
-		long companyId, long userId, java.lang.String userName, int issueNo,
-		java.lang.String title, java.lang.String description,
-		java.util.Date issueDate, java.lang.String byline)
+	public com.liferay.training.newsletter.model.Issue addIssue(
+		long journalArticleId, long groupId, long companyId, long userId,
+		java.lang.String userName, int issueNo, java.lang.String title,
+		java.lang.String description, java.util.Date issueDate,
+		java.lang.String byline)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -697,7 +702,9 @@ public class IssueLocalServiceClp implements IssueLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
 					_methodParameterTypes19,
 					new Object[] {
-						groupId,
+						journalArticleId,
+						
+					groupId,
 						
 					companyId,
 						
@@ -737,7 +744,7 @@ public class IssueLocalServiceClp implements IssueLocalService {
 
 	@Override
 	public com.liferay.training.newsletter.model.Issue updateIssue(
-		long issueId, long groupId, long companyId, long userId,
+		long journalArticleId, long groupId, long companyId, long userId,
 		java.lang.String userName, int issueNo, java.lang.String title,
 		java.lang.String description, java.util.Date issueDate,
 		java.lang.String byline)
@@ -749,7 +756,7 @@ public class IssueLocalServiceClp implements IssueLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName20,
 					_methodParameterTypes20,
 					new Object[] {
-						issueId,
+						journalArticleId,
 						
 					groupId,
 						
@@ -794,6 +801,40 @@ public class IssueLocalServiceClp implements IssueLocalService {
 	}
 
 	@Override
+	public com.liferay.training.newsletter.model.Issue getIssueByJournalArticleId(
+		long journalArticleId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchIssueException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21, new Object[] { journalArticleId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof com.liferay.training.newsletter.NoSuchIssueException) {
+				throw (com.liferay.training.newsletter.NoSuchIssueException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.training.newsletter.model.Issue)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public com.liferay.training.newsletter.model.Issue getIssueByIssueNo(
 		int issueNo)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -801,8 +842,8 @@ public class IssueLocalServiceClp implements IssueLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21, new Object[] { issueNo });
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] { issueNo });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -834,8 +875,8 @@ public class IssueLocalServiceClp implements IssueLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] { issueMonth, issueYear });
 		}
 		catch (Throwable t) {
@@ -902,4 +943,6 @@ public class IssueLocalServiceClp implements IssueLocalService {
 	private String[] _methodParameterTypes21;
 	private String _methodName22;
 	private String[] _methodParameterTypes22;
+	private String _methodName23;
+	private String[] _methodParameterTypes23;
 }

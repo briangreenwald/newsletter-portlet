@@ -50,6 +50,7 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("issueId", getIssueId());
+		attributes.put("journalArticleId", getJournalArticleId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -73,6 +74,12 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 
 		if (issueId != null) {
 			setIssueId(issueId);
+		}
+
+		Long journalArticleId = (Long)attributes.get("journalArticleId");
+
+		if (journalArticleId != null) {
+			setJournalArticleId(journalArticleId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -192,6 +199,26 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 	@Override
 	public void setIssueId(long issueId) {
 		_issue.setIssueId(issueId);
+	}
+
+	/**
+	* Returns the journal article ID of this issue.
+	*
+	* @return the journal article ID of this issue
+	*/
+	@Override
+	public long getJournalArticleId() {
+		return _issue.getJournalArticleId();
+	}
+
+	/**
+	* Sets the journal article ID of this issue.
+	*
+	* @param journalArticleId the journal article ID of this issue
+	*/
+	@Override
+	public void setJournalArticleId(long journalArticleId) {
+		_issue.setJournalArticleId(journalArticleId);
 	}
 
 	/**

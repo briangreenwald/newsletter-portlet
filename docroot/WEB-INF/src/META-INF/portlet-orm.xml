@@ -11,6 +11,7 @@
 		<attributes>
 			<id name="articleId" />
 			<basic name="issueId" />
+			<basic name="journalArticleId" />
 			<basic name="groupId" />
 			<basic name="companyId" />
 			<basic name="userId" />
@@ -37,6 +38,7 @@
 	<mapped-superclass class="com.liferay.training.newsletter.model.impl.IssueModelImpl">
 		<attributes>
 			<id name="issueId" />
+			<basic name="journalArticleId" />
 			<basic name="groupId" />
 			<basic name="companyId" />
 			<basic name="userId" />

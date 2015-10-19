@@ -176,6 +176,75 @@ public class IssueUtil {
 	}
 
 	/**
+	* Returns the issue where journalArticleId = &#63; or throws a {@link com.liferay.training.newsletter.NoSuchIssueException} if it could not be found.
+	*
+	* @param journalArticleId the journal article ID
+	* @return the matching issue
+	* @throws com.liferay.training.newsletter.NoSuchIssueException if a matching issue could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.training.newsletter.model.Issue findByJournalArticleId(
+		long journalArticleId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchIssueException {
+		return getPersistence().findByJournalArticleId(journalArticleId);
+	}
+
+	/**
+	* Returns the issue where journalArticleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param journalArticleId the journal article ID
+	* @return the matching issue, or <code>null</code> if a matching issue could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.training.newsletter.model.Issue fetchByJournalArticleId(
+		long journalArticleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByJournalArticleId(journalArticleId);
+	}
+
+	/**
+	* Returns the issue where journalArticleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param journalArticleId the journal article ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching issue, or <code>null</code> if a matching issue could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.training.newsletter.model.Issue fetchByJournalArticleId(
+		long journalArticleId, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByJournalArticleId(journalArticleId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the issue where journalArticleId = &#63; from the database.
+	*
+	* @param journalArticleId the journal article ID
+	* @return the issue that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.training.newsletter.model.Issue removeByJournalArticleId(
+		long journalArticleId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchIssueException {
+		return getPersistence().removeByJournalArticleId(journalArticleId);
+	}
+
+	/**
+	* Returns the number of issues where journalArticleId = &#63;.
+	*
+	* @param journalArticleId the journal article ID
+	* @return the number of matching issues
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByJournalArticleId(long journalArticleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByJournalArticleId(journalArticleId);
+	}
+
+	/**
 	* Returns all the issues where issueMonth = &#63; and issueYear = &#63;.
 	*
 	* @param issueMonth the issue month

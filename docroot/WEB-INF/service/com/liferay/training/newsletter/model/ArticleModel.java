@@ -90,6 +90,20 @@ public interface ArticleModel extends BaseModel<Article>, GroupedModel {
 	public void setIssueId(long issueId);
 
 	/**
+	 * Returns the journal article ID of this article.
+	 *
+	 * @return the journal article ID of this article
+	 */
+	public long getJournalArticleId();
+
+	/**
+	 * Sets the journal article ID of this article.
+	 *
+	 * @param journalArticleId the journal article ID of this article
+	 */
+	public void setJournalArticleId(long journalArticleId);
+
+	/**
 	 * Returns the group ID of this article.
 	 *
 	 * @return the group ID of this article

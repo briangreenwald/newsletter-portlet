@@ -76,6 +76,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("issueId", getIssueId());
+		attributes.put("journalArticleId", getJournalArticleId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -99,6 +100,12 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 
 		if (issueId != null) {
 			setIssueId(issueId);
+		}
+
+		Long journalArticleId = (Long)attributes.get("journalArticleId");
+
+		if (journalArticleId != null) {
+			setJournalArticleId(journalArticleId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -196,6 +203,30 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 				Method method = clazz.getMethod("setIssueId", long.class);
 
 				method.invoke(_issueRemoteModel, issueId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getJournalArticleId() {
+		return _journalArticleId;
+	}
+
+	@Override
+	public void setJournalArticleId(long journalArticleId) {
+		_journalArticleId = journalArticleId;
+
+		if (_issueRemoteModel != null) {
+			try {
+				Class<?> clazz = _issueRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setJournalArticleId",
+						long.class);
+
+				method.invoke(_issueRemoteModel, journalArticleId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -582,6 +613,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 		IssueClp clone = new IssueClp();
 
 		clone.setIssueId(getIssueId());
+		clone.setJournalArticleId(getJournalArticleId());
 		clone.setGroupId(getGroupId());
 		clone.setCompanyId(getCompanyId());
 		clone.setUserId(getUserId());
@@ -647,10 +679,12 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{issueId=");
 		sb.append(getIssueId());
+		sb.append(", journalArticleId=");
+		sb.append(getJournalArticleId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -684,7 +718,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.training.newsletter.model.Issue");
@@ -693,6 +727,10 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 		sb.append(
 			"<column><column-name>issueId</column-name><column-value><![CDATA[");
 		sb.append(getIssueId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>journalArticleId</column-name><column-value><![CDATA[");
+		sb.append(getJournalArticleId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -753,6 +791,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 	}
 
 	private long _issueId;
+	private long _journalArticleId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

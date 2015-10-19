@@ -31,6 +31,7 @@ public class IssueSoap implements Serializable {
 		IssueSoap soapModel = new IssueSoap();
 
 		soapModel.setIssueId(model.getIssueId());
+		soapModel.setJournalArticleId(model.getJournalArticleId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -102,6 +103,14 @@ public class IssueSoap implements Serializable {
 
 	public void setIssueId(long issueId) {
 		_issueId = issueId;
+	}
+
+	public long getJournalArticleId() {
+		return _journalArticleId;
+	}
+
+	public void setJournalArticleId(long journalArticleId) {
+		_journalArticleId = journalArticleId;
 	}
 
 	public long getGroupId() {
@@ -209,6 +218,7 @@ public class IssueSoap implements Serializable {
 	}
 
 	private long _issueId;
+	private long _journalArticleId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

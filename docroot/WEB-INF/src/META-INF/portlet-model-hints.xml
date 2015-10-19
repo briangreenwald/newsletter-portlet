@@ -4,6 +4,7 @@
 	<model name="com.liferay.training.newsletter.model.Article">
 		<field name="articleId" type="long" />
 		<field name="issueId" type="long" />
+		<field name="journalArticleId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -18,6 +19,7 @@
 	</model>
 	<model name="com.liferay.training.newsletter.model.Issue">
 		<field name="issueId" type="long" />
+		<field name="journalArticleId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

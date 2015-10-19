@@ -63,6 +63,7 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "articleId", Types.BIGINT },
 			{ "issueId", Types.BIGINT },
+			{ "journalArticleId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
@@ -75,7 +76,7 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 			{ "order_", Types.INTEGER },
 			{ "content", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table newsletter_Article (articleId LONG not null primary key,issueId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,author VARCHAR(75) null,order_ INTEGER,content VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table newsletter_Article (articleId LONG not null primary key,issueId LONG,journalArticleId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,author VARCHAR(75) null,order_ INTEGER,content VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table newsletter_Article";
 	public static final String ORDER_BY_JPQL = " ORDER BY article.order ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY newsletter_Article.order_ ASC";
@@ -92,7 +93,8 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 				"value.object.column.bitmask.enabled.com.liferay.training.newsletter.model.Article"),
 			true);
 	public static long ISSUENO_COLUMN_BITMASK = 1L;
-	public static long ORDER_COLUMN_BITMASK = 2L;
+	public static long JOURNALARTICLEID_COLUMN_BITMASK = 2L;
+	public static long ORDER_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.liferay.training.newsletter.model.Article"));
 
@@ -135,6 +137,7 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 
 		attributes.put("articleId", getArticleId());
 		attributes.put("issueId", getIssueId());
+		attributes.put("journalArticleId", getJournalArticleId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -162,6 +165,12 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 
 		if (issueId != null) {
 			setIssueId(issueId);
+		}
+
+		Long journalArticleId = (Long)attributes.get("journalArticleId");
+
+		if (journalArticleId != null) {
+			setJournalArticleId(journalArticleId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -249,6 +258,28 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 	@Override
 	public void setIssueId(long issueId) {
 		_issueId = issueId;
+	}
+
+	@Override
+	public long getJournalArticleId() {
+		return _journalArticleId;
+	}
+
+	@Override
+	public void setJournalArticleId(long journalArticleId) {
+		_columnBitmask |= JOURNALARTICLEID_COLUMN_BITMASK;
+
+		if (!_setOriginalJournalArticleId) {
+			_setOriginalJournalArticleId = true;
+
+			_originalJournalArticleId = _journalArticleId;
+		}
+
+		_journalArticleId = journalArticleId;
+	}
+
+	public long getOriginalJournalArticleId() {
+		return _originalJournalArticleId;
 	}
 
 	@Override
@@ -438,6 +469,7 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 
 		articleImpl.setArticleId(getArticleId());
 		articleImpl.setIssueId(getIssueId());
+		articleImpl.setJournalArticleId(getJournalArticleId());
 		articleImpl.setGroupId(getGroupId());
 		articleImpl.setCompanyId(getCompanyId());
 		articleImpl.setUserId(getUserId());
@@ -507,6 +539,10 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 	public void resetOriginalValues() {
 		ArticleModelImpl articleModelImpl = this;
 
+		articleModelImpl._originalJournalArticleId = articleModelImpl._journalArticleId;
+
+		articleModelImpl._setOriginalJournalArticleId = false;
+
 		articleModelImpl._originalIssueNo = articleModelImpl._issueNo;
 
 		articleModelImpl._setOriginalIssueNo = false;
@@ -521,6 +557,8 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 		articleCacheModel.articleId = getArticleId();
 
 		articleCacheModel.issueId = getIssueId();
+
+		articleCacheModel.journalArticleId = getJournalArticleId();
 
 		articleCacheModel.groupId = getGroupId();
 
@@ -587,12 +625,14 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{articleId=");
 		sb.append(getArticleId());
 		sb.append(", issueId=");
 		sb.append(getIssueId());
+		sb.append(", journalArticleId=");
+		sb.append(getJournalArticleId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -622,7 +662,7 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.training.newsletter.model.Article");
@@ -635,6 +675,10 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 		sb.append(
 			"<column><column-name>issueId</column-name><column-value><![CDATA[");
 		sb.append(getIssueId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>journalArticleId</column-name><column-value><![CDATA[");
+		sb.append(getJournalArticleId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -692,6 +736,9 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 		};
 	private long _articleId;
 	private long _issueId;
+	private long _journalArticleId;
+	private long _originalJournalArticleId;
+	private boolean _setOriginalJournalArticleId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

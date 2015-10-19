@@ -37,10 +37,12 @@ import java.util.Date;
 public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{issueId=");
 		sb.append(issueId);
+		sb.append(", journalArticleId=");
+		sb.append(journalArticleId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -77,6 +79,7 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 		IssueImpl issueImpl = new IssueImpl();
 
 		issueImpl.setIssueId(issueId);
+		issueImpl.setJournalArticleId(journalArticleId);
 		issueImpl.setGroupId(groupId);
 		issueImpl.setCompanyId(companyId);
 		issueImpl.setUserId(userId);
@@ -143,6 +146,7 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		issueId = objectInput.readLong();
+		journalArticleId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
@@ -162,6 +166,7 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(issueId);
+		objectOutput.writeLong(journalArticleId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
@@ -204,6 +209,7 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 	}
 
 	public long issueId;
+	public long journalArticleId;
 	public long groupId;
 	public long companyId;
 	public long userId;

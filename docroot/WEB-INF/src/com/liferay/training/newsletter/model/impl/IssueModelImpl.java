@@ -62,6 +62,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	public static final String TABLE_NAME = "newsletter_Issue";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "issueId", Types.BIGINT },
+			{ "journalArticleId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
@@ -76,7 +77,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 			{ "issueYear", Types.INTEGER },
 			{ "byline", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table newsletter_Issue (issueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,description VARCHAR(75) null,issueDate DATE null,issueMonth INTEGER,issueYear INTEGER,byline VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table newsletter_Issue (issueId LONG not null primary key,journalArticleId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,description VARCHAR(75) null,issueDate DATE null,issueMonth INTEGER,issueYear INTEGER,byline VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table newsletter_Issue";
 	public static final String ORDER_BY_JPQL = " ORDER BY issue.issueDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY newsletter_Issue.issueDate DESC";
@@ -95,7 +96,8 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	public static long ISSUEMONTH_COLUMN_BITMASK = 1L;
 	public static long ISSUENO_COLUMN_BITMASK = 2L;
 	public static long ISSUEYEAR_COLUMN_BITMASK = 4L;
-	public static long ISSUEDATE_COLUMN_BITMASK = 8L;
+	public static long JOURNALARTICLEID_COLUMN_BITMASK = 8L;
+	public static long ISSUEDATE_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.liferay.training.newsletter.model.Issue"));
 
@@ -137,6 +139,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("issueId", getIssueId());
+		attributes.put("journalArticleId", getJournalArticleId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -160,6 +163,12 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 		if (issueId != null) {
 			setIssueId(issueId);
+		}
+
+		Long journalArticleId = (Long)attributes.get("journalArticleId");
+
+		if (journalArticleId != null) {
+			setJournalArticleId(journalArticleId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -249,6 +258,28 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	@Override
 	public void setIssueId(long issueId) {
 		_issueId = issueId;
+	}
+
+	@Override
+	public long getJournalArticleId() {
+		return _journalArticleId;
+	}
+
+	@Override
+	public void setJournalArticleId(long journalArticleId) {
+		_columnBitmask |= JOURNALARTICLEID_COLUMN_BITMASK;
+
+		if (!_setOriginalJournalArticleId) {
+			_setOriginalJournalArticleId = true;
+
+			_originalJournalArticleId = _journalArticleId;
+		}
+
+		_journalArticleId = journalArticleId;
+	}
+
+	public long getOriginalJournalArticleId() {
+		return _originalJournalArticleId;
 	}
 
 	@Override
@@ -481,6 +512,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		IssueImpl issueImpl = new IssueImpl();
 
 		issueImpl.setIssueId(getIssueId());
+		issueImpl.setJournalArticleId(getJournalArticleId());
 		issueImpl.setGroupId(getGroupId());
 		issueImpl.setCompanyId(getCompanyId());
 		issueImpl.setUserId(getUserId());
@@ -546,6 +578,10 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	public void resetOriginalValues() {
 		IssueModelImpl issueModelImpl = this;
 
+		issueModelImpl._originalJournalArticleId = issueModelImpl._journalArticleId;
+
+		issueModelImpl._setOriginalJournalArticleId = false;
+
 		issueModelImpl._originalIssueNo = issueModelImpl._issueNo;
 
 		issueModelImpl._setOriginalIssueNo = false;
@@ -566,6 +602,8 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		IssueCacheModel issueCacheModel = new IssueCacheModel();
 
 		issueCacheModel.issueId = getIssueId();
+
+		issueCacheModel.journalArticleId = getJournalArticleId();
 
 		issueCacheModel.groupId = getGroupId();
 
@@ -643,10 +681,12 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{issueId=");
 		sb.append(getIssueId());
+		sb.append(", journalArticleId=");
+		sb.append(getJournalArticleId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -680,7 +720,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.training.newsletter.model.Issue");
@@ -689,6 +729,10 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		sb.append(
 			"<column><column-name>issueId</column-name><column-value><![CDATA[");
 		sb.append(getIssueId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>journalArticleId</column-name><column-value><![CDATA[");
+		sb.append(getJournalArticleId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -751,6 +795,9 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	private static ClassLoader _classLoader = Issue.class.getClassLoader();
 	private static Class<?>[] _escapedModelInterfaces = new Class[] { Issue.class };
 	private long _issueId;
+	private long _journalArticleId;
+	private long _originalJournalArticleId;
+	private boolean _setOriginalJournalArticleId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

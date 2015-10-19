@@ -255,16 +255,22 @@ public interface ArticleLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	public com.liferay.training.newsletter.model.Article addArticle(
-		long groupId, long companyId, long userId, java.lang.String userName,
-		int issueNo, java.lang.String title, java.lang.String author,
-		int order, java.lang.String content)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public com.liferay.training.newsletter.model.Article updateArticle(
-		long articleId, long groupId, long companyId, long userId,
+		long journalArticleId, long groupId, long companyId, long userId,
 		java.lang.String userName, int issueNo, java.lang.String title,
 		java.lang.String author, int order, java.lang.String content)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.training.newsletter.model.Article updateArticle(
+		long journalArticleId, long groupId, long companyId, long userId,
+		java.lang.String userName, int issueNo, java.lang.String title,
+		java.lang.String author, int order, java.lang.String content)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.training.newsletter.model.Article getArticleByJournalArticleId(
+		long journalArticleId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchArticleException;
 }

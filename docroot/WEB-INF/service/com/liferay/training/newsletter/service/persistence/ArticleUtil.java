@@ -116,9 +116,9 @@ public class ArticleUtil {
 	* @return the matching articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.training.newsletter.model.Article> findByissueNo(
+	public static java.util.List<com.liferay.training.newsletter.model.Article> findByIssueNo(
 		int issueNo) throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByissueNo(issueNo);
+		return getPersistence().findByIssueNo(issueNo);
 	}
 
 	/**
@@ -134,10 +134,10 @@ public class ArticleUtil {
 	* @return the range of matching articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.training.newsletter.model.Article> findByissueNo(
+	public static java.util.List<com.liferay.training.newsletter.model.Article> findByIssueNo(
 		int issueNo, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByissueNo(issueNo, start, end);
+		return getPersistence().findByIssueNo(issueNo, start, end);
 	}
 
 	/**
@@ -154,12 +154,12 @@ public class ArticleUtil {
 	* @return the ordered range of matching articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.training.newsletter.model.Article> findByissueNo(
+	public static java.util.List<com.liferay.training.newsletter.model.Article> findByIssueNo(
 		int issueNo, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByissueNo(issueNo, start, end, orderByComparator);
+				   .findByIssueNo(issueNo, start, end, orderByComparator);
 	}
 
 	/**
@@ -171,12 +171,12 @@ public class ArticleUtil {
 	* @throws com.liferay.training.newsletter.NoSuchArticleException if a matching article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.training.newsletter.model.Article findByissueNo_First(
+	public static com.liferay.training.newsletter.model.Article findByIssueNo_First(
 		int issueNo,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchArticleException {
-		return getPersistence().findByissueNo_First(issueNo, orderByComparator);
+		return getPersistence().findByIssueNo_First(issueNo, orderByComparator);
 	}
 
 	/**
@@ -187,11 +187,11 @@ public class ArticleUtil {
 	* @return the first matching article, or <code>null</code> if a matching article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.training.newsletter.model.Article fetchByissueNo_First(
+	public static com.liferay.training.newsletter.model.Article fetchByIssueNo_First(
 		int issueNo,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByissueNo_First(issueNo, orderByComparator);
+		return getPersistence().fetchByIssueNo_First(issueNo, orderByComparator);
 	}
 
 	/**
@@ -203,12 +203,12 @@ public class ArticleUtil {
 	* @throws com.liferay.training.newsletter.NoSuchArticleException if a matching article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.training.newsletter.model.Article findByissueNo_Last(
+	public static com.liferay.training.newsletter.model.Article findByIssueNo_Last(
 		int issueNo,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchArticleException {
-		return getPersistence().findByissueNo_Last(issueNo, orderByComparator);
+		return getPersistence().findByIssueNo_Last(issueNo, orderByComparator);
 	}
 
 	/**
@@ -219,11 +219,11 @@ public class ArticleUtil {
 	* @return the last matching article, or <code>null</code> if a matching article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.training.newsletter.model.Article fetchByissueNo_Last(
+	public static com.liferay.training.newsletter.model.Article fetchByIssueNo_Last(
 		int issueNo,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByissueNo_Last(issueNo, orderByComparator);
+		return getPersistence().fetchByIssueNo_Last(issueNo, orderByComparator);
 	}
 
 	/**
@@ -236,13 +236,13 @@ public class ArticleUtil {
 	* @throws com.liferay.training.newsletter.NoSuchArticleException if a article with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.training.newsletter.model.Article[] findByissueNo_PrevAndNext(
+	public static com.liferay.training.newsletter.model.Article[] findByIssueNo_PrevAndNext(
 		long articleId, int issueNo,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchArticleException {
 		return getPersistence()
-				   .findByissueNo_PrevAndNext(articleId, issueNo,
+				   .findByIssueNo_PrevAndNext(articleId, issueNo,
 			orderByComparator);
 	}
 
@@ -252,9 +252,9 @@ public class ArticleUtil {
 	* @param issueNo the issue no
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByissueNo(int issueNo)
+	public static void removeByIssueNo(int issueNo)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByissueNo(issueNo);
+		getPersistence().removeByIssueNo(issueNo);
 	}
 
 	/**
@@ -264,9 +264,78 @@ public class ArticleUtil {
 	* @return the number of matching articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByissueNo(int issueNo)
+	public static int countByIssueNo(int issueNo)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByissueNo(issueNo);
+		return getPersistence().countByIssueNo(issueNo);
+	}
+
+	/**
+	* Returns the article where journalArticleId = &#63; or throws a {@link com.liferay.training.newsletter.NoSuchArticleException} if it could not be found.
+	*
+	* @param journalArticleId the journal article ID
+	* @return the matching article
+	* @throws com.liferay.training.newsletter.NoSuchArticleException if a matching article could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.training.newsletter.model.Article findByJournalArticleId(
+		long journalArticleId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchArticleException {
+		return getPersistence().findByJournalArticleId(journalArticleId);
+	}
+
+	/**
+	* Returns the article where journalArticleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param journalArticleId the journal article ID
+	* @return the matching article, or <code>null</code> if a matching article could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.training.newsletter.model.Article fetchByJournalArticleId(
+		long journalArticleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByJournalArticleId(journalArticleId);
+	}
+
+	/**
+	* Returns the article where journalArticleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param journalArticleId the journal article ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching article, or <code>null</code> if a matching article could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.training.newsletter.model.Article fetchByJournalArticleId(
+		long journalArticleId, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByJournalArticleId(journalArticleId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the article where journalArticleId = &#63; from the database.
+	*
+	* @param journalArticleId the journal article ID
+	* @return the article that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.training.newsletter.model.Article removeByJournalArticleId(
+		long journalArticleId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchArticleException {
+		return getPersistence().removeByJournalArticleId(journalArticleId);
+	}
+
+	/**
+	* Returns the number of articles where journalArticleId = &#63;.
+	*
+	* @param journalArticleId the journal article ID
+	* @return the number of matching articles
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByJournalArticleId(long journalArticleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByJournalArticleId(journalArticleId);
 	}
 
 	/**

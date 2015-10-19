@@ -281,25 +281,36 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 	}
 
 	@Override
-	public com.liferay.training.newsletter.model.Issue addIssue(long groupId,
-		long companyId, long userId, java.lang.String userName, int issueNo,
-		java.lang.String title, java.lang.String description,
-		java.util.Date issueDate, java.lang.String byline)
+	public com.liferay.training.newsletter.model.Issue addIssue(
+		long journalArticleId, long groupId, long companyId, long userId,
+		java.lang.String userName, int issueNo, java.lang.String title,
+		java.lang.String description, java.util.Date issueDate,
+		java.lang.String byline)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _issueLocalService.addIssue(groupId, companyId, userId,
-			userName, issueNo, title, description, issueDate, byline);
+		return _issueLocalService.addIssue(journalArticleId, groupId,
+			companyId, userId, userName, issueNo, title, description,
+			issueDate, byline);
 	}
 
 	@Override
 	public com.liferay.training.newsletter.model.Issue updateIssue(
-		long issueId, long groupId, long companyId, long userId,
+		long journalArticleId, long groupId, long companyId, long userId,
 		java.lang.String userName, int issueNo, java.lang.String title,
 		java.lang.String description, java.util.Date issueDate,
 		java.lang.String byline)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _issueLocalService.updateIssue(issueId, groupId, companyId,
-			userId, userName, issueNo, title, description, issueDate, byline);
+		return _issueLocalService.updateIssue(journalArticleId, groupId,
+			companyId, userId, userName, issueNo, title, description,
+			issueDate, byline);
+	}
+
+	@Override
+	public com.liferay.training.newsletter.model.Issue getIssueByJournalArticleId(
+		long journalArticleId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchIssueException {
+		return _issueLocalService.getIssueByJournalArticleId(journalArticleId);
 	}
 
 	@Override

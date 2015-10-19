@@ -299,6 +299,226 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 	}
 
 	private static final String _FINDER_COLUMN_ISSUENO_ISSUENO_2 = "issue.issueNo = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_JOURNALARTICLEID = new FinderPath(IssueModelImpl.ENTITY_CACHE_ENABLED,
+			IssueModelImpl.FINDER_CACHE_ENABLED, IssueImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByJournalArticleId",
+			new String[] { Long.class.getName() },
+			IssueModelImpl.JOURNALARTICLEID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_JOURNALARTICLEID = new FinderPath(IssueModelImpl.ENTITY_CACHE_ENABLED,
+			IssueModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByJournalArticleId", new String[] { Long.class.getName() });
+
+	/**
+	 * Returns the issue where journalArticleId = &#63; or throws a {@link com.liferay.training.newsletter.NoSuchIssueException} if it could not be found.
+	 *
+	 * @param journalArticleId the journal article ID
+	 * @return the matching issue
+	 * @throws com.liferay.training.newsletter.NoSuchIssueException if a matching issue could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue findByJournalArticleId(long journalArticleId)
+		throws NoSuchIssueException, SystemException {
+		Issue issue = fetchByJournalArticleId(journalArticleId);
+
+		if (issue == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("journalArticleId=");
+			msg.append(journalArticleId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchIssueException(msg.toString());
+		}
+
+		return issue;
+	}
+
+	/**
+	 * Returns the issue where journalArticleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param journalArticleId the journal article ID
+	 * @return the matching issue, or <code>null</code> if a matching issue could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue fetchByJournalArticleId(long journalArticleId)
+		throws SystemException {
+		return fetchByJournalArticleId(journalArticleId, true);
+	}
+
+	/**
+	 * Returns the issue where journalArticleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param journalArticleId the journal article ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching issue, or <code>null</code> if a matching issue could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue fetchByJournalArticleId(long journalArticleId,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { journalArticleId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_JOURNALARTICLEID,
+					finderArgs, this);
+		}
+
+		if (result instanceof Issue) {
+			Issue issue = (Issue)result;
+
+			if ((journalArticleId != issue.getJournalArticleId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_ISSUE_WHERE);
+
+			query.append(_FINDER_COLUMN_JOURNALARTICLEID_JOURNALARTICLEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(journalArticleId);
+
+				List<Issue> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_JOURNALARTICLEID,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"IssuePersistenceImpl.fetchByJournalArticleId(long, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					Issue issue = list.get(0);
+
+					result = issue;
+
+					cacheResult(issue);
+
+					if ((issue.getJournalArticleId() != journalArticleId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_JOURNALARTICLEID,
+							finderArgs, issue);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_JOURNALARTICLEID,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Issue)result;
+		}
+	}
+
+	/**
+	 * Removes the issue where journalArticleId = &#63; from the database.
+	 *
+	 * @param journalArticleId the journal article ID
+	 * @return the issue that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue removeByJournalArticleId(long journalArticleId)
+		throws NoSuchIssueException, SystemException {
+		Issue issue = findByJournalArticleId(journalArticleId);
+
+		return remove(issue);
+	}
+
+	/**
+	 * Returns the number of issues where journalArticleId = &#63;.
+	 *
+	 * @param journalArticleId the journal article ID
+	 * @return the number of matching issues
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByJournalArticleId(long journalArticleId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_JOURNALARTICLEID;
+
+		Object[] finderArgs = new Object[] { journalArticleId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_ISSUE_WHERE);
+
+			query.append(_FINDER_COLUMN_JOURNALARTICLEID_JOURNALARTICLEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(journalArticleId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_JOURNALARTICLEID_JOURNALARTICLEID_2 =
+		"issue.journalArticleId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_MONTHANDYEAR =
 		new FinderPath(IssueModelImpl.ENTITY_CACHE_ENABLED,
 			IssueModelImpl.FINDER_CACHE_ENABLED, IssueImpl.class,
@@ -848,6 +1068,9 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ISSUENO,
 			new Object[] { issue.getIssueNo() }, issue);
 
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_JOURNALARTICLEID,
+			new Object[] { issue.getJournalArticleId() }, issue);
+
 		issue.resetOriginalValues();
 	}
 
@@ -927,6 +1150,13 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ISSUENO, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ISSUENO, args, issue);
+
+			args = new Object[] { issue.getJournalArticleId() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_JOURNALARTICLEID,
+				args, Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_JOURNALARTICLEID,
+				args, issue);
 		}
 		else {
 			IssueModelImpl issueModelImpl = (IssueModelImpl)issue;
@@ -939,6 +1169,16 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ISSUENO, args,
 					issue);
+			}
+
+			if ((issueModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_JOURNALARTICLEID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { issue.getJournalArticleId() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_JOURNALARTICLEID,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_JOURNALARTICLEID,
+					args, issue);
 			}
 		}
 	}
@@ -957,6 +1197,21 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ISSUENO, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ISSUENO, args);
+		}
+
+		args = new Object[] { issue.getJournalArticleId() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_JOURNALARTICLEID, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_JOURNALARTICLEID, args);
+
+		if ((issueModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_JOURNALARTICLEID.getColumnBitmask()) != 0) {
+			args = new Object[] { issueModelImpl.getOriginalJournalArticleId() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_JOURNALARTICLEID,
+				args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_JOURNALARTICLEID,
+				args);
 		}
 	}
 
@@ -1143,6 +1398,7 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 		issueImpl.setPrimaryKey(issue.getPrimaryKey());
 
 		issueImpl.setIssueId(issue.getIssueId());
+		issueImpl.setJournalArticleId(issue.getJournalArticleId());
 		issueImpl.setGroupId(issue.getGroupId());
 		issueImpl.setCompanyId(issue.getCompanyId());
 		issueImpl.setUserId(issue.getUserId());

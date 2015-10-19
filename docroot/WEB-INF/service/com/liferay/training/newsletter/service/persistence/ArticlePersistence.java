@@ -44,7 +44,7 @@ public interface ArticlePersistence extends BasePersistence<Article> {
 	* @return the matching articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.training.newsletter.model.Article> findByissueNo(
+	public java.util.List<com.liferay.training.newsletter.model.Article> findByIssueNo(
 		int issueNo) throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -60,7 +60,7 @@ public interface ArticlePersistence extends BasePersistence<Article> {
 	* @return the range of matching articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.training.newsletter.model.Article> findByissueNo(
+	public java.util.List<com.liferay.training.newsletter.model.Article> findByIssueNo(
 		int issueNo, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -78,7 +78,7 @@ public interface ArticlePersistence extends BasePersistence<Article> {
 	* @return the ordered range of matching articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.training.newsletter.model.Article> findByissueNo(
+	public java.util.List<com.liferay.training.newsletter.model.Article> findByIssueNo(
 		int issueNo, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -92,7 +92,7 @@ public interface ArticlePersistence extends BasePersistence<Article> {
 	* @throws com.liferay.training.newsletter.NoSuchArticleException if a matching article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.training.newsletter.model.Article findByissueNo_First(
+	public com.liferay.training.newsletter.model.Article findByIssueNo_First(
 		int issueNo,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -106,7 +106,7 @@ public interface ArticlePersistence extends BasePersistence<Article> {
 	* @return the first matching article, or <code>null</code> if a matching article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.training.newsletter.model.Article fetchByissueNo_First(
+	public com.liferay.training.newsletter.model.Article fetchByIssueNo_First(
 		int issueNo,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -120,7 +120,7 @@ public interface ArticlePersistence extends BasePersistence<Article> {
 	* @throws com.liferay.training.newsletter.NoSuchArticleException if a matching article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.training.newsletter.model.Article findByissueNo_Last(
+	public com.liferay.training.newsletter.model.Article findByIssueNo_Last(
 		int issueNo,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -134,7 +134,7 @@ public interface ArticlePersistence extends BasePersistence<Article> {
 	* @return the last matching article, or <code>null</code> if a matching article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.training.newsletter.model.Article fetchByissueNo_Last(
+	public com.liferay.training.newsletter.model.Article fetchByIssueNo_Last(
 		int issueNo,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -149,7 +149,7 @@ public interface ArticlePersistence extends BasePersistence<Article> {
 	* @throws com.liferay.training.newsletter.NoSuchArticleException if a article with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.training.newsletter.model.Article[] findByissueNo_PrevAndNext(
+	public com.liferay.training.newsletter.model.Article[] findByIssueNo_PrevAndNext(
 		long articleId, int issueNo,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -161,7 +161,7 @@ public interface ArticlePersistence extends BasePersistence<Article> {
 	* @param issueNo the issue no
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByissueNo(int issueNo)
+	public void removeByIssueNo(int issueNo)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -171,7 +171,65 @@ public interface ArticlePersistence extends BasePersistence<Article> {
 	* @return the number of matching articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByissueNo(int issueNo)
+	public int countByIssueNo(int issueNo)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the article where journalArticleId = &#63; or throws a {@link com.liferay.training.newsletter.NoSuchArticleException} if it could not be found.
+	*
+	* @param journalArticleId the journal article ID
+	* @return the matching article
+	* @throws com.liferay.training.newsletter.NoSuchArticleException if a matching article could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.training.newsletter.model.Article findByJournalArticleId(
+		long journalArticleId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchArticleException;
+
+	/**
+	* Returns the article where journalArticleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param journalArticleId the journal article ID
+	* @return the matching article, or <code>null</code> if a matching article could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.training.newsletter.model.Article fetchByJournalArticleId(
+		long journalArticleId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the article where journalArticleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param journalArticleId the journal article ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching article, or <code>null</code> if a matching article could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.training.newsletter.model.Article fetchByJournalArticleId(
+		long journalArticleId, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the article where journalArticleId = &#63; from the database.
+	*
+	* @param journalArticleId the journal article ID
+	* @return the article that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.training.newsletter.model.Article removeByJournalArticleId(
+		long journalArticleId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchArticleException;
+
+	/**
+	* Returns the number of articles where journalArticleId = &#63;.
+	*
+	* @param journalArticleId the journal article ID
+	* @return the number of matching articles
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByJournalArticleId(long journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

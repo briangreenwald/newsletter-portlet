@@ -51,6 +51,7 @@ public class ArticleWrapper implements Article, ModelWrapper<Article> {
 
 		attributes.put("articleId", getArticleId());
 		attributes.put("issueId", getIssueId());
+		attributes.put("journalArticleId", getJournalArticleId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -78,6 +79,12 @@ public class ArticleWrapper implements Article, ModelWrapper<Article> {
 
 		if (issueId != null) {
 			setIssueId(issueId);
+		}
+
+		Long journalArticleId = (Long)attributes.get("journalArticleId");
+
+		if (journalArticleId != null) {
+			setJournalArticleId(journalArticleId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -205,6 +212,26 @@ public class ArticleWrapper implements Article, ModelWrapper<Article> {
 	@Override
 	public void setIssueId(long issueId) {
 		_article.setIssueId(issueId);
+	}
+
+	/**
+	* Returns the journal article ID of this article.
+	*
+	* @return the journal article ID of this article
+	*/
+	@Override
+	public long getJournalArticleId() {
+		return _article.getJournalArticleId();
+	}
+
+	/**
+	* Sets the journal article ID of this article.
+	*
+	* @param journalArticleId the journal article ID of this article
+	*/
+	@Override
+	public void setJournalArticleId(long journalArticleId) {
+		_article.setJournalArticleId(journalArticleId);
 	}
 
 	/**
