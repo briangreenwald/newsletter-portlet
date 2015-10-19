@@ -16,6 +16,7 @@ import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.training.newsletter.service.ArticleLocalServiceUtil;
 import com.liferay.training.newsletter.service.IssueLocalServiceUtil;
 
 import java.util.Calendar;
@@ -75,6 +76,14 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 				String author = parseField(articleContent, AUTHOR);
 				String order = parseField(articleContent, ORDER);
 				String content = parseField(articleContent, CONTENT);
+				
+				try {
+					ArticleLocalServiceUtil.addArticle(groupId, companyId, userId, userName, issueNo, title, author, order, content);
+				}
+				catch (Exception e) {
+					_log.error(String.format(
+						"Unable to add Article entitled \"%s\"", title));
+				}
 			}
 
 		} catch (DocumentException e) {

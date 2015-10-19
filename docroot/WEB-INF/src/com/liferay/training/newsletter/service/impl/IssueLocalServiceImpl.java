@@ -112,5 +112,16 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 
 		return super.updateIssue(issue);
 	}
+	
+	public Issue getIssueByIssueNo(int issueNo) throws SystemException {
+		
+		return issuePersistence.findByIssueNo(issueNo);
+	}
+	
+	public List<Issue> getIssuesByMonthAndYear(int issueMonth, int issueYear) 
+		throws SystemException {
+		
+		return issuePersistence.findByMonthAndYear(issueMonth, issueYear);
+	}
 
 }

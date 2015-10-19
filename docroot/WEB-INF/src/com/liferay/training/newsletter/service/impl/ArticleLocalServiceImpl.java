@@ -17,6 +17,7 @@ package com.liferay.training.newsletter.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.training.newsletter.model.Article;
+import com.liferay.training.newsletter.service.IssueLocalServiceUtil;
 import com.liferay.training.newsletter.service.base.ArticleLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -43,37 +44,37 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	 */
 	
 	public Article addArticle(
-			long issueId, long groupId, long companyId, long userId, 
-			String userName, int issueNo, String title, String author, 
-			int order, String content) 
+			long groupId, long companyId, long userId, String userName, 
+			int issueNo, String title, String author, int order, String content) 
 		throws SystemException, PortalException {
-		
+
 		long articleId = counterLocalService.increment(Article.class.getName());
-		Article article = createArticle(issueId);
-		
+		Article article = createArticle(articleId);
+
 		Date now = new Date();
-		
+		long issueId = IssueLocalServiceUtil.getIssueByIssueNo(issueNo);
+
 		article.setArticleId(articleId);
 		article.setIssueId(issueId);
 		article.setGroupId(groupId);
 		article.setCompanyId(companyId);
 		article.setUserId(userId);
 		article.setUserName(userName);
-		
+
 		article.setCreateDate(now);
 		article.setModifiedDate(now);
-		
+
 		article.setIssueNo(issueNo);
 		article.setTitle(title);
 		article.setAuthor(author);
 		article.setOrder(order);
 		article.setContent(content);
-		
+
 		return super.addArticle(article);
 	}
 
 	public Article updateArticle(
-			long articleId, long issueId, long groupId, long companyId, 
+			long articleId, long groupId, long companyId, 
 			long userId, String userName, int issueNo, String title, 
 			String author, int order, String content)
 		throws SystemException, PortalException {
@@ -81,6 +82,7 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		Article article = getArticle(articleId);
 
 		Date now = new Date();
+		long issueId = IssueLocalServiceUtil.getIssueByIssueNo(issueNo);
 
 		article.setArticleId(articleId);
 		article.setIssueId(issueId);
