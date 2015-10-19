@@ -8,15 +8,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.training.newsletter.service.IssueLocalServiceUtil;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -46,24 +46,40 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 			Element titleElement = root.element(TITLE);
 			String title = titleElement.getText();
 
-			String issueNo = parseField(articleContent, ISSUE_NO);
+			String issueNumnber = parseField(articleContent, ISSUE_NO);
+			int issueNo = Integer.parseInt(issueNumnber);
 
-			System.out.println(String.format("Title: %s\nIssue No: %s", title, issueNo));
+			long groupId = article.getGroupId();
+			long companyId = article.getCompanyId();
+			long userId = article.getUserId();
+			String userName = article.getUserName();
 
 			if (structureName.equals(NEWSLETTER_ISSUE)) {
 				String description = parseField(articleContent, DESCRIPTION);
+
 				String date = parseField(articleContent, ISSUE_DATE);
-				Calendar cal = Calendar.getInstance();
 				Date issueDate = new Date(Long.valueOf(date));
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(issueDate);
+				int issueMonth = cal.get(Calendar.MONTH);
+				int issueYear = cal.get(Calendar.YEAR);
+
 				String byline = parseField(articleContent, BYLINE);
-				System.out.println(String.format("Description: %s\nIssue Date: %s\nByline: %s", description, issueDate, byline));
-				
+
+				try {
+					IssueLocalServiceUtil.addIssue(
+						groupId, companyId, userId, userName, issueNo, title, 
+						description, issueMonth, issueYear, byline);
+				}
+				catch (Exception e) {
+					_log.error(String.format(
+						"Unable to add Issue entitled \"%s\"", title));
+				}
 			}
 			else if (structureName.equals(NEWSLETTER_ARTICLE)) {
 				String author = parseField(articleContent, AUTHOR);
 				String order = parseField(articleContent, ORDER);
 				String content = parseField(articleContent, CONTENT);
-				System.out.println(String.format("Author: %s\nOrder: %s\nContent: %s", author, order, content));
 			}
 
 		} catch (DocumentException e) {
