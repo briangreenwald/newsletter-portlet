@@ -297,6 +297,19 @@ public class IssueLocalServiceUtil {
 			issueNo, title, description, issueDate, byline);
 	}
 
+	public static com.liferay.training.newsletter.model.Issue getIssueByIssueNo(
+		int issueNo)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchIssueException {
+		return getService().getIssueByIssueNo(issueNo);
+	}
+
+	public static java.util.List<com.liferay.training.newsletter.model.Issue> getIssuesByMonthAndYear(
+		int issueMonth, int issueYear)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getIssuesByMonthAndYear(issueMonth, issueYear);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

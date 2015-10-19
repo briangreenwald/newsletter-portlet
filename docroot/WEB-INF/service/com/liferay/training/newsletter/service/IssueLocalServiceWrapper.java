@@ -302,6 +302,21 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 			userId, userName, issueNo, title, description, issueDate, byline);
 	}
 
+	@Override
+	public com.liferay.training.newsletter.model.Issue getIssueByIssueNo(
+		int issueNo)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchIssueException {
+		return _issueLocalService.getIssueByIssueNo(issueNo);
+	}
+
+	@Override
+	public java.util.List<com.liferay.training.newsletter.model.Issue> getIssuesByMonthAndYear(
+		int issueMonth, int issueYear)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _issueLocalService.getIssuesByMonthAndYear(issueMonth, issueYear);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

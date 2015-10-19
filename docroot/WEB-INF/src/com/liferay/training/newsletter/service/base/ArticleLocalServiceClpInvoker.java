@@ -117,7 +117,7 @@ public class ArticleLocalServiceClpInvoker {
 		_methodName42 = "addArticle";
 
 		_methodParameterTypes42 = new String[] {
-				"long", "long", "long", "long", "java.lang.String", "int",
+				"long", "long", "long", "java.lang.String", "int",
 				"java.lang.String", "java.lang.String", "int",
 				"java.lang.String"
 			};
@@ -125,8 +125,8 @@ public class ArticleLocalServiceClpInvoker {
 		_methodName43 = "updateArticle";
 
 		_methodParameterTypes43 = new String[] {
-				"long", "long", "long", "long", "long", "java.lang.String",
-				"int", "java.lang.String", "java.lang.String", "int",
+				"long", "long", "long", "long", "java.lang.String", "int",
+				"java.lang.String", "java.lang.String", "int",
 				"java.lang.String"
 			};
 	}
@@ -237,12 +237,11 @@ public class ArticleLocalServiceClpInvoker {
 			return ArticleLocalServiceUtil.addArticle(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
-				((Long)arguments[3]).longValue(),
-				(java.lang.String)arguments[4],
-				((Integer)arguments[5]).intValue(),
-				(java.lang.String)arguments[6], (java.lang.String)arguments[7],
-				((Integer)arguments[8]).intValue(),
-				(java.lang.String)arguments[9]);
+				(java.lang.String)arguments[3],
+				((Integer)arguments[4]).intValue(),
+				(java.lang.String)arguments[5], (java.lang.String)arguments[6],
+				((Integer)arguments[7]).intValue(),
+				(java.lang.String)arguments[8]);
 		}
 
 		if (_methodName43.equals(name) &&
@@ -251,12 +250,11 @@ public class ArticleLocalServiceClpInvoker {
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
 				((Long)arguments[3]).longValue(),
-				((Long)arguments[4]).longValue(),
-				(java.lang.String)arguments[5],
-				((Integer)arguments[6]).intValue(),
-				(java.lang.String)arguments[7], (java.lang.String)arguments[8],
-				((Integer)arguments[9]).intValue(),
-				(java.lang.String)arguments[10]);
+				(java.lang.String)arguments[4],
+				((Integer)arguments[5]).intValue(),
+				(java.lang.String)arguments[6], (java.lang.String)arguments[7],
+				((Integer)arguments[8]).intValue(),
+				(java.lang.String)arguments[9]);
 		}
 
 		throw new UnsupportedOperationException();

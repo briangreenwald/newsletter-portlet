@@ -109,6 +109,73 @@ public class IssueUtil {
 	}
 
 	/**
+	* Returns the issue where issueNo = &#63; or throws a {@link com.liferay.training.newsletter.NoSuchIssueException} if it could not be found.
+	*
+	* @param issueNo the issue no
+	* @return the matching issue
+	* @throws com.liferay.training.newsletter.NoSuchIssueException if a matching issue could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.training.newsletter.model.Issue findByIssueNo(
+		int issueNo)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchIssueException {
+		return getPersistence().findByIssueNo(issueNo);
+	}
+
+	/**
+	* Returns the issue where issueNo = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param issueNo the issue no
+	* @return the matching issue, or <code>null</code> if a matching issue could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.training.newsletter.model.Issue fetchByIssueNo(
+		int issueNo) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByIssueNo(issueNo);
+	}
+
+	/**
+	* Returns the issue where issueNo = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param issueNo the issue no
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching issue, or <code>null</code> if a matching issue could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.training.newsletter.model.Issue fetchByIssueNo(
+		int issueNo, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByIssueNo(issueNo, retrieveFromCache);
+	}
+
+	/**
+	* Removes the issue where issueNo = &#63; from the database.
+	*
+	* @param issueNo the issue no
+	* @return the issue that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.training.newsletter.model.Issue removeByIssueNo(
+		int issueNo)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchIssueException {
+		return getPersistence().removeByIssueNo(issueNo);
+	}
+
+	/**
+	* Returns the number of issues where issueNo = &#63;.
+	*
+	* @param issueNo the issue no
+	* @return the number of matching issues
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByIssueNo(int issueNo)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByIssueNo(issueNo);
+	}
+
+	/**
 	* Returns all the issues where issueMonth = &#63; and issueYear = &#63;.
 	*
 	* @param issueMonth the issue month

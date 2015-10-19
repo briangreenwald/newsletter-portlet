@@ -82,6 +82,223 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(IssueModelImpl.ENTITY_CACHE_ENABLED,
 			IssueModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FETCH_BY_ISSUENO = new FinderPath(IssueModelImpl.ENTITY_CACHE_ENABLED,
+			IssueModelImpl.FINDER_CACHE_ENABLED, IssueImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByIssueNo",
+			new String[] { Integer.class.getName() },
+			IssueModelImpl.ISSUENO_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_ISSUENO = new FinderPath(IssueModelImpl.ENTITY_CACHE_ENABLED,
+			IssueModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByIssueNo",
+			new String[] { Integer.class.getName() });
+
+	/**
+	 * Returns the issue where issueNo = &#63; or throws a {@link com.liferay.training.newsletter.NoSuchIssueException} if it could not be found.
+	 *
+	 * @param issueNo the issue no
+	 * @return the matching issue
+	 * @throws com.liferay.training.newsletter.NoSuchIssueException if a matching issue could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue findByIssueNo(int issueNo)
+		throws NoSuchIssueException, SystemException {
+		Issue issue = fetchByIssueNo(issueNo);
+
+		if (issue == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("issueNo=");
+			msg.append(issueNo);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchIssueException(msg.toString());
+		}
+
+		return issue;
+	}
+
+	/**
+	 * Returns the issue where issueNo = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param issueNo the issue no
+	 * @return the matching issue, or <code>null</code> if a matching issue could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue fetchByIssueNo(int issueNo) throws SystemException {
+		return fetchByIssueNo(issueNo, true);
+	}
+
+	/**
+	 * Returns the issue where issueNo = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param issueNo the issue no
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching issue, or <code>null</code> if a matching issue could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue fetchByIssueNo(int issueNo, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { issueNo };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_ISSUENO,
+					finderArgs, this);
+		}
+
+		if (result instanceof Issue) {
+			Issue issue = (Issue)result;
+
+			if ((issueNo != issue.getIssueNo())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_ISSUE_WHERE);
+
+			query.append(_FINDER_COLUMN_ISSUENO_ISSUENO_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(issueNo);
+
+				List<Issue> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ISSUENO,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"IssuePersistenceImpl.fetchByIssueNo(int, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					Issue issue = list.get(0);
+
+					result = issue;
+
+					cacheResult(issue);
+
+					if ((issue.getIssueNo() != issueNo)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ISSUENO,
+							finderArgs, issue);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ISSUENO,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Issue)result;
+		}
+	}
+
+	/**
+	 * Removes the issue where issueNo = &#63; from the database.
+	 *
+	 * @param issueNo the issue no
+	 * @return the issue that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue removeByIssueNo(int issueNo)
+		throws NoSuchIssueException, SystemException {
+		Issue issue = findByIssueNo(issueNo);
+
+		return remove(issue);
+	}
+
+	/**
+	 * Returns the number of issues where issueNo = &#63;.
+	 *
+	 * @param issueNo the issue no
+	 * @return the number of matching issues
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByIssueNo(int issueNo) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_ISSUENO;
+
+		Object[] finderArgs = new Object[] { issueNo };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_ISSUE_WHERE);
+
+			query.append(_FINDER_COLUMN_ISSUENO_ISSUENO_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(issueNo);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ISSUENO_ISSUENO_2 = "issue.issueNo = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_MONTHANDYEAR =
 		new FinderPath(IssueModelImpl.ENTITY_CACHE_ENABLED,
 			IssueModelImpl.FINDER_CACHE_ENABLED, IssueImpl.class,
@@ -99,7 +316,7 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 			new String[] { Integer.class.getName(), Integer.class.getName() },
 			IssueModelImpl.ISSUEMONTH_COLUMN_BITMASK |
 			IssueModelImpl.ISSUEYEAR_COLUMN_BITMASK |
-			IssueModelImpl.CREATEDATE_COLUMN_BITMASK);
+			IssueModelImpl.ISSUEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_MONTHANDYEAR = new FinderPath(IssueModelImpl.ENTITY_CACHE_ENABLED,
 			IssueModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByMonthAndYear",
@@ -628,6 +845,9 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 		EntityCacheUtil.putResult(IssueModelImpl.ENTITY_CACHE_ENABLED,
 			IssueImpl.class, issue.getPrimaryKey(), issue);
 
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ISSUENO,
+			new Object[] { issue.getIssueNo() }, issue);
+
 		issue.resetOriginalValues();
 	}
 
@@ -683,6 +903,8 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(issue);
 	}
 
 	@Override
@@ -693,6 +915,48 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 		for (Issue issue : issues) {
 			EntityCacheUtil.removeResult(IssueModelImpl.ENTITY_CACHE_ENABLED,
 				IssueImpl.class, issue.getPrimaryKey());
+
+			clearUniqueFindersCache(issue);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(Issue issue) {
+		if (issue.isNew()) {
+			Object[] args = new Object[] { issue.getIssueNo() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ISSUENO, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ISSUENO, args, issue);
+		}
+		else {
+			IssueModelImpl issueModelImpl = (IssueModelImpl)issue;
+
+			if ((issueModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_ISSUENO.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { issue.getIssueNo() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ISSUENO, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ISSUENO, args,
+					issue);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(Issue issue) {
+		IssueModelImpl issueModelImpl = (IssueModelImpl)issue;
+
+		Object[] args = new Object[] { issue.getIssueNo() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ISSUENO, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ISSUENO, args);
+
+		if ((issueModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_ISSUENO.getColumnBitmask()) != 0) {
+			args = new Object[] { issueModelImpl.getOriginalIssueNo() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ISSUENO, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ISSUENO, args);
 		}
 	}
 
@@ -861,6 +1125,9 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 
 		EntityCacheUtil.putResult(IssueModelImpl.ENTITY_CACHE_ENABLED,
 			IssueImpl.class, issue.getPrimaryKey(), issue);
+
+		clearUniqueFindersCache(issue);
+		cacheUniqueFindersCache(issue);
 
 		return issue;
 	}

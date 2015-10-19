@@ -129,6 +129,14 @@ public class IssueLocalServiceClpInvoker {
 				"java.lang.String", "java.lang.String", "java.util.Date",
 				"java.lang.String"
 			};
+
+		_methodName44 = "getIssueByIssueNo";
+
+		_methodParameterTypes44 = new String[] { "int" };
+
+		_methodName45 = "getIssuesByMonthAndYear";
+
+		_methodParameterTypes45 = new String[] { "int", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -255,6 +263,17 @@ public class IssueLocalServiceClpInvoker {
 				(java.util.Date)arguments[8], (java.lang.String)arguments[9]);
 		}
 
+		if (_methodName44.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
+			return IssueLocalServiceUtil.getIssueByIssueNo(((Integer)arguments[0]).intValue());
+		}
+
+		if (_methodName45.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
+			return IssueLocalServiceUtil.getIssuesByMonthAndYear(((Integer)arguments[0]).intValue(),
+				((Integer)arguments[1]).intValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -298,4 +317,8 @@ public class IssueLocalServiceClpInvoker {
 	private String[] _methodParameterTypes42;
 	private String _methodName43;
 	private String[] _methodParameterTypes43;
+	private String _methodName44;
+	private String[] _methodParameterTypes44;
+	private String _methodName45;
+	private String[] _methodParameterTypes45;
 }

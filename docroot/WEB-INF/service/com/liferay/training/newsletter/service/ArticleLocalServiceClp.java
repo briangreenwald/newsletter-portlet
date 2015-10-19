@@ -117,7 +117,7 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 		_methodName19 = "addArticle";
 
 		_methodParameterTypes19 = new String[] {
-				"long", "long", "long", "long", "java.lang.String", "int",
+				"long", "long", "long", "java.lang.String", "int",
 				"java.lang.String", "java.lang.String", "int",
 				"java.lang.String"
 			};
@@ -125,8 +125,8 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 		_methodName20 = "updateArticle";
 
 		_methodParameterTypes20 = new String[] {
-				"long", "long", "long", "long", "long", "java.lang.String",
-				"int", "java.lang.String", "java.lang.String", "int",
+				"long", "long", "long", "long", "java.lang.String", "int",
+				"java.lang.String", "java.lang.String", "int",
 				"java.lang.String"
 			};
 	}
@@ -683,9 +683,9 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 
 	@Override
 	public com.liferay.training.newsletter.model.Article addArticle(
-		long issueId, long groupId, long companyId, long userId,
-		java.lang.String userName, int issueNo, java.lang.String title,
-		java.lang.String author, int order, java.lang.String content)
+		long groupId, long companyId, long userId, java.lang.String userName,
+		int issueNo, java.lang.String title, java.lang.String author,
+		int order, java.lang.String content)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -694,9 +694,7 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
 					_methodParameterTypes19,
 					new Object[] {
-						issueId,
-						
-					groupId,
+						groupId,
 						
 					companyId,
 						
@@ -740,10 +738,9 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 
 	@Override
 	public com.liferay.training.newsletter.model.Article updateArticle(
-		long articleId, long issueId, long groupId, long companyId,
-		long userId, java.lang.String userName, int issueNo,
-		java.lang.String title, java.lang.String author, int order,
-		java.lang.String content)
+		long articleId, long groupId, long companyId, long userId,
+		java.lang.String userName, int issueNo, java.lang.String title,
+		java.lang.String author, int order, java.lang.String content)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -753,8 +750,6 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 					_methodParameterTypes20,
 					new Object[] {
 						articleId,
-						
-					issueId,
 						
 					groupId,
 						

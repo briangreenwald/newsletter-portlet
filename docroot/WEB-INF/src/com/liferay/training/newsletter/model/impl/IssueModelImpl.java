@@ -78,8 +78,8 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		};
 	public static final String TABLE_SQL_CREATE = "create table newsletter_Issue (issueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,description VARCHAR(75) null,issueDate DATE null,issueMonth INTEGER,issueYear INTEGER,byline VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table newsletter_Issue";
-	public static final String ORDER_BY_JPQL = " ORDER BY issue.createDate DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY newsletter_Issue.createDate DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY issue.issueDate DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY newsletter_Issue.issueDate DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -93,8 +93,9 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 				"value.object.column.bitmask.enabled.com.liferay.training.newsletter.model.Issue"),
 			true);
 	public static long ISSUEMONTH_COLUMN_BITMASK = 1L;
-	public static long ISSUEYEAR_COLUMN_BITMASK = 2L;
-	public static long CREATEDATE_COLUMN_BITMASK = 4L;
+	public static long ISSUENO_COLUMN_BITMASK = 2L;
+	public static long ISSUEYEAR_COLUMN_BITMASK = 4L;
+	public static long ISSUEDATE_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.liferay.training.newsletter.model.Issue"));
 
@@ -312,8 +313,6 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
-
 		_createDate = createDate;
 	}
 
@@ -334,7 +333,19 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public void setIssueNo(int issueNo) {
+		_columnBitmask |= ISSUENO_COLUMN_BITMASK;
+
+		if (!_setOriginalIssueNo) {
+			_setOriginalIssueNo = true;
+
+			_originalIssueNo = _issueNo;
+		}
+
 		_issueNo = issueNo;
+	}
+
+	public int getOriginalIssueNo() {
+		return _originalIssueNo;
 	}
 
 	@Override
@@ -374,6 +385,8 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public void setIssueDate(Date issueDate) {
+		_columnBitmask = -1L;
+
 		_issueDate = issueDate;
 	}
 
@@ -491,7 +504,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	public int compareTo(Issue issue) {
 		int value = 0;
 
-		value = DateUtil.compareTo(getCreateDate(), issue.getCreateDate());
+		value = DateUtil.compareTo(getIssueDate(), issue.getIssueDate());
 
 		value = value * -1;
 
@@ -532,6 +545,10 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	@Override
 	public void resetOriginalValues() {
 		IssueModelImpl issueModelImpl = this;
+
+		issueModelImpl._originalIssueNo = issueModelImpl._issueNo;
+
+		issueModelImpl._setOriginalIssueNo = false;
 
 		issueModelImpl._originalIssueMonth = issueModelImpl._issueMonth;
 
@@ -742,6 +759,8 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private int _issueNo;
+	private int _originalIssueNo;
+	private boolean _setOriginalIssueNo;
 	private String _title;
 	private String _description;
 	private Date _issueDate;

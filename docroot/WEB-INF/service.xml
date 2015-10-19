@@ -40,9 +40,9 @@
 
 		<!-- Finder methods -->
 		
-		<finer name="IssueNo" return-type="Issue">
+		<finder name="IssueNo" return-type="Issue">
 			<finder-column name="issueNo" />
-		</finer>
+		</finder>
 
 		<finder name="MonthAndYear" return-type="Collection">
 			<finder-column name="issueMonth" />

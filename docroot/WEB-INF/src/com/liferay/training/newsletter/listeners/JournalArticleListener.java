@@ -78,7 +78,7 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 				String content = parseField(articleContent, CONTENT);
 				
 				try {
-					ArticleLocalServiceUtil.addArticle(groupId, companyId, userId, userName, issueNo, title, author, order, content);
+					ArticleLocalServiceUtil.addArticle(groupId, companyId, userId, userName, issueNo, title, author, Integer.valueOf(order), content);
 				}
 				catch (Exception e) {
 					_log.error(String.format(

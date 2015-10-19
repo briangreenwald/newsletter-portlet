@@ -16,12 +16,13 @@ package com.liferay.training.newsletter.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.training.newsletter.NoSuchIssueException;
 import com.liferay.training.newsletter.model.Issue;
-import com.liferay.training.newsletter.service.IssueLocalServiceUtil;
 import com.liferay.training.newsletter.service.base.IssueLocalServiceBaseImpl;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * The implementation of the issue local service. <p> All custom service methods
@@ -113,7 +114,8 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return super.updateIssue(issue);
 	}
 	
-	public Issue getIssueByIssueNo(int issueNo) throws SystemException {
+	public Issue getIssueByIssueNo(int issueNo) 
+		throws NoSuchIssueException, SystemException {
 		
 		return issuePersistence.findByIssueNo(issueNo);
 	}

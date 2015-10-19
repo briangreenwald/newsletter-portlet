@@ -276,26 +276,25 @@ public class ArticleLocalServiceUtil {
 	}
 
 	public static com.liferay.training.newsletter.model.Article addArticle(
-		long issueId, long groupId, long companyId, long userId,
+		long groupId, long companyId, long userId, java.lang.String userName,
+		int issueNo, java.lang.String title, java.lang.String author,
+		int order, java.lang.String content)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addArticle(groupId, companyId, userId, userName, issueNo,
+			title, author, order, content);
+	}
+
+	public static com.liferay.training.newsletter.model.Article updateArticle(
+		long articleId, long groupId, long companyId, long userId,
 		java.lang.String userName, int issueNo, java.lang.String title,
 		java.lang.String author, int order, java.lang.String content)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addArticle(issueId, groupId, companyId, userId, userName,
-			issueNo, title, author, order, content);
-	}
-
-	public static com.liferay.training.newsletter.model.Article updateArticle(
-		long articleId, long issueId, long groupId, long companyId,
-		long userId, java.lang.String userName, int issueNo,
-		java.lang.String title, java.lang.String author, int order,
-		java.lang.String content)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .updateArticle(articleId, issueId, groupId, companyId,
-			userId, userName, issueNo, title, author, order, content);
+				   .updateArticle(articleId, groupId, companyId, userId,
+			userName, issueNo, title, author, order, content);
 	}
 
 	public static void clearService() {

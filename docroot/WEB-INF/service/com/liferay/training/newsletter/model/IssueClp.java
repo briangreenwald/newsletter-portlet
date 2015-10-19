@@ -603,7 +603,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 	public int compareTo(Issue issue) {
 		int value = 0;
 
-		value = DateUtil.compareTo(getCreateDate(), issue.getCreateDate());
+		value = DateUtil.compareTo(getIssueDate(), issue.getIssueDate());
 
 		value = value * -1;
 

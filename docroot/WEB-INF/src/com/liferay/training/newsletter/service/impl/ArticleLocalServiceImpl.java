@@ -17,6 +17,7 @@ package com.liferay.training.newsletter.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.training.newsletter.model.Article;
+import com.liferay.training.newsletter.model.Issue;
 import com.liferay.training.newsletter.service.IssueLocalServiceUtil;
 import com.liferay.training.newsletter.service.base.ArticleLocalServiceBaseImpl;
 
@@ -52,8 +53,9 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		Article article = createArticle(articleId);
 
 		Date now = new Date();
-		long issueId = IssueLocalServiceUtil.getIssueByIssueNo(issueNo);
-
+		Issue issue = IssueLocalServiceUtil.getIssueByIssueNo(issueNo);
+		long issueId = issue.getIssueId();
+		
 		article.setArticleId(articleId);
 		article.setIssueId(issueId);
 		article.setGroupId(groupId);
@@ -82,7 +84,8 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		Article article = getArticle(articleId);
 
 		Date now = new Date();
-		long issueId = IssueLocalServiceUtil.getIssueByIssueNo(issueNo);
+		Issue issue = IssueLocalServiceUtil.getIssueByIssueNo(issueNo);
+		long issueId = issue.getIssueId();
 
 		article.setArticleId(articleId);
 		article.setIssueId(issueId);
