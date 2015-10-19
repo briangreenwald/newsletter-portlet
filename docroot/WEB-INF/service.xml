@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="com.liferay.training.newsletter">
+	<author>Brian Greenwald</author>
+	<namespace>newsletter</namespace>
+
+	<entity name="Issue" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="issueId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="issueNo" type="int" />
+		<column name="title" type="String" />
+		<column name="description" type="String" />
+		<column name="issueMonth" type="int" />
+		<column name="issueYear" type="int" />
+		<column name="byline" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="MonthAndYear" return-type="Collection">
+			<finder-column name="issueMonth" />
+			<finder-column name="issueYear" />
+		</finder>
+	</entity>
+	
+	<entity name="Article" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="articleId" type="long" primary="true" />
+		
+		<!-- Foreign Key  field -->
+		
+		<column name="issueId" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="issueNo" type="int" />
+		<column name="title" type="String" />
+		<column name="author" type="String" />
+		<column name="order" type="int" />
+		<column name="content" type="String" />
+		
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="order" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="issueNo" return-type="Collection">
+			<finder-column name="issueNo" />
+		</finder>
+	</entity>
+</service-builder>
