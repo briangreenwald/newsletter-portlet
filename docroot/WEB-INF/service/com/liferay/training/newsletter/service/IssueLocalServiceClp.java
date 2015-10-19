@@ -32,11 +32,11 @@ public class IssueLocalServiceClp implements IssueLocalService {
 
 		_methodName1 = "createIssue";
 
-		_methodParameterTypes1 = new String[] { "int" };
+		_methodParameterTypes1 = new String[] { "long" };
 
 		_methodName2 = "deleteIssue";
 
-		_methodParameterTypes2 = new String[] { "int" };
+		_methodParameterTypes2 = new String[] { "long" };
 
 		_methodName3 = "deleteIssue";
 
@@ -82,11 +82,11 @@ public class IssueLocalServiceClp implements IssueLocalService {
 
 		_methodName10 = "fetchIssue";
 
-		_methodParameterTypes10 = new String[] { "int" };
+		_methodParameterTypes10 = new String[] { "long" };
 
 		_methodName11 = "getIssue";
 
-		_methodParameterTypes11 = new String[] { "int" };
+		_methodParameterTypes11 = new String[] { "long" };
 
 		_methodName12 = "getPersistedModel";
 
@@ -113,6 +113,22 @@ public class IssueLocalServiceClp implements IssueLocalService {
 		_methodName17 = "setBeanIdentifier";
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
+
+		_methodName19 = "addIssue";
+
+		_methodParameterTypes19 = new String[] {
+				"long", "long", "long", "java.lang.String", "int",
+				"java.lang.String", "java.lang.String", "int", "int",
+				"java.lang.String"
+			};
+
+		_methodName20 = "updateIssue";
+
+		_methodParameterTypes20 = new String[] {
+				"long", "long", "long", "long", "java.lang.String", "int",
+				"java.lang.String", "java.lang.String", "int", "int",
+				"java.lang.String"
+			};
 	}
 
 	@Override
@@ -146,7 +162,7 @@ public class IssueLocalServiceClp implements IssueLocalService {
 	}
 
 	@Override
-	public com.liferay.training.newsletter.model.Issue createIssue(int issueId) {
+	public com.liferay.training.newsletter.model.Issue createIssue(long issueId) {
 		Object returnObj = null;
 
 		try {
@@ -169,7 +185,7 @@ public class IssueLocalServiceClp implements IssueLocalService {
 	}
 
 	@Override
-	public com.liferay.training.newsletter.model.Issue deleteIssue(int issueId)
+	public com.liferay.training.newsletter.model.Issue deleteIssue(long issueId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -429,7 +445,7 @@ public class IssueLocalServiceClp implements IssueLocalService {
 	}
 
 	@Override
-	public com.liferay.training.newsletter.model.Issue fetchIssue(int issueId)
+	public com.liferay.training.newsletter.model.Issue fetchIssue(long issueId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -457,7 +473,7 @@ public class IssueLocalServiceClp implements IssueLocalService {
 	}
 
 	@Override
-	public com.liferay.training.newsletter.model.Issue getIssue(int issueId)
+	public com.liferay.training.newsletter.model.Issue getIssue(long issueId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -661,6 +677,108 @@ public class IssueLocalServiceClp implements IssueLocalService {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public com.liferay.training.newsletter.model.Issue addIssue(long groupId,
+		long companyId, long userId, java.lang.String userName, int issueNo,
+		java.lang.String title, java.lang.String description, int issueMonth,
+		int issueYear, java.lang.String byline)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19,
+					new Object[] {
+						groupId,
+						
+					companyId,
+						
+					userId,
+						
+					ClpSerializer.translateInput(userName),
+						
+					issueNo,
+						
+					ClpSerializer.translateInput(title),
+						
+					ClpSerializer.translateInput(description),
+						
+					issueMonth,
+						
+					issueYear,
+						
+					ClpSerializer.translateInput(byline)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.training.newsletter.model.Issue)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.training.newsletter.model.Issue updateIssue(
+		long issueId, long groupId, long companyId, long userId,
+		java.lang.String userName, int issueNo, java.lang.String title,
+		java.lang.String description, int issueMonth, int issueYear,
+		java.lang.String byline) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
+					new Object[] {
+						issueId,
+						
+					groupId,
+						
+					companyId,
+						
+					userId,
+						
+					ClpSerializer.translateInput(userName),
+						
+					issueNo,
+						
+					ClpSerializer.translateInput(title),
+						
+					ClpSerializer.translateInput(description),
+						
+					issueMonth,
+						
+					issueYear,
+						
+					ClpSerializer.translateInput(byline)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.training.newsletter.model.Issue)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -698,4 +816,8 @@ public class IssueLocalServiceClp implements IssueLocalService {
 	private String[] _methodParameterTypes16;
 	private String _methodName17;
 	private String[] _methodParameterTypes17;
+	private String _methodName19;
+	private String[] _methodParameterTypes19;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
 }

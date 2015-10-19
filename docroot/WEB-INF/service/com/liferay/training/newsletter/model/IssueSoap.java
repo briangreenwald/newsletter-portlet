@@ -37,6 +37,7 @@ public class IssueSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setIssueNo(model.getIssueNo());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setIssueMonth(model.getIssueMonth());
@@ -86,19 +87,19 @@ public class IssueSoap implements Serializable {
 	public IssueSoap() {
 	}
 
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _issueId;
 	}
 
-	public void setPrimaryKey(int pk) {
+	public void setPrimaryKey(long pk) {
 		setIssueId(pk);
 	}
 
-	public int getIssueId() {
+	public long getIssueId() {
 		return _issueId;
 	}
 
-	public void setIssueId(int issueId) {
+	public void setIssueId(long issueId) {
 		_issueId = issueId;
 	}
 
@@ -150,6 +151,14 @@ public class IssueSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public int getIssueNo() {
+		return _issueNo;
+	}
+
+	public void setIssueNo(int issueNo) {
+		_issueNo = issueNo;
+	}
+
 	public String getTitle() {
 		return _title;
 	}
@@ -190,13 +199,14 @@ public class IssueSoap implements Serializable {
 		_byline = byline;
 	}
 
-	private int _issueId;
+	private long _issueId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private int _issueNo;
 	private String _title;
 	private String _description;
 	private int _issueMonth;

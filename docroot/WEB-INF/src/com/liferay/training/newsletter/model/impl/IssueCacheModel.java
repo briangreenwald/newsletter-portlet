@@ -37,7 +37,7 @@ import java.util.Date;
 public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{issueId=");
 		sb.append(issueId);
@@ -53,6 +53,8 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", issueNo=");
+		sb.append(issueNo);
 		sb.append(", title=");
 		sb.append(title);
 		sb.append(", description=");
@@ -98,6 +100,8 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 			issueImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		issueImpl.setIssueNo(issueNo);
+
 		if (title == null) {
 			issueImpl.setTitle(StringPool.BLANK);
 		}
@@ -129,13 +133,14 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		issueId = objectInput.readInt();
+		issueId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		issueNo = objectInput.readInt();
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
 		issueMonth = objectInput.readInt();
@@ -146,7 +151,7 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeInt(issueId);
+		objectOutput.writeLong(issueId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
@@ -160,6 +165,7 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+		objectOutput.writeInt(issueNo);
 
 		if (title == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -186,13 +192,14 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 		}
 	}
 
-	public int issueId;
+	public long issueId;
 	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public int issueNo;
 	public String title;
 	public String description;
 	public int issueMonth;

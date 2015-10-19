@@ -64,7 +64,7 @@ public interface IssueLocalService extends BaseLocalService,
 	* @param issueId the primary key for the new issue
 	* @return the new issue
 	*/
-	public com.liferay.training.newsletter.model.Issue createIssue(int issueId);
+	public com.liferay.training.newsletter.model.Issue createIssue(long issueId);
 
 	/**
 	* Deletes the issue with the primary key from the database. Also notifies the appropriate model listeners.
@@ -75,7 +75,7 @@ public interface IssueLocalService extends BaseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.training.newsletter.model.Issue deleteIssue(int issueId)
+	public com.liferay.training.newsletter.model.Issue deleteIssue(long issueId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -169,7 +169,7 @@ public interface IssueLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.training.newsletter.model.Issue fetchIssue(int issueId)
+	public com.liferay.training.newsletter.model.Issue fetchIssue(long issueId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -181,7 +181,7 @@ public interface IssueLocalService extends BaseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.training.newsletter.model.Issue getIssue(int issueId)
+	public com.liferay.training.newsletter.model.Issue getIssue(long issueId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -249,4 +249,16 @@ public interface IssueLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public com.liferay.training.newsletter.model.Issue addIssue(long groupId,
+		long companyId, long userId, java.lang.String userName, int issueNo,
+		java.lang.String title, java.lang.String description, int issueMonth,
+		int issueYear, java.lang.String byline)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.training.newsletter.model.Issue updateIssue(
+		long issueId, long groupId, long companyId, long userId,
+		java.lang.String userName, int issueNo, java.lang.String title,
+		java.lang.String description, int issueMonth, int issueYear,
+		java.lang.String byline);
 }

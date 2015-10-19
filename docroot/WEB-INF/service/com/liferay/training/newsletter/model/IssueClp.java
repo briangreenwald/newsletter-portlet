@@ -52,12 +52,12 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 	}
 
 	@Override
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _issueId;
 	}
 
 	@Override
-	public void setPrimaryKey(int primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		setIssueId(primaryKey);
 	}
 
@@ -68,7 +68,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Integer)primaryKeyObj).intValue());
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
 	@Override
@@ -82,6 +82,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("issueNo", getIssueNo());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("issueMonth", getIssueMonth());
@@ -93,7 +94,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Integer issueId = (Integer)attributes.get("issueId");
+		Long issueId = (Long)attributes.get("issueId");
 
 		if (issueId != null) {
 			setIssueId(issueId);
@@ -135,6 +136,12 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 			setModifiedDate(modifiedDate);
 		}
 
+		Integer issueNo = (Integer)attributes.get("issueNo");
+
+		if (issueNo != null) {
+			setIssueNo(issueNo);
+		}
+
 		String title = (String)attributes.get("title");
 
 		if (title != null) {
@@ -167,19 +174,19 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 	}
 
 	@Override
-	public int getIssueId() {
+	public long getIssueId() {
 		return _issueId;
 	}
 
 	@Override
-	public void setIssueId(int issueId) {
+	public void setIssueId(long issueId) {
 		_issueId = issueId;
 
 		if (_issueRemoteModel != null) {
 			try {
 				Class<?> clazz = _issueRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setIssueId", int.class);
+				Method method = clazz.getMethod("setIssueId", long.class);
 
 				method.invoke(_issueRemoteModel, issueId);
 			}
@@ -330,6 +337,29 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 				Method method = clazz.getMethod("setModifiedDate", Date.class);
 
 				method.invoke(_issueRemoteModel, modifiedDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public int getIssueNo() {
+		return _issueNo;
+	}
+
+	@Override
+	public void setIssueNo(int issueNo) {
+		_issueNo = issueNo;
+
+		if (_issueRemoteModel != null) {
+			try {
+				Class<?> clazz = _issueRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setIssueNo", int.class);
+
+				method.invoke(_issueRemoteModel, issueNo);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -528,6 +558,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 		clone.setUserName(getUserName());
 		clone.setCreateDate(getCreateDate());
 		clone.setModifiedDate(getModifiedDate());
+		clone.setIssueNo(getIssueNo());
 		clone.setTitle(getTitle());
 		clone.setDescription(getDescription());
 		clone.setIssueMonth(getIssueMonth());
@@ -564,7 +595,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 
 		IssueClp issue = (IssueClp)obj;
 
-		int primaryKey = issue.getPrimaryKey();
+		long primaryKey = issue.getPrimaryKey();
 
 		if (getPrimaryKey() == primaryKey) {
 			return true;
@@ -580,12 +611,12 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 
 	@Override
 	public int hashCode() {
-		return getPrimaryKey();
+		return (int)getPrimaryKey();
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{issueId=");
 		sb.append(getIssueId());
@@ -601,6 +632,8 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", issueNo=");
+		sb.append(getIssueNo());
 		sb.append(", title=");
 		sb.append(getTitle());
 		sb.append(", description=");
@@ -618,7 +651,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.training.newsletter.model.Issue");
@@ -653,6 +686,10 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>issueNo</column-name><column-value><![CDATA[");
+		sb.append(getIssueNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>title</column-name><column-value><![CDATA[");
 		sb.append(getTitle());
 		sb.append("]]></column-value></column>");
@@ -678,7 +715,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 		return sb.toString();
 	}
 
-	private int _issueId;
+	private long _issueId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
@@ -686,6 +723,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private int _issueNo;
 	private String _title;
 	private String _description;
 	private int _issueMonth;

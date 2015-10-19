@@ -59,7 +59,7 @@ public class IssueLocalServiceUtil {
 	* @return the new issue
 	*/
 	public static com.liferay.training.newsletter.model.Issue createIssue(
-		int issueId) {
+		long issueId) {
 		return getService().createIssue(issueId);
 	}
 
@@ -72,7 +72,7 @@ public class IssueLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.training.newsletter.model.Issue deleteIssue(
-		int issueId)
+		long issueId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().deleteIssue(issueId);
@@ -182,7 +182,8 @@ public class IssueLocalServiceUtil {
 	}
 
 	public static com.liferay.training.newsletter.model.Issue fetchIssue(
-		int issueId) throws com.liferay.portal.kernel.exception.SystemException {
+		long issueId)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchIssue(issueId);
 	}
 
@@ -195,7 +196,7 @@ public class IssueLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.training.newsletter.model.Issue getIssue(
-		int issueId)
+		long issueId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getIssue(issueId);
@@ -272,6 +273,26 @@ public class IssueLocalServiceUtil {
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
 		return getService().invokeMethod(name, parameterTypes, arguments);
+	}
+
+	public static com.liferay.training.newsletter.model.Issue addIssue(
+		long groupId, long companyId, long userId, java.lang.String userName,
+		int issueNo, java.lang.String title, java.lang.String description,
+		int issueMonth, int issueYear, java.lang.String byline)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addIssue(groupId, companyId, userId, userName, issueNo,
+			title, description, issueMonth, issueYear, byline);
+	}
+
+	public static com.liferay.training.newsletter.model.Issue updateIssue(
+		long issueId, long groupId, long companyId, long userId,
+		java.lang.String userName, int issueNo, java.lang.String title,
+		java.lang.String description, int issueMonth, int issueYear,
+		java.lang.String byline) {
+		return getService()
+				   .updateIssue(issueId, groupId, companyId, userId, userName,
+			issueNo, title, description, issueMonth, issueYear, byline);
 	}
 
 	public static void clearService() {

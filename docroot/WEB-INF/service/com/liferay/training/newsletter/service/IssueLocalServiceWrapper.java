@@ -50,7 +50,7 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 	* @return the new issue
 	*/
 	@Override
-	public com.liferay.training.newsletter.model.Issue createIssue(int issueId) {
+	public com.liferay.training.newsletter.model.Issue createIssue(long issueId) {
 		return _issueLocalService.createIssue(issueId);
 	}
 
@@ -63,7 +63,7 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public com.liferay.training.newsletter.model.Issue deleteIssue(int issueId)
+	public com.liferay.training.newsletter.model.Issue deleteIssue(long issueId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _issueLocalService.deleteIssue(issueId);
@@ -180,7 +180,7 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 	}
 
 	@Override
-	public com.liferay.training.newsletter.model.Issue fetchIssue(int issueId)
+	public com.liferay.training.newsletter.model.Issue fetchIssue(long issueId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _issueLocalService.fetchIssue(issueId);
 	}
@@ -194,7 +194,7 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public com.liferay.training.newsletter.model.Issue getIssue(int issueId)
+	public com.liferay.training.newsletter.model.Issue getIssue(long issueId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _issueLocalService.getIssue(issueId);
@@ -278,6 +278,27 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
 		return _issueLocalService.invokeMethod(name, parameterTypes, arguments);
+	}
+
+	@Override
+	public com.liferay.training.newsletter.model.Issue addIssue(long groupId,
+		long companyId, long userId, java.lang.String userName, int issueNo,
+		java.lang.String title, java.lang.String description, int issueMonth,
+		int issueYear, java.lang.String byline)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _issueLocalService.addIssue(groupId, companyId, userId,
+			userName, issueNo, title, description, issueMonth, issueYear, byline);
+	}
+
+	@Override
+	public com.liferay.training.newsletter.model.Issue updateIssue(
+		long issueId, long groupId, long companyId, long userId,
+		java.lang.String userName, int issueNo, java.lang.String title,
+		java.lang.String description, int issueMonth, int issueYear,
+		java.lang.String byline) {
+		return _issueLocalService.updateIssue(issueId, groupId, companyId,
+			userId, userName, issueNo, title, description, issueMonth,
+			issueYear, byline);
 	}
 
 	/**

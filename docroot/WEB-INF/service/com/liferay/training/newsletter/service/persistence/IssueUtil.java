@@ -255,7 +255,7 @@ public class IssueUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.training.newsletter.model.Issue[] findByMonthAndYear_PrevAndNext(
-		int issueId, int issueMonth, int issueYear,
+		long issueId, int issueMonth, int issueYear,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchIssueException {
@@ -316,7 +316,7 @@ public class IssueUtil {
 	* @return the new issue
 	*/
 	public static com.liferay.training.newsletter.model.Issue create(
-		int issueId) {
+		long issueId) {
 		return getPersistence().create(issueId);
 	}
 
@@ -329,7 +329,7 @@ public class IssueUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.training.newsletter.model.Issue remove(
-		int issueId)
+		long issueId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchIssueException {
 		return getPersistence().remove(issueId);
@@ -350,7 +350,7 @@ public class IssueUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.training.newsletter.model.Issue findByPrimaryKey(
-		int issueId)
+		long issueId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchIssueException {
 		return getPersistence().findByPrimaryKey(issueId);
@@ -364,7 +364,8 @@ public class IssueUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.training.newsletter.model.Issue fetchByPrimaryKey(
-		int issueId) throws com.liferay.portal.kernel.exception.SystemException {
+		long issueId)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByPrimaryKey(issueId);
 	}
 

@@ -397,7 +397,7 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Issue[] findByMonthAndYear_PrevAndNext(int issueId, int issueMonth,
+	public Issue[] findByMonthAndYear_PrevAndNext(long issueId, int issueMonth,
 		int issueYear, OrderByComparator orderByComparator)
 		throws NoSuchIssueException, SystemException {
 		Issue issue = findByPrimaryKey(issueId);
@@ -703,7 +703,7 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 	 * @return the new issue
 	 */
 	@Override
-	public Issue create(int issueId) {
+	public Issue create(long issueId) {
 		Issue issue = new IssueImpl();
 
 		issue.setNew(true);
@@ -721,7 +721,7 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Issue remove(int issueId)
+	public Issue remove(long issueId)
 		throws NoSuchIssueException, SystemException {
 		return remove((Serializable)issueId);
 	}
@@ -882,6 +882,7 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 		issueImpl.setUserName(issue.getUserName());
 		issueImpl.setCreateDate(issue.getCreateDate());
 		issueImpl.setModifiedDate(issue.getModifiedDate());
+		issueImpl.setIssueNo(issue.getIssueNo());
 		issueImpl.setTitle(issue.getTitle());
 		issueImpl.setDescription(issue.getDescription());
 		issueImpl.setIssueMonth(issue.getIssueMonth());
@@ -925,7 +926,7 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Issue findByPrimaryKey(int issueId)
+	public Issue findByPrimaryKey(long issueId)
 		throws NoSuchIssueException, SystemException {
 		return findByPrimaryKey((Serializable)issueId);
 	}
@@ -985,7 +986,7 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Issue fetchByPrimaryKey(int issueId) throws SystemException {
+	public Issue fetchByPrimaryKey(long issueId) throws SystemException {
 		return fetchByPrimaryKey((Serializable)issueId);
 	}
 

@@ -52,28 +52,28 @@ public interface IssueModel extends BaseModel<Issue>, GroupedModel {
 	 *
 	 * @return the primary key of this issue
 	 */
-	public int getPrimaryKey();
+	public long getPrimaryKey();
 
 	/**
 	 * Sets the primary key of this issue.
 	 *
 	 * @param primaryKey the primary key of this issue
 	 */
-	public void setPrimaryKey(int primaryKey);
+	public void setPrimaryKey(long primaryKey);
 
 	/**
 	 * Returns the issue ID of this issue.
 	 *
 	 * @return the issue ID of this issue
 	 */
-	public int getIssueId();
+	public long getIssueId();
 
 	/**
 	 * Sets the issue ID of this issue.
 	 *
 	 * @param issueId the issue ID of this issue
 	 */
-	public void setIssueId(int issueId);
+	public void setIssueId(long issueId);
 
 	/**
 	 * Returns the group ID of this issue.
@@ -188,6 +188,20 @@ public interface IssueModel extends BaseModel<Issue>, GroupedModel {
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
+
+	/**
+	 * Returns the issue no of this issue.
+	 *
+	 * @return the issue no of this issue
+	 */
+	public int getIssueNo();
+
+	/**
+	 * Sets the issue no of this issue.
+	 *
+	 * @param issueNo the issue no of this issue
+	 */
+	public void setIssueNo(int issueNo);
 
 	/**
 	 * Returns the title of this issue.

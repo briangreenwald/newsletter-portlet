@@ -23,7 +23,11 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
+
+import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.training.newsletter.model.Issue;
 import com.liferay.training.newsletter.model.IssueModel;
@@ -57,20 +61,21 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	 */
 	public static final String TABLE_NAME = "newsletter_Issue";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "issueId", Types.INTEGER },
+			{ "issueId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
+			{ "issueNo", Types.INTEGER },
 			{ "title", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "issueMonth", Types.INTEGER },
 			{ "issueYear", Types.INTEGER },
 			{ "byline", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table newsletter_Issue (issueId INTEGER not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,description VARCHAR(75) null,issueMonth INTEGER,issueYear INTEGER,byline VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table newsletter_Issue (issueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,description VARCHAR(75) null,issueMonth INTEGER,issueYear INTEGER,byline VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table newsletter_Issue";
 	public static final String ORDER_BY_JPQL = " ORDER BY issue.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY newsletter_Issue.createDate DESC";
@@ -96,12 +101,12 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	}
 
 	@Override
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _issueId;
 	}
 
 	@Override
-	public void setPrimaryKey(int primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		setIssueId(primaryKey);
 	}
 
@@ -112,7 +117,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Integer)primaryKeyObj).intValue());
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
 	@Override
@@ -136,6 +141,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("issueNo", getIssueNo());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("issueMonth", getIssueMonth());
@@ -147,7 +153,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Integer issueId = (Integer)attributes.get("issueId");
+		Long issueId = (Long)attributes.get("issueId");
 
 		if (issueId != null) {
 			setIssueId(issueId);
@@ -189,6 +195,12 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 			setModifiedDate(modifiedDate);
 		}
 
+		Integer issueNo = (Integer)attributes.get("issueNo");
+
+		if (issueNo != null) {
+			setIssueNo(issueNo);
+		}
+
 		String title = (String)attributes.get("title");
 
 		if (title != null) {
@@ -221,12 +233,12 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	}
 
 	@Override
-	public int getIssueId() {
+	public long getIssueId() {
 		return _issueId;
 	}
 
 	@Override
-	public void setIssueId(int issueId) {
+	public void setIssueId(long issueId) {
 		_issueId = issueId;
 	}
 
@@ -305,6 +317,16 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+	}
+
+	@Override
+	public int getIssueNo() {
+		return _issueNo;
+	}
+
+	@Override
+	public void setIssueNo(int issueNo) {
+		_issueNo = issueNo;
 	}
 
 	@Override
@@ -401,6 +423,19 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	}
 
 	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			Issue.class.getName(), getPrimaryKey());
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
 	public Issue toEscapedModel() {
 		if (_escapedModel == null) {
 			_escapedModel = (Issue)ProxyUtil.newProxyInstance(_classLoader,
@@ -421,6 +456,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		issueImpl.setUserName(getUserName());
 		issueImpl.setCreateDate(getCreateDate());
 		issueImpl.setModifiedDate(getModifiedDate());
+		issueImpl.setIssueNo(getIssueNo());
 		issueImpl.setTitle(getTitle());
 		issueImpl.setDescription(getDescription());
 		issueImpl.setIssueMonth(getIssueMonth());
@@ -459,7 +495,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 		Issue issue = (Issue)obj;
 
-		int primaryKey = issue.getPrimaryKey();
+		long primaryKey = issue.getPrimaryKey();
 
 		if (getPrimaryKey() == primaryKey) {
 			return true;
@@ -471,7 +507,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public int hashCode() {
-		return getPrimaryKey();
+		return (int)getPrimaryKey();
 	}
 
 	@Override
@@ -527,6 +563,8 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 			issueCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		issueCacheModel.issueNo = getIssueNo();
+
 		issueCacheModel.title = getTitle();
 
 		String title = issueCacheModel.title;
@@ -560,7 +598,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{issueId=");
 		sb.append(getIssueId());
@@ -576,6 +614,8 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", issueNo=");
+		sb.append(getIssueNo());
 		sb.append(", title=");
 		sb.append(getTitle());
 		sb.append(", description=");
@@ -593,7 +633,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.training.newsletter.model.Issue");
@@ -628,6 +668,10 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>issueNo</column-name><column-value><![CDATA[");
+		sb.append(getIssueNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>title</column-name><column-value><![CDATA[");
 		sb.append(getTitle());
 		sb.append("]]></column-value></column>");
@@ -655,7 +699,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	private static ClassLoader _classLoader = Issue.class.getClassLoader();
 	private static Class<?>[] _escapedModelInterfaces = new Class[] { Issue.class };
-	private int _issueId;
+	private long _issueId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
@@ -663,6 +707,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private int _issueNo;
 	private String _title;
 	private String _description;
 	private int _issueMonth;

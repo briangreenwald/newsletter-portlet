@@ -15,13 +15,14 @@ create table newsletter_Article (
 );
 
 create table newsletter_Issue (
-	issueId INTEGER not null primary key,
+	issueId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	issueNo INTEGER,
 	title VARCHAR(75) null,
 	description VARCHAR(75) null,
 	issueMonth INTEGER,

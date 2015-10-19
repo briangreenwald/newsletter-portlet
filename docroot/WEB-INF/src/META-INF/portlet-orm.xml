@@ -47,6 +47,7 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="issueNo" />
 			<basic name="title" />
 			<basic name="description" />
 			<basic name="issueMonth" />

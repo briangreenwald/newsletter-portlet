@@ -17,13 +17,14 @@
 		<field name="content" type="String" />
 	</model>
 	<model name="com.liferay.training.newsletter.model.Issue">
-		<field name="issueId" type="int" />
+		<field name="issueId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="issueNo" type="int" />
 		<field name="title" type="String" />
 		<field name="description" type="String" />
 		<field name="issueMonth" type="int" />

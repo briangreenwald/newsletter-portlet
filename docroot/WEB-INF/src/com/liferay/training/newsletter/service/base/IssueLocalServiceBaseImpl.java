@@ -84,7 +84,7 @@ public abstract class IssueLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the new issue
 	 */
 	@Override
-	public Issue createIssue(int issueId) {
+	public Issue createIssue(long issueId) {
 		return issuePersistence.create(issueId);
 	}
 
@@ -98,7 +98,7 @@ public abstract class IssueLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Issue deleteIssue(int issueId)
+	public Issue deleteIssue(long issueId)
 		throws PortalException, SystemException {
 		return issuePersistence.remove(issueId);
 	}
@@ -208,7 +208,7 @@ public abstract class IssueLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@Override
-	public Issue fetchIssue(int issueId) throws SystemException {
+	public Issue fetchIssue(long issueId) throws SystemException {
 		return issuePersistence.fetchByPrimaryKey(issueId);
 	}
 
@@ -221,7 +221,7 @@ public abstract class IssueLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Issue getIssue(int issueId) throws PortalException, SystemException {
+	public Issue getIssue(long issueId) throws PortalException, SystemException {
 		return issuePersistence.findByPrimaryKey(issueId);
 	}
 

@@ -56,6 +56,7 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("issueNo", getIssueNo());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("issueMonth", getIssueMonth());
@@ -67,7 +68,7 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Integer issueId = (Integer)attributes.get("issueId");
+		Long issueId = (Long)attributes.get("issueId");
 
 		if (issueId != null) {
 			setIssueId(issueId);
@@ -109,6 +110,12 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 			setModifiedDate(modifiedDate);
 		}
 
+		Integer issueNo = (Integer)attributes.get("issueNo");
+
+		if (issueNo != null) {
+			setIssueNo(issueNo);
+		}
+
 		String title = (String)attributes.get("title");
 
 		if (title != null) {
@@ -146,7 +153,7 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 	* @return the primary key of this issue
 	*/
 	@Override
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _issue.getPrimaryKey();
 	}
 
@@ -156,7 +163,7 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 	* @param primaryKey the primary key of this issue
 	*/
 	@Override
-	public void setPrimaryKey(int primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		_issue.setPrimaryKey(primaryKey);
 	}
 
@@ -166,7 +173,7 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 	* @return the issue ID of this issue
 	*/
 	@Override
-	public int getIssueId() {
+	public long getIssueId() {
 		return _issue.getIssueId();
 	}
 
@@ -176,7 +183,7 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 	* @param issueId the issue ID of this issue
 	*/
 	@Override
-	public void setIssueId(int issueId) {
+	public void setIssueId(long issueId) {
 		_issue.setIssueId(issueId);
 	}
 
@@ -320,6 +327,26 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 	@Override
 	public void setModifiedDate(java.util.Date modifiedDate) {
 		_issue.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Returns the issue no of this issue.
+	*
+	* @return the issue no of this issue
+	*/
+	@Override
+	public int getIssueNo() {
+		return _issue.getIssueNo();
+	}
+
+	/**
+	* Sets the issue no of this issue.
+	*
+	* @param issueNo the issue no of this issue
+	*/
+	@Override
+	public void setIssueNo(int issueNo) {
+		_issue.setIssueNo(issueNo);
 	}
 
 	/**

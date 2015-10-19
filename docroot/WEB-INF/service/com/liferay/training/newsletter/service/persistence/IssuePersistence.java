@@ -159,7 +159,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.training.newsletter.model.Issue[] findByMonthAndYear_PrevAndNext(
-		int issueId, int issueMonth, int issueYear,
+		long issueId, int issueMonth, int issueYear,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchIssueException;
@@ -206,7 +206,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @param issueId the primary key for the new issue
 	* @return the new issue
 	*/
-	public com.liferay.training.newsletter.model.Issue create(int issueId);
+	public com.liferay.training.newsletter.model.Issue create(long issueId);
 
 	/**
 	* Removes the issue with the primary key from the database. Also notifies the appropriate model listeners.
@@ -216,7 +216,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @throws com.liferay.training.newsletter.NoSuchIssueException if a issue with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.training.newsletter.model.Issue remove(int issueId)
+	public com.liferay.training.newsletter.model.Issue remove(long issueId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchIssueException;
 
@@ -233,7 +233,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.training.newsletter.model.Issue findByPrimaryKey(
-		int issueId)
+		long issueId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchIssueException;
 
@@ -245,7 +245,8 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.training.newsletter.model.Issue fetchByPrimaryKey(
-		int issueId) throws com.liferay.portal.kernel.exception.SystemException;
+		long issueId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns all the issues.
