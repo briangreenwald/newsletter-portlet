@@ -23,6 +23,7 @@ import com.liferay.training.newsletter.service.IssueLocalServiceUtil;
 import com.liferay.training.newsletter.service.base.ArticleLocalServiceBaseImpl;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * The implementation of the article local service.
@@ -111,6 +112,11 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		throws NoSuchArticleException, SystemException {
 		
 		return articlePersistence.findByJournalArticleId(journalArticleId);
+	}
+	
+	public List<Article> getArticlesByIssueNo(int issueNo) throws SystemException {
+		
+		return articlePersistence.findByIssueNo(issueNo);
 	}
 	
 }
