@@ -289,7 +289,9 @@ public class IssueLocalServiceUtil {
 		long issueId, long groupId, long companyId, long userId,
 		java.lang.String userName, int issueNo, java.lang.String title,
 		java.lang.String description, int issueMonth, int issueYear,
-		java.lang.String byline) {
+		java.lang.String byline)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateIssue(issueId, groupId, companyId, userId, userName,
 			issueNo, title, description, issueMonth, issueYear, byline);
