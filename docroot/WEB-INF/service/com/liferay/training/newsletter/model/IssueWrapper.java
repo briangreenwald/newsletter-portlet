@@ -59,6 +59,7 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 		attributes.put("issueNo", getIssueNo());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
+		attributes.put("issueDate", getIssueDate());
 		attributes.put("issueMonth", getIssueMonth());
 		attributes.put("issueYear", getIssueYear());
 		attributes.put("byline", getByline());
@@ -126,6 +127,12 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Date issueDate = (Date)attributes.get("issueDate");
+
+		if (issueDate != null) {
+			setIssueDate(issueDate);
 		}
 
 		Integer issueMonth = (Integer)attributes.get("issueMonth");
@@ -387,6 +394,26 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 	@Override
 	public void setDescription(java.lang.String description) {
 		_issue.setDescription(description);
+	}
+
+	/**
+	* Returns the issue date of this issue.
+	*
+	* @return the issue date of this issue
+	*/
+	@Override
+	public java.util.Date getIssueDate() {
+		return _issue.getIssueDate();
+	}
+
+	/**
+	* Sets the issue date of this issue.
+	*
+	* @param issueDate the issue date of this issue
+	*/
+	@Override
+	public void setIssueDate(java.util.Date issueDate) {
+		_issue.setIssueDate(issueDate);
 	}
 
 	/**

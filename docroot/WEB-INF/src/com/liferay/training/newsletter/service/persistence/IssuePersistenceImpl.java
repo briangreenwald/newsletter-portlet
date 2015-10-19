@@ -885,6 +885,7 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 		issueImpl.setIssueNo(issue.getIssueNo());
 		issueImpl.setTitle(issue.getTitle());
 		issueImpl.setDescription(issue.getDescription());
+		issueImpl.setIssueDate(issue.getIssueDate());
 		issueImpl.setIssueMonth(issue.getIssueMonth());
 		issueImpl.setIssueYear(issue.getIssueYear());
 		issueImpl.setByline(issue.getByline());

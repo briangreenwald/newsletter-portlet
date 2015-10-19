@@ -71,11 +71,12 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 			{ "issueNo", Types.INTEGER },
 			{ "title", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
+			{ "issueDate", Types.TIMESTAMP },
 			{ "issueMonth", Types.INTEGER },
 			{ "issueYear", Types.INTEGER },
 			{ "byline", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table newsletter_Issue (issueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,description VARCHAR(75) null,issueMonth INTEGER,issueYear INTEGER,byline VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table newsletter_Issue (issueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,description VARCHAR(75) null,issueDate DATE null,issueMonth INTEGER,issueYear INTEGER,byline VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table newsletter_Issue";
 	public static final String ORDER_BY_JPQL = " ORDER BY issue.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY newsletter_Issue.createDate DESC";
@@ -144,6 +145,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		attributes.put("issueNo", getIssueNo());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
+		attributes.put("issueDate", getIssueDate());
 		attributes.put("issueMonth", getIssueMonth());
 		attributes.put("issueYear", getIssueYear());
 		attributes.put("byline", getByline());
@@ -211,6 +213,12 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Date issueDate = (Date)attributes.get("issueDate");
+
+		if (issueDate != null) {
+			setIssueDate(issueDate);
 		}
 
 		Integer issueMonth = (Integer)attributes.get("issueMonth");
@@ -360,6 +368,16 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	}
 
 	@Override
+	public Date getIssueDate() {
+		return _issueDate;
+	}
+
+	@Override
+	public void setIssueDate(Date issueDate) {
+		_issueDate = issueDate;
+	}
+
+	@Override
 	public int getIssueMonth() {
 		return _issueMonth;
 	}
@@ -459,6 +477,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		issueImpl.setIssueNo(getIssueNo());
 		issueImpl.setTitle(getTitle());
 		issueImpl.setDescription(getDescription());
+		issueImpl.setIssueDate(getIssueDate());
 		issueImpl.setIssueMonth(getIssueMonth());
 		issueImpl.setIssueYear(getIssueYear());
 		issueImpl.setByline(getByline());
@@ -581,6 +600,15 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 			issueCacheModel.description = null;
 		}
 
+		Date issueDate = getIssueDate();
+
+		if (issueDate != null) {
+			issueCacheModel.issueDate = issueDate.getTime();
+		}
+		else {
+			issueCacheModel.issueDate = Long.MIN_VALUE;
+		}
+
 		issueCacheModel.issueMonth = getIssueMonth();
 
 		issueCacheModel.issueYear = getIssueYear();
@@ -598,7 +626,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{issueId=");
 		sb.append(getIssueId());
@@ -620,6 +648,8 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		sb.append(getTitle());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", issueDate=");
+		sb.append(getIssueDate());
 		sb.append(", issueMonth=");
 		sb.append(getIssueMonth());
 		sb.append(", issueYear=");
@@ -633,7 +663,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.training.newsletter.model.Issue");
@@ -680,6 +710,10 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>issueDate</column-name><column-value><![CDATA[");
+		sb.append(getIssueDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>issueMonth</column-name><column-value><![CDATA[");
 		sb.append(getIssueMonth());
 		sb.append("]]></column-value></column>");
@@ -710,6 +744,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	private int _issueNo;
 	private String _title;
 	private String _description;
+	private Date _issueDate;
 	private int _issueMonth;
 	private int _originalIssueMonth;
 	private boolean _setOriginalIssueMonth;

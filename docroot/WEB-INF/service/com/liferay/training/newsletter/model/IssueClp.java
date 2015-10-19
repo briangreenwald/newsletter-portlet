@@ -85,6 +85,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 		attributes.put("issueNo", getIssueNo());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
+		attributes.put("issueDate", getIssueDate());
 		attributes.put("issueMonth", getIssueMonth());
 		attributes.put("issueYear", getIssueYear());
 		attributes.put("byline", getByline());
@@ -152,6 +153,12 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Date issueDate = (Date)attributes.get("issueDate");
+
+		if (issueDate != null) {
+			setIssueDate(issueDate);
 		}
 
 		Integer issueMonth = (Integer)attributes.get("issueMonth");
@@ -414,6 +421,29 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 	}
 
 	@Override
+	public Date getIssueDate() {
+		return _issueDate;
+	}
+
+	@Override
+	public void setIssueDate(Date issueDate) {
+		_issueDate = issueDate;
+
+		if (_issueRemoteModel != null) {
+			try {
+				Class<?> clazz = _issueRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setIssueDate", Date.class);
+
+				method.invoke(_issueRemoteModel, issueDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
 	public int getIssueMonth() {
 		return _issueMonth;
 	}
@@ -561,6 +591,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 		clone.setIssueNo(getIssueNo());
 		clone.setTitle(getTitle());
 		clone.setDescription(getDescription());
+		clone.setIssueDate(getIssueDate());
 		clone.setIssueMonth(getIssueMonth());
 		clone.setIssueYear(getIssueYear());
 		clone.setByline(getByline());
@@ -616,7 +647,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{issueId=");
 		sb.append(getIssueId());
@@ -638,6 +669,8 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 		sb.append(getTitle());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", issueDate=");
+		sb.append(getIssueDate());
 		sb.append(", issueMonth=");
 		sb.append(getIssueMonth());
 		sb.append(", issueYear=");
@@ -651,7 +684,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.training.newsletter.model.Issue");
@@ -698,6 +731,10 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>issueDate</column-name><column-value><![CDATA[");
+		sb.append(getIssueDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>issueMonth</column-name><column-value><![CDATA[");
 		sb.append(getIssueMonth());
 		sb.append("]]></column-value></column>");
@@ -726,6 +763,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 	private int _issueNo;
 	private String _title;
 	private String _description;
+	private Date _issueDate;
 	private int _issueMonth;
 	private int _issueYear;
 	private String _byline;

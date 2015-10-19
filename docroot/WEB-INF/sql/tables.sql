@@ -25,6 +25,7 @@ create table newsletter_Issue (
 	issueNo INTEGER,
 	title VARCHAR(75) null,
 	description VARCHAR(75) null,
+	issueDate DATE null,
 	issueMonth INTEGER,
 	issueYear INTEGER,
 	byline VARCHAR(75) null

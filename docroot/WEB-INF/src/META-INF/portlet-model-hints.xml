@@ -27,6 +27,7 @@
 		<field name="issueNo" type="int" />
 		<field name="title" type="String" />
 		<field name="description" type="String" />
+		<field name="issueDate" type="Date" />
 		<field name="issueMonth" type="int" />
 		<field name="issueYear" type="int" />
 		<field name="byline" type="String" />

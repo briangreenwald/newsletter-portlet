@@ -118,7 +118,7 @@ public class IssueLocalServiceClp implements IssueLocalService {
 
 		_methodParameterTypes19 = new String[] {
 				"long", "long", "long", "java.lang.String", "int",
-				"java.lang.String", "java.lang.String", "int", "int",
+				"java.lang.String", "java.lang.String", "java.util.Date",
 				"java.lang.String"
 			};
 
@@ -126,7 +126,7 @@ public class IssueLocalServiceClp implements IssueLocalService {
 
 		_methodParameterTypes20 = new String[] {
 				"long", "long", "long", "long", "java.lang.String", "int",
-				"java.lang.String", "java.lang.String", "int", "int",
+				"java.lang.String", "java.lang.String", "java.util.Date",
 				"java.lang.String"
 			};
 	}
@@ -680,8 +680,8 @@ public class IssueLocalServiceClp implements IssueLocalService {
 	@Override
 	public com.liferay.training.newsletter.model.Issue addIssue(long groupId,
 		long companyId, long userId, java.lang.String userName, int issueNo,
-		java.lang.String title, java.lang.String description, int issueMonth,
-		int issueYear, java.lang.String byline)
+		java.lang.String title, java.lang.String description,
+		java.util.Date issueDate, java.lang.String byline)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -703,9 +703,7 @@ public class IssueLocalServiceClp implements IssueLocalService {
 						
 					ClpSerializer.translateInput(description),
 						
-					issueMonth,
-						
-					issueYear,
+					ClpSerializer.translateInput(issueDate),
 						
 					ClpSerializer.translateInput(byline)
 					});
@@ -733,7 +731,7 @@ public class IssueLocalServiceClp implements IssueLocalService {
 	public com.liferay.training.newsletter.model.Issue updateIssue(
 		long issueId, long groupId, long companyId, long userId,
 		java.lang.String userName, int issueNo, java.lang.String title,
-		java.lang.String description, int issueMonth, int issueYear,
+		java.lang.String description, java.util.Date issueDate,
 		java.lang.String byline)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -759,9 +757,7 @@ public class IssueLocalServiceClp implements IssueLocalService {
 						
 					ClpSerializer.translateInput(description),
 						
-					issueMonth,
-						
-					issueYear,
+					ClpSerializer.translateInput(issueDate),
 						
 					ClpSerializer.translateInput(byline)
 					});

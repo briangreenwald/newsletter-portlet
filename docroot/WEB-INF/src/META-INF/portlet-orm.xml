@@ -50,6 +50,9 @@
 			<basic name="issueNo" />
 			<basic name="title" />
 			<basic name="description" />
+			<basic name="issueDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<basic name="issueMonth" />
 			<basic name="issueYear" />
 			<basic name="byline" />

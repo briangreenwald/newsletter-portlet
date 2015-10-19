@@ -40,6 +40,7 @@ public class IssueSoap implements Serializable {
 		soapModel.setIssueNo(model.getIssueNo());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setIssueDate(model.getIssueDate());
 		soapModel.setIssueMonth(model.getIssueMonth());
 		soapModel.setIssueYear(model.getIssueYear());
 		soapModel.setByline(model.getByline());
@@ -175,6 +176,14 @@ public class IssueSoap implements Serializable {
 		_description = description;
 	}
 
+	public Date getIssueDate() {
+		return _issueDate;
+	}
+
+	public void setIssueDate(Date issueDate) {
+		_issueDate = issueDate;
+	}
+
 	public int getIssueMonth() {
 		return _issueMonth;
 	}
@@ -209,6 +218,7 @@ public class IssueSoap implements Serializable {
 	private int _issueNo;
 	private String _title;
 	private String _description;
+	private Date _issueDate;
 	private int _issueMonth;
 	private int _issueYear;
 	private String _byline;

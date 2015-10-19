@@ -234,6 +234,20 @@ public interface IssueModel extends BaseModel<Issue>, GroupedModel {
 	public void setDescription(String description);
 
 	/**
+	 * Returns the issue date of this issue.
+	 *
+	 * @return the issue date of this issue
+	 */
+	public Date getIssueDate();
+
+	/**
+	 * Sets the issue date of this issue.
+	 *
+	 * @param issueDate the issue date of this issue
+	 */
+	public void setIssueDate(Date issueDate);
+
+	/**
 	 * Returns the issue month of this issue.
 	 *
 	 * @return the issue month of this issue

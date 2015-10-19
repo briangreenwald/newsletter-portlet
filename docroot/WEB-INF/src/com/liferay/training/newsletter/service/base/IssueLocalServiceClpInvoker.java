@@ -118,7 +118,7 @@ public class IssueLocalServiceClpInvoker {
 
 		_methodParameterTypes42 = new String[] {
 				"long", "long", "long", "java.lang.String", "int",
-				"java.lang.String", "java.lang.String", "int", "int",
+				"java.lang.String", "java.lang.String", "java.util.Date",
 				"java.lang.String"
 			};
 
@@ -126,7 +126,7 @@ public class IssueLocalServiceClpInvoker {
 
 		_methodParameterTypes43 = new String[] {
 				"long", "long", "long", "long", "java.lang.String", "int",
-				"java.lang.String", "java.lang.String", "int", "int",
+				"java.lang.String", "java.lang.String", "java.util.Date",
 				"java.lang.String"
 			};
 	}
@@ -240,9 +240,7 @@ public class IssueLocalServiceClpInvoker {
 				(java.lang.String)arguments[3],
 				((Integer)arguments[4]).intValue(),
 				(java.lang.String)arguments[5], (java.lang.String)arguments[6],
-				((Integer)arguments[7]).intValue(),
-				((Integer)arguments[8]).intValue(),
-				(java.lang.String)arguments[9]);
+				(java.util.Date)arguments[7], (java.lang.String)arguments[8]);
 		}
 
 		if (_methodName43.equals(name) &&
@@ -254,9 +252,7 @@ public class IssueLocalServiceClpInvoker {
 				(java.lang.String)arguments[4],
 				((Integer)arguments[5]).intValue(),
 				(java.lang.String)arguments[6], (java.lang.String)arguments[7],
-				((Integer)arguments[8]).intValue(),
-				((Integer)arguments[9]).intValue(),
-				(java.lang.String)arguments[10]);
+				(java.util.Date)arguments[8], (java.lang.String)arguments[9]);
 		}
 
 		throw new UnsupportedOperationException();
