@@ -45,24 +45,26 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	 */
 	
 	public Article addArticle(
-			long groupId, long companyId, long userId, String userName, 
-			int issueNo, String title, String author, int order, String content) 
+			long journalArticleId, long groupId, long companyId, long userId, 
+			String userName, int issueNo, String title, String author, 
+			int order, String content) 
 		throws SystemException, PortalException {
 
 		long articleId = counterLocalService.increment(Article.class.getName());
 		Article article = createArticle(articleId);
-
-		Date now = new Date();
+		article.setArticleId(articleId);
+		
 		Issue issue = IssueLocalServiceUtil.getIssueByIssueNo(issueNo);
 		long issueId = issue.getIssueId();
-		
-		article.setArticleId(articleId);
 		article.setIssueId(issueId);
+		
+		article.setJournalArticleId(journalArticleId);
 		article.setGroupId(groupId);
 		article.setCompanyId(companyId);
 		article.setUserId(userId);
 		article.setUserName(userName);
 
+		Date now = new Date();
 		article.setCreateDate(now);
 		article.setModifiedDate(now);
 
@@ -76,12 +78,12 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	}
 
 	public Article updateArticle(
-			long articleId, long groupId, long companyId, 
+			long journalArticleId, long groupId, long companyId, 
 			long userId, String userName, int issueNo, String title, 
 			String author, int order, String content)
 		throws SystemException, PortalException {
 
-		Article article = getArticle(articleId);
+		Article article = getArticleByJournalArticleId(journalArticleId);
 
 		Date now = new Date();
 		Issue issue = IssueLocalServiceUtil.getIssueByIssueNo(issueNo);
@@ -103,6 +105,12 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		article.setContent(content);
 
 		return super.updateArticle(article);
+	}
+	
+	public Article getArticleByJournalArticleId(long journalArticleId) 
+		throws NoSuchArticleException, SystemException {
+		
+		return articlePersistence.findByJournalArticleId(journalArticleId);
 	}
 	
 }

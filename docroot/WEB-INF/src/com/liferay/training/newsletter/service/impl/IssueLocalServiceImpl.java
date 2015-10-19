@@ -46,21 +46,21 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	 */
 
 	public Issue addIssue(
-			long groupId, long companyId, long userId, String userName,
-			int issueNo, String title, String description, Date issueDate, 
-			String byline)
+			long journalArticleId, long groupId, long companyId, long userId, 
+			String userName, int issueNo, String title, String description, 
+			Date issueDate, String byline)
 		throws SystemException {
 
 		long issueId = counterLocalService.increment(Issue.class.getName());
 		Issue issue = createIssue(issueId);
 
-		Date now = new Date();
-
+		issue.setJournalArticleId(journalArticleId);
 		issue.setGroupId(groupId);
 		issue.setCompanyId(companyId);
 		issue.setUserId(userId);
 		issue.setUserName(userName);
 		
+		Date now = new Date();
 		issue.setCreateDate(now);
 		issue.setModifiedDate(now);
 		
@@ -83,20 +83,19 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	}
 
 	public Issue updateIssue(
-			long issueId, long groupId, long companyId, long userId,
-			String userName, int issueNo, String title, String description,
-			Date issueDate, String byline)
+			long journalArticleId, long groupId, long companyId, 
+			long userId, String userName, int issueNo, String title, 
+			String description,	Date issueDate, String byline)
 		throws SystemException, PortalException {
 
-		Issue issue = getIssue(issueId);
-
-		Date now = new Date();
+		Issue issue = getIssueByJournalArticleId(journalArticleId);
 
 		issue.setGroupId(groupId);
 		issue.setCompanyId(companyId);
 		issue.setUserId(userId);
 		issue.setUserName(userName);
 		
+		Date now = new Date();
 		issue.setModifiedDate(now);
 		
 		issue.setIssueNo(issueNo);
@@ -112,6 +111,12 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		issue.setByline(byline);
 
 		return super.updateIssue(issue);
+	}
+	
+	public Issue getIssueByJournalArticleId(long journalArticleId) 
+		throws NoSuchIssueException, SystemException {
+		
+		return issuePersistence.findByJournalArticleId(journalArticleId);
 	}
 	
 	public Issue getIssueByIssueNo(int issueNo) 

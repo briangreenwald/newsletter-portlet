@@ -50,6 +50,7 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 			String issueNumnber = parseField(articleContent, ISSUE_NO);
 			int issueNo = Integer.parseInt(issueNumnber);
 
+			long journalArticleId = article.getPrimaryKey();
 			long groupId = article.getGroupId();
 			long companyId = article.getCompanyId();
 			long userId = article.getUserId();
@@ -64,8 +65,8 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 
 				try {
 					IssueLocalServiceUtil.addIssue(
-						groupId, companyId, userId, userName, issueNo, title, 
-						description, issueDate, byline);
+						journalArticleId, groupId, companyId, userId, userName, 
+						issueNo, title, description, issueDate, byline);
 				}
 				catch (Exception e) {
 					_log.error(String.format(
@@ -74,11 +75,14 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 			}
 			else if (structureName.equals(NEWSLETTER_ARTICLE)) {
 				String author = parseField(articleContent, AUTHOR);
-				String order = parseField(articleContent, ORDER);
+				String orderString = parseField(articleContent, ORDER);
+				int order = Integer.valueOf(orderString);
 				String content = parseField(articleContent, CONTENT);
 				
 				try {
-					ArticleLocalServiceUtil.addArticle(groupId, companyId, userId, userName, issueNo, title, author, Integer.valueOf(order), content);
+					ArticleLocalServiceUtil.addArticle(
+						journalArticleId, groupId, companyId, userId, userName, 
+						issueNo, title, author, order, content);
 				}
 				catch (Exception e) {
 					_log.error(String.format(
@@ -96,6 +100,7 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 	@Override
 	public void onAfterUpdate(JournalArticle article) 
 		throws ModelListenerException {
+		
 		
 		
 	}

@@ -9,6 +9,10 @@
 		<!-- PK fields -->
 
 		<column name="issueId" type="long" primary="true" />
+		
+		<!-- Foreign Key Field -->
+		
+		<column name="journalArticleId" type="long" /> <!-- A reference to the JournalArticle created through WCM -->
 
 		<!-- Group instance -->
 
@@ -43,6 +47,10 @@
 		<finder name="IssueNo" return-type="Issue">
 			<finder-column name="issueNo" />
 		</finder>
+		
+		<finder name="JournalArticleId" return-type="Issue">
+			<finder-column name="journalArticleId" />
+		</finder>
 
 		<finder name="MonthAndYear" return-type="Collection">
 			<finder-column name="issueMonth" />
@@ -56,9 +64,10 @@
 
 		<column name="articleId" type="long" primary="true" />
 		
-		<!-- Foreign Key  field -->
+		<!-- Foreign Key fields -->
 		
-		<column name="issueId" type="long" />
+		<column name="issueId" type="long" /> <!-- The issue the article belongs to -->
+		<column name="journalArticleId" type="long" /> <!-- A reference to the JournalArticle created through WCM -->
 
 		<!-- Group instance -->
 
@@ -88,8 +97,12 @@
 
 		<!-- Finder methods -->
 
-		<finder name="issueNo" return-type="Collection">
+		<finder name="IssueNo" return-type="Collection">
 			<finder-column name="issueNo" />
+		</finder>
+		
+		<finder name="JournalArticleId" return-type="Issue">
+			<finder-column name="journalArticleId" />
 		</finder>
 	</entity>
 </service-builder>
