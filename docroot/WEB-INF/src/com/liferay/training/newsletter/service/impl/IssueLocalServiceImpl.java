@@ -16,6 +16,8 @@ package com.liferay.training.newsletter.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.training.newsletter.NoSuchIssueException;
 import com.liferay.training.newsletter.model.Issue;
 import com.liferay.training.newsletter.service.base.IssueLocalServiceBaseImpl;
@@ -111,6 +113,24 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		issue.setByline(byline);
 
 		return super.updateIssue(issue);
+	}
+	
+	public List<Issue> getApprovedIssuesByMonthAndYear(
+			int issueMonth, int issueYear)
+		throws SystemException, PortalException {
+		
+		List<Issue> issues = getIssuesByMonthAndYear(issueMonth, issueYear);
+		
+		for (Issue issue : issues) {
+			long journalArticleId = issue.getJournalArticleId();
+			JournalArticle journalArticle 
+				= JournalArticleLocalServiceUtil.getArticle(journalArticleId);
+			
+			if (!journalArticle.isApproved()) {
+				issues.remove(issue);
+			}
+		}
+		return issues;
 	}
 	
 	public Issue getIssueByJournalArticleId(long journalArticleId) 

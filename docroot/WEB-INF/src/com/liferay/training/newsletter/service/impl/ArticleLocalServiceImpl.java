@@ -16,6 +16,8 @@ package com.liferay.training.newsletter.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.training.newsletter.NoSuchArticleException;
 import com.liferay.training.newsletter.model.Article;
 import com.liferay.training.newsletter.model.Issue;
@@ -108,13 +110,31 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		return super.updateArticle(article);
 	}
 	
+	public List<Article> getApprovedArticlesByIssueNo(int issueNo) 
+		throws SystemException, PortalException {
+		
+		List<Article> articles = getArticlesByIssueNo(issueNo);
+		
+		for (Article article : articles) {
+			long journalArticleId = article.getJournalArticleId();
+			JournalArticle journalArticle 
+				= JournalArticleLocalServiceUtil.getArticle(journalArticleId);
+			
+			if (!journalArticle.isApproved()) {
+				articles.remove(article);
+			}
+		}
+		return articles;
+	}
+	
 	public Article getArticleByJournalArticleId(long journalArticleId) 
 		throws NoSuchArticleException, SystemException {
 		
 		return articlePersistence.findByJournalArticleId(journalArticleId);
 	}
 	
-	public List<Article> getArticlesByIssueNo(int issueNo) throws SystemException {
+	public List<Article> getArticlesByIssueNo(int issueNo) 
+		throws SystemException {
 		
 		return articlePersistence.findByIssueNo(issueNo);
 	}
