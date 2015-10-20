@@ -15,7 +15,9 @@
 		<field name="title" type="String" />
 		<field name="author" type="String" />
 		<field name="order" type="int" />
-		<field name="content" type="String" />
+		<field name="content" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 	</model>
 	<model name="com.liferay.training.newsletter.model.Issue">
 		<field name="issueId" type="long" />
