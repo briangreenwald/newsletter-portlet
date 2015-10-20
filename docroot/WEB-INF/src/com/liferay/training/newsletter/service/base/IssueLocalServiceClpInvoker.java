@@ -130,17 +130,21 @@ public class IssueLocalServiceClpInvoker {
 				"java.lang.String"
 			};
 
-		_methodName44 = "getIssueByJournalArticleId";
+		_methodName44 = "getApprovedIssuesByMonthAndYear";
 
-		_methodParameterTypes44 = new String[] { "long" };
+		_methodParameterTypes44 = new String[] { "int", "int" };
 
-		_methodName45 = "getIssueByIssueNo";
+		_methodName45 = "getIssueByJournalArticleId";
 
-		_methodParameterTypes45 = new String[] { "int" };
+		_methodParameterTypes45 = new String[] { "long" };
 
-		_methodName46 = "getIssuesByMonthAndYear";
+		_methodName46 = "getIssueByIssueNo";
 
-		_methodParameterTypes46 = new String[] { "int", "int" };
+		_methodParameterTypes46 = new String[] { "int" };
+
+		_methodName47 = "getIssuesByMonthAndYear";
+
+		_methodParameterTypes47 = new String[] { "int", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -270,16 +274,22 @@ public class IssueLocalServiceClpInvoker {
 
 		if (_methodName44.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
-			return IssueLocalServiceUtil.getIssueByJournalArticleId(((Long)arguments[0]).longValue());
+			return IssueLocalServiceUtil.getApprovedIssuesByMonthAndYear(((Integer)arguments[0]).intValue(),
+				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName45.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
-			return IssueLocalServiceUtil.getIssueByIssueNo(((Integer)arguments[0]).intValue());
+			return IssueLocalServiceUtil.getIssueByJournalArticleId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName46.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
+			return IssueLocalServiceUtil.getIssueByIssueNo(((Integer)arguments[0]).intValue());
+		}
+
+		if (_methodName47.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
 			return IssueLocalServiceUtil.getIssuesByMonthAndYear(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
@@ -333,4 +343,6 @@ public class IssueLocalServiceClpInvoker {
 	private String[] _methodParameterTypes45;
 	private String _methodName46;
 	private String[] _methodParameterTypes46;
+	private String _methodName47;
+	private String[] _methodParameterTypes47;
 }

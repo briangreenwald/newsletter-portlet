@@ -298,6 +298,14 @@ public class IssueLocalServiceUtil {
 			userName, issueNo, title, description, issueDate, byline);
 	}
 
+	public static java.util.List<com.liferay.training.newsletter.model.Issue> getApprovedIssuesByMonthAndYear(
+		int issueMonth, int issueYear)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getApprovedIssuesByMonthAndYear(issueMonth, issueYear);
+	}
+
 	public static com.liferay.training.newsletter.model.Issue getIssueByJournalArticleId(
 		long journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException,

@@ -130,13 +130,17 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 				"java.lang.String"
 			};
 
-		_methodName21 = "getArticleByJournalArticleId";
+		_methodName21 = "getApprovedArticlesByIssueNo";
 
-		_methodParameterTypes21 = new String[] { "long" };
+		_methodParameterTypes21 = new String[] { "int" };
 
-		_methodName22 = "getArticlesByIssueNo";
+		_methodName22 = "getArticleByJournalArticleId";
 
-		_methodParameterTypes22 = new String[] { "int" };
+		_methodParameterTypes22 = new String[] { "long" };
+
+		_methodName23 = "getArticlesByIssueNo";
+
+		_methodParameterTypes23 = new String[] { "int" };
 	}
 
 	@Override
@@ -804,6 +808,40 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 	}
 
 	@Override
+	public java.util.List<com.liferay.training.newsletter.model.Article> getApprovedArticlesByIssueNo(
+		int issueNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21, new Object[] { issueNo });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.training.newsletter.model.Article>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public com.liferay.training.newsletter.model.Article getArticleByJournalArticleId(
 		long journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -811,8 +849,8 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21, new Object[] { journalArticleId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] { journalArticleId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -843,8 +881,8 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22, new Object[] { issueNo });
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23, new Object[] { issueNo });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -910,4 +948,6 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 	private String[] _methodParameterTypes21;
 	private String _methodName22;
 	private String[] _methodParameterTypes22;
+	private String _methodName23;
+	private String[] _methodParameterTypes23;
 }

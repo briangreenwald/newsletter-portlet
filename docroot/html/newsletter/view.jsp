@@ -11,9 +11,9 @@
 	Map<Integer, List<Issue>> issuesByMonth = new LinkedHashMap<Integer, List<Issue>>();
 	
 	for (int month = Calendar.DECEMBER; month >= Calendar.JANUARY; month--) {
-		List<Issue> issues = IssueLocalServiceUtil.getIssuesByMonthAndYear(month, 2012);
+		List<Issue> issues = IssueLocalServiceUtil.getApprovedIssuesByMonthAndYear(month, 2012);
 		if (!issues.isEmpty()) {
-			issuesByMonth.put(month, IssueLocalServiceUtil.getIssuesByMonthAndYear(month, 2012));
+			issuesByMonth.put(month, issues);
 		}
 	}
 
@@ -46,7 +46,7 @@
 				<p style="font-size: 24px;"><%= issueTitle %></p>
 				<ul style="list-style: none;">
 					<%
-						List<Article> articles = ArticleLocalServiceUtil.getArticlesByIssueNo(issueNo);
+						List<Article> articles = ArticleLocalServiceUtil.getApprovedArticlesByIssueNo(issueNo);
 						for (Article article : articles) {
 							String articleTitle = article.getTitle();
 					%>

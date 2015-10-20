@@ -130,13 +130,17 @@ public class ArticleLocalServiceClpInvoker {
 				"java.lang.String"
 			};
 
-		_methodName44 = "getArticleByJournalArticleId";
+		_methodName44 = "getApprovedArticlesByIssueNo";
 
-		_methodParameterTypes44 = new String[] { "long" };
+		_methodParameterTypes44 = new String[] { "int" };
 
-		_methodName45 = "getArticlesByIssueNo";
+		_methodName45 = "getArticleByJournalArticleId";
 
-		_methodParameterTypes45 = new String[] { "int" };
+		_methodParameterTypes45 = new String[] { "long" };
+
+		_methodName46 = "getArticlesByIssueNo";
+
+		_methodParameterTypes46 = new String[] { "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -268,11 +272,16 @@ public class ArticleLocalServiceClpInvoker {
 
 		if (_methodName44.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
-			return ArticleLocalServiceUtil.getArticleByJournalArticleId(((Long)arguments[0]).longValue());
+			return ArticleLocalServiceUtil.getApprovedArticlesByIssueNo(((Integer)arguments[0]).intValue());
 		}
 
 		if (_methodName45.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
+			return ArticleLocalServiceUtil.getArticleByJournalArticleId(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName46.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
 			return ArticleLocalServiceUtil.getArticlesByIssueNo(((Integer)arguments[0]).intValue());
 		}
 
@@ -323,4 +332,6 @@ public class ArticleLocalServiceClpInvoker {
 	private String[] _methodParameterTypes44;
 	private String _methodName45;
 	private String[] _methodParameterTypes45;
+	private String _methodName46;
+	private String[] _methodParameterTypes46;
 }

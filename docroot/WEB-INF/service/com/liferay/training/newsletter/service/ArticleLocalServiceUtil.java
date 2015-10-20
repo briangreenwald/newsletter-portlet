@@ -297,6 +297,13 @@ public class ArticleLocalServiceUtil {
 			userName, issueNo, title, author, order, content);
 	}
 
+	public static java.util.List<com.liferay.training.newsletter.model.Article> getApprovedArticlesByIssueNo(
+		int issueNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getApprovedArticlesByIssueNo(issueNo);
+	}
+
 	public static com.liferay.training.newsletter.model.Article getArticleByJournalArticleId(
 		long journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException,

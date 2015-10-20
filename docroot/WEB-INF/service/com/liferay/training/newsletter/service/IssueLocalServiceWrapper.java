@@ -306,6 +306,15 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.training.newsletter.model.Issue> getApprovedIssuesByMonthAndYear(
+		int issueMonth, int issueYear)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _issueLocalService.getApprovedIssuesByMonthAndYear(issueMonth,
+			issueYear);
+	}
+
+	@Override
 	public com.liferay.training.newsletter.model.Issue getIssueByJournalArticleId(
 		long journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException,
