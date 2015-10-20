@@ -273,4 +273,8 @@ public interface ArticleLocalService extends BaseLocalService,
 		long journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchArticleException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.training.newsletter.model.Article> getArticlesByIssueNo(
+		int issueNo) throws com.liferay.portal.kernel.exception.SystemException;
 }

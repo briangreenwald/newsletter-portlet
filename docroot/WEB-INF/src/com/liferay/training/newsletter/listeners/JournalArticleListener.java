@@ -73,7 +73,7 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 				}
 				catch (Exception e) {
 					_log.error(String.format(
-						"Unable to add Issue entitled \"%s\"", title));
+						"Unable to add Issue entitled \"%s\": %s", title, e));
 				}
 			}
 			else if (structureName.equalsIgnoreCase(NEWSLETTER_ARTICLE)) {
@@ -89,15 +89,16 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 				}
 				catch (Exception e) {
 					_log.error(String.format(
-						"Unable to add Article entitled \"%s\"", title));
+						"Unable to add Article entitled \"%s\": %s", title, 
+						e));
 				}
 			}
 
 		}
 		catch (DocumentException e) {
 			_log.error(String.format(
-				"Unable to retrieve contents for JournalArticle with id %d",
-				journalArticle.getArticleId()));
+				"Unable to retrieve contents for JournalArticle with id %d: %s",
+				journalArticle.getArticleId(), e));
 		}
 	}
 
@@ -148,7 +149,7 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 				}
 				catch (Exception e) {
 					_log.error(String.format(
-						"Unable to add Issue entitled \"%s\"", title));
+						"Unable to add Issue entitled \"%s\": %s", title, e));
 				}
 			}
 			else if (structureName.equalsIgnoreCase(NEWSLETTER_ARTICLE)) {
@@ -164,15 +165,15 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 				}
 				catch (Exception e) {
 					_log.error(String.format(
-						"Unable to add Article entitled \"%s\"", title));
+						"Unable to add Article entitled \"%s\": %s", title, e));
 				}
 			}
 
 		}
 		catch (DocumentException e) {
 			_log.error(String.format(
-				"Unable to retrieve contents for JournalArticle with id %d",
-				journalArticle.getArticleId()));
+				"Unable to retrieve contents for JournalArticle with id %d: %s",
+				journalArticle.getArticleId(), e));
 		}
 
 	}
@@ -203,8 +204,8 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 			}
 			catch (Exception e) {
 				_log.error(String.format(
-					"Unable to delete Issue with journalArticleId %d", 
-					journalArticleId));
+					"Unable to delete Issue with journalArticleId %d: %s", 
+					journalArticleId, e));
 			}
 		}
 		else if (structureName.equalsIgnoreCase(NEWSLETTER_ARTICLE)) {
@@ -217,8 +218,8 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 			}
 			catch (Exception e) {
 				_log.error(String.format(
-					"Unable to delete Article with journalArticle %d", 
-					journalArticleId));
+					"Unable to delete Article with journalArticle %d: %s", 
+					journalArticleId, e));
 			}
 		}
 		

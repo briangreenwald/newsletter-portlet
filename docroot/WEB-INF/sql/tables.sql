@@ -12,7 +12,7 @@ create table newsletter_Article (
 	title VARCHAR(75) null,
 	author VARCHAR(75) null,
 	order_ INTEGER,
-	content VARCHAR(75) null
+	content STRING null
 );
 
 create table newsletter_Issue (

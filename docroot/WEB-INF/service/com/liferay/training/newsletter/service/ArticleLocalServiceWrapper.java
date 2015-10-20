@@ -314,6 +314,12 @@ public class ArticleLocalServiceWrapper implements ArticleLocalService,
 		return _articleLocalService.getArticleByJournalArticleId(journalArticleId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.training.newsletter.model.Article> getArticlesByIssueNo(
+		int issueNo) throws com.liferay.portal.kernel.exception.SystemException {
+		return _articleLocalService.getArticlesByIssueNo(issueNo);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

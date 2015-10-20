@@ -29,22 +29,28 @@
 		<%
 			for (Integer month : issuesByMonth.keySet()) {
 				for (Issue issue : issuesByMonth.get(month)) {
-					String title = issue.getTitle();
+					String issueTitle = issue.getTitle();
 					int issueNo = issue.getIssueNo();
 					Date issueDate = issue.getIssueDate();
 					String issueDateFormatted = dateFormat.format(issueDate);
 		%>
 			<div>
-				<span><%= String.format("Issue: #%d, %s", issueNo, issueDateFormatted) %></span><br>
-				<span><h4><%= title %></h4></span>
+				<span><%= String.format("Issue: #%d, %s", issueNo, issueDateFormatted) %></span><br><br>
+				<span style="font-size:24px"><%= issueTitle %></span>
 				<ul>
 					<%
-						List<Article> articles = ArticleLocalServiceUtil.get
+						List<Article> articles = ArticleLocalServiceUtil.getArticlesByIssueNo(issueNo);
+						for (Article article : articles) {
+							String articleTitle = article.getTitle();
+					%>
+						<li><%= article.getTitle() %></li>
+					<%
+						}
 					%>
 				</ul>
 			</div>
 		
-		<%			
+		<%
 				}
 			}
 		%>

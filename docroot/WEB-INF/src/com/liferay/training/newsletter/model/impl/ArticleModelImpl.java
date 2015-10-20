@@ -76,7 +76,7 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 			{ "order_", Types.INTEGER },
 			{ "content", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table newsletter_Article (articleId LONG not null primary key,issueId LONG,journalArticleId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,author VARCHAR(75) null,order_ INTEGER,content VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table newsletter_Article (articleId LONG not null primary key,issueId LONG,journalArticleId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,author VARCHAR(75) null,order_ INTEGER,content STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table newsletter_Article";
 	public static final String ORDER_BY_JPQL = " ORDER BY article.order ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY newsletter_Article.order_ ASC";
