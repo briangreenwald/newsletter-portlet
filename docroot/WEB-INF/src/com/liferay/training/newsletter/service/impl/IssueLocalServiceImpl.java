@@ -164,21 +164,21 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return approvedIssues;
 	}
 	
-	private List<Issue> getAllIssues() throws SystemException {
-		
-		return issuePersistence.findAll();
-	}
-	
-	private Issue getIssueByJournalArticleId(long journalArticleId) 
+	public Issue getIssueByJournalArticleId(long journalArticleId) 
 		throws NoSuchIssueException, SystemException {
 		
 		return issuePersistence.findByJournalArticleId(journalArticleId);
 	}
 	
-	private Issue getIssueByIssueNo(int issueNo) 
+	public Issue getIssueByIssueNo(int issueNo) 
 		throws NoSuchIssueException, SystemException {
-		
+					
 		return issuePersistence.findByIssueNo(issueNo);
+	}
+	
+	private List<Issue> getAllIssues() throws SystemException {
+		
+		return issuePersistence.findAll();
 	}
 	
 	private List<Issue> getIssuesByMonthAndYear(int issueMonth, int issueYear) 
