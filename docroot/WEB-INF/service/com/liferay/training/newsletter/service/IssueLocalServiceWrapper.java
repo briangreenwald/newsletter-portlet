@@ -306,6 +306,21 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 	}
 
 	@Override
+	public java.util.List<java.lang.Integer> getApprovedIssueYears()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _issueLocalService.getApprovedIssueYears();
+	}
+
+	@Override
+	public com.liferay.training.newsletter.model.Issue getApprovedIssueByIssueNo(
+		int issueNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _issueLocalService.getApprovedIssueByIssueNo(issueNo);
+	}
+
+	@Override
 	public java.util.List<com.liferay.training.newsletter.model.Issue> getApprovedIssuesByMonthAndYear(
 		int issueMonth, int issueYear)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -328,13 +343,6 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchIssueException {
 		return _issueLocalService.getIssueByIssueNo(issueNo);
-	}
-
-	@Override
-	public java.util.List<com.liferay.training.newsletter.model.Issue> getIssuesByMonthAndYear(
-		int issueMonth, int issueYear)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _issueLocalService.getIssuesByMonthAndYear(issueMonth, issueYear);
 	}
 
 	/**

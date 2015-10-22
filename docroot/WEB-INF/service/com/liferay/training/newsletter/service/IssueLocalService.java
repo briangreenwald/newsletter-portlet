@@ -266,6 +266,17 @@ public interface IssueLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.Integer> getApprovedIssueYears()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.training.newsletter.model.Issue getApprovedIssueByIssueNo(
+		int issueNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.training.newsletter.model.Issue> getApprovedIssuesByMonthAndYear(
 		int issueMonth, int issueYear)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -282,9 +293,4 @@ public interface IssueLocalService extends BaseLocalService,
 		int issueNo)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchIssueException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.training.newsletter.model.Issue> getIssuesByMonthAndYear(
-		int issueMonth, int issueYear)
-		throws com.liferay.portal.kernel.exception.SystemException;
 }

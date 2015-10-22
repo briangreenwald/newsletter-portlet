@@ -298,6 +298,19 @@ public class IssueLocalServiceUtil {
 			userName, issueNo, title, description, issueDate, byline);
 	}
 
+	public static java.util.List<java.lang.Integer> getApprovedIssueYears()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getApprovedIssueYears();
+	}
+
+	public static com.liferay.training.newsletter.model.Issue getApprovedIssueByIssueNo(
+		int issueNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getApprovedIssueByIssueNo(issueNo);
+	}
+
 	public static java.util.List<com.liferay.training.newsletter.model.Issue> getApprovedIssuesByMonthAndYear(
 		int issueMonth, int issueYear)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -318,12 +331,6 @@ public class IssueLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchIssueException {
 		return getService().getIssueByIssueNo(issueNo);
-	}
-
-	public static java.util.List<com.liferay.training.newsletter.model.Issue> getIssuesByMonthAndYear(
-		int issueMonth, int issueYear)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getIssuesByMonthAndYear(issueMonth, issueYear);
 	}
 
 	public static void clearService() {

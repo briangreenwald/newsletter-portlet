@@ -130,21 +130,25 @@ public class IssueLocalServiceClp implements IssueLocalService {
 				"java.lang.String"
 			};
 
-		_methodName21 = "getApprovedIssuesByMonthAndYear";
+		_methodName21 = "getApprovedIssueYears";
 
-		_methodParameterTypes21 = new String[] { "int", "int" };
+		_methodParameterTypes21 = new String[] {  };
 
-		_methodName22 = "getIssueByJournalArticleId";
+		_methodName22 = "getApprovedIssueByIssueNo";
 
-		_methodParameterTypes22 = new String[] { "long" };
+		_methodParameterTypes22 = new String[] { "int" };
 
-		_methodName23 = "getIssueByIssueNo";
+		_methodName23 = "getApprovedIssuesByMonthAndYear";
 
-		_methodParameterTypes23 = new String[] { "int" };
+		_methodParameterTypes23 = new String[] { "int", "int" };
 
-		_methodName24 = "getIssuesByMonthAndYear";
+		_methodName24 = "getIssueByJournalArticleId";
 
-		_methodParameterTypes24 = new String[] { "int", "int" };
+		_methodParameterTypes24 = new String[] { "long" };
+
+		_methodName25 = "getIssueByIssueNo";
+
+		_methodParameterTypes25 = new String[] { "int" };
 	}
 
 	@Override
@@ -805,6 +809,73 @@ public class IssueLocalServiceClp implements IssueLocalService {
 	}
 
 	@Override
+	public java.util.List<java.lang.Integer> getApprovedIssueYears()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<java.lang.Integer>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.training.newsletter.model.Issue getApprovedIssueByIssueNo(
+		int issueNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] { issueNo });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.training.newsletter.model.Issue)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.util.List<com.liferay.training.newsletter.model.Issue> getApprovedIssuesByMonthAndYear(
 		int issueMonth, int issueYear)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -812,8 +883,8 @@ public class IssueLocalServiceClp implements IssueLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] { issueMonth, issueYear });
 		}
 		catch (Throwable t) {
@@ -847,8 +918,8 @@ public class IssueLocalServiceClp implements IssueLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22, new Object[] { journalArticleId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24, new Object[] { journalArticleId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -881,8 +952,8 @@ public class IssueLocalServiceClp implements IssueLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23, new Object[] { issueNo });
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25, new Object[] { issueNo });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -905,36 +976,6 @@ public class IssueLocalServiceClp implements IssueLocalService {
 		}
 
 		return (com.liferay.training.newsletter.model.Issue)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.util.List<com.liferay.training.newsletter.model.Issue> getIssuesByMonthAndYear(
-		int issueMonth, int issueYear)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
-					new Object[] { issueMonth, issueYear });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<com.liferay.training.newsletter.model.Issue>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -986,4 +1027,6 @@ public class IssueLocalServiceClp implements IssueLocalService {
 	private String[] _methodParameterTypes23;
 	private String _methodName24;
 	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
 }
