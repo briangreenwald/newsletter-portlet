@@ -116,6 +116,35 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return super.updateIssue(issue);
 	}
 	
+	public List<Integer> getApprovedIssueYears() 
+		throws SystemException, PortalException {
+		
+		List<Issue> allIssues = getAllIssues();
+		List<Integer> approvedIssueYears = new ArrayList<Integer>();
+		
+		for (Issue issue : allIssues) {
+			JournalArticle journalArticle = JournalArticleLocalServiceUtil.getArticle(issue.getJournalArticleId());
+			int issueYear = issue.getIssueYear();
+			if (journalArticle.isApproved() && !approvedIssueYears.contains(issueYear)) {
+				approvedIssueYears.add(issueYear);
+			}
+		}
+		return approvedIssueYears;
+	}
+	
+	public Issue getApprovedIssueByIssueNo(int issueNo)
+		throws SystemException, PortalException {
+		
+		Issue issue = getIssueByIssueNo(issueNo);
+		JournalArticle journalArticle = JournalArticleLocalServiceUtil.getArticle(issue.getJournalArticleId());
+		if (journalArticle.isApproved()) {
+			return issue;
+		}
+		else {
+			return null;
+		}
+	}
+	
 	public List<Issue> getApprovedIssuesByMonthAndYear(
 			int issueMonth, int issueYear)
 		throws SystemException, PortalException {
@@ -135,22 +164,27 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return approvedIssues;
 	}
 	
-	public Issue getIssueByJournalArticleId(long journalArticleId) 
+	private List<Issue> getAllIssues() throws SystemException {
+		
+		return issuePersistence.findAll();
+	}
+	
+	private Issue getIssueByJournalArticleId(long journalArticleId) 
 		throws NoSuchIssueException, SystemException {
 		
 		return issuePersistence.findByJournalArticleId(journalArticleId);
 	}
 	
-	public Issue getIssueByIssueNo(int issueNo) 
+	private Issue getIssueByIssueNo(int issueNo) 
 		throws NoSuchIssueException, SystemException {
 		
 		return issuePersistence.findByIssueNo(issueNo);
 	}
 	
-	public List<Issue> getIssuesByMonthAndYear(int issueMonth, int issueYear) 
+	private List<Issue> getIssuesByMonthAndYear(int issueMonth, int issueYear) 
 		throws SystemException {
 		
 		return issuePersistence.findByMonthAndYear(issueMonth, issueYear);
 	}
-
+	
 }
