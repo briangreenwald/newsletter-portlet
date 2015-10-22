@@ -25,7 +25,9 @@ import com.liferay.training.newsletter.service.base.IssueLocalServiceBaseImpl;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The implementation of the issue local service. <p> All custom service methods
@@ -49,9 +51,9 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	 */
 
 	public Issue addIssue(
-			long journalArticleId, long groupId, long companyId, long userId, 
-			String userName, int issueNo, String title, String description, 
-			Date issueDate, String byline)
+		long journalArticleId, long groupId, long companyId, long userId,
+		String userName, int issueNo, String title, String description,
+		Date issueDate, String byline)
 		throws SystemException {
 
 		long issueId = counterLocalService.increment(Issue.class.getName());
@@ -62,22 +64,22 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		issue.setCompanyId(companyId);
 		issue.setUserId(userId);
 		issue.setUserName(userName);
-		
+
 		Date now = new Date();
 		issue.setCreateDate(now);
 		issue.setModifiedDate(now);
-		
+
 		issue.setIssueNo(issueNo);
 		issue.setTitle(title);
 		issue.setDescription(description);
-		
+
 		issue.setIssueDate(issueDate);
-		
+
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(issueDate);
 		int issueMonth = cal.get(Calendar.MONTH);
 		int issueYear = cal.get(Calendar.YEAR);
-		
+
 		issue.setIssueMonth(issueMonth);
 		issue.setIssueYear(issueYear);
 		issue.setByline(byline);
@@ -86,9 +88,9 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	}
 
 	public Issue updateIssue(
-			long journalArticleId, long groupId, long companyId, 
-			long userId, String userName, int issueNo, String title, 
-			String description,	Date issueDate, String byline)
+		long journalArticleId, long groupId, long companyId, long userId,
+		String userName, int issueNo, String title, String description,
+		Date issueDate, String byline)
 		throws SystemException, PortalException {
 
 		Issue issue = getIssueByJournalArticleId(journalArticleId);
@@ -97,10 +99,10 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		issue.setCompanyId(companyId);
 		issue.setUserId(userId);
 		issue.setUserName(userName);
-		
+
 		Date now = new Date();
 		issue.setModifiedDate(now);
-		
+
 		issue.setIssueNo(issueNo);
 		issue.setTitle(title);
 		issue.setDescription(description);
@@ -110,33 +112,19 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		cal.setTime(issueDate);
 		int issueMonth = cal.get(Calendar.MONTH);
 		int issueYear = cal.get(Calendar.YEAR);
-		
+
 		issue.setByline(byline);
 
 		return super.updateIssue(issue);
 	}
-	
-	public List<Integer> getApprovedIssueYears() 
-		throws SystemException, PortalException {
-		
-		List<Issue> allIssues = getAllIssues();
-		List<Integer> approvedIssueYears = new ArrayList<Integer>();
-		
-		for (Issue issue : allIssues) {
-			JournalArticle journalArticle = JournalArticleLocalServiceUtil.getArticle(issue.getJournalArticleId());
-			int issueYear = issue.getIssueYear();
-			if (journalArticle.isApproved() && !approvedIssueYears.contains(issueYear)) {
-				approvedIssueYears.add(issueYear);
-			}
-		}
-		return approvedIssueYears;
-	}
-	
+
 	public Issue getApprovedIssueByIssueNo(int issueNo)
 		throws SystemException, PortalException {
-		
-		Issue issue = getIssueByIssueNo(issueNo);
-		JournalArticle journalArticle = JournalArticleLocalServiceUtil.getArticle(issue.getJournalArticleId());
+
+		Issue issue = issuePersistence.findByIssueNo(issueNo);
+		JournalArticle journalArticle =
+			JournalArticleLocalServiceUtil.getArticle(
+				issue.getJournalArticleId());
 		if (journalArticle.isApproved()) {
 			return issue;
 		}
@@ -144,18 +132,50 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 			return null;
 		}
 	}
-	
-	public List<Issue> getApprovedIssuesByMonthAndYear(
-			int issueMonth, int issueYear)
+
+	public Map<Integer, List<Issue>> getApprovedIssuesByYear()
 		throws SystemException, PortalException {
+
+		List<Issue> allIssues = issuePersistence.findAll();
 		
-		List<Issue> allIssues = getIssuesByMonthAndYear(issueMonth, issueYear);
+		List<Issue> approvedIssues = filterApprovedIssues(allIssues);
+		
+		Map<Integer, List<Issue>> issuesByYear 
+			= new LinkedHashMap<Integer, List<Issue>>();
+		
+		for (Issue issue : approvedIssues) {
+			int issueYear = issue.getIssueYear();
+
+			List<Issue> issuesThisYear;
+			if (issuesByYear.containsKey(issueYear)) {
+				issuesThisYear = issuesByYear.get(issueYear);
+
+			}
+			else {
+				issuesThisYear = new ArrayList<Issue>();
+			}	
+			issuesThisYear.add(issue);
+			issuesByYear.put(issueYear, issuesThisYear);
+		}
+		
+		return issuesByYear;
+	}
+
+	public Issue getIssueByJournalArticleId(long journalArticleId)
+		throws NoSuchIssueException, SystemException {
+
+		return issuePersistence.findByJournalArticleId(journalArticleId);
+	}
+	
+	private List<Issue> filterApprovedIssues(List<Issue> allIssues) 
+		throws PortalException, SystemException {
+		
 		List<Issue> approvedIssues = new ArrayList<Issue>();
 		
 		for (Issue issue : allIssues) {
-			long journalArticleId = issue.getJournalArticleId();
 			JournalArticle journalArticle 
-				= JournalArticleLocalServiceUtil.getArticle(journalArticleId);
+				= JournalArticleLocalServiceUtil.getArticle(
+					issue.getJournalArticleId());
 			
 			if (journalArticle.isApproved()) {
 				approvedIssues.add(issue);
@@ -163,28 +183,5 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		}
 		return approvedIssues;
 	}
-	
-	public Issue getIssueByJournalArticleId(long journalArticleId) 
-		throws NoSuchIssueException, SystemException {
-		
-		return issuePersistence.findByJournalArticleId(journalArticleId);
-	}
-	
-	public Issue getIssueByIssueNo(int issueNo) 
-		throws NoSuchIssueException, SystemException {
-					
-		return issuePersistence.findByIssueNo(issueNo);
-	}
-	
-	private List<Issue> getAllIssues() throws SystemException {
-		
-		return issuePersistence.findAll();
-	}
-	
-	private List<Issue> getIssuesByMonthAndYear(int issueMonth, int issueYear) 
-		throws SystemException {
-		
-		return issuePersistence.findByMonthAndYear(issueMonth, issueYear);
-	}
-	
+
 }

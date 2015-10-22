@@ -52,10 +52,6 @@
 			<finder-column name="journalArticleId" />
 		</finder>
 
-		<finder name="MonthAndYear" return-type="Collection">
-			<finder-column name="issueMonth" />
-			<finder-column name="issueYear" />
-		</finder>
 	</entity>
 	
 	<entity name="Article" local-service="true" remote-service="false">
