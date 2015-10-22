@@ -130,25 +130,17 @@ public class IssueLocalServiceClpInvoker {
 				"java.lang.String"
 			};
 
-		_methodName44 = "getApprovedIssueYears";
+		_methodName44 = "getApprovedIssueByIssueNo";
 
-		_methodParameterTypes44 = new String[] {  };
+		_methodParameterTypes44 = new String[] { "int" };
 
-		_methodName45 = "getApprovedIssueByIssueNo";
+		_methodName45 = "getApprovedIssuesByYear";
 
-		_methodParameterTypes45 = new String[] { "int" };
+		_methodParameterTypes45 = new String[] {  };
 
-		_methodName46 = "getApprovedIssuesByMonthAndYear";
+		_methodName46 = "getIssueByJournalArticleId";
 
-		_methodParameterTypes46 = new String[] { "int", "int" };
-
-		_methodName47 = "getIssueByJournalArticleId";
-
-		_methodParameterTypes47 = new String[] { "long" };
-
-		_methodName48 = "getIssueByIssueNo";
-
-		_methodParameterTypes48 = new String[] { "int" };
+		_methodParameterTypes46 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -278,28 +270,17 @@ public class IssueLocalServiceClpInvoker {
 
 		if (_methodName44.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
-			return IssueLocalServiceUtil.getApprovedIssueYears();
+			return IssueLocalServiceUtil.getApprovedIssueByIssueNo(((Integer)arguments[0]).intValue());
 		}
 
 		if (_methodName45.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
-			return IssueLocalServiceUtil.getApprovedIssueByIssueNo(((Integer)arguments[0]).intValue());
+			return IssueLocalServiceUtil.getApprovedIssuesByYear();
 		}
 
 		if (_methodName46.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
-			return IssueLocalServiceUtil.getApprovedIssuesByMonthAndYear(((Integer)arguments[0]).intValue(),
-				((Integer)arguments[1]).intValue());
-		}
-
-		if (_methodName47.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
 			return IssueLocalServiceUtil.getIssueByJournalArticleId(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName48.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
-			return IssueLocalServiceUtil.getIssueByIssueNo(((Integer)arguments[0]).intValue());
 		}
 
 		throw new UnsupportedOperationException();
@@ -351,8 +332,4 @@ public class IssueLocalServiceClpInvoker {
 	private String[] _methodParameterTypes45;
 	private String _methodName46;
 	private String[] _methodParameterTypes46;
-	private String _methodName47;
-	private String[] _methodParameterTypes47;
-	private String _methodName48;
-	private String[] _methodParameterTypes48;
 }

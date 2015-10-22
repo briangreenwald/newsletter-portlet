@@ -93,11 +93,9 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.training.newsletter.model.Issue"),
 			true);
-	public static long ISSUEMONTH_COLUMN_BITMASK = 1L;
-	public static long ISSUENO_COLUMN_BITMASK = 2L;
-	public static long ISSUEYEAR_COLUMN_BITMASK = 4L;
-	public static long JOURNALARTICLEID_COLUMN_BITMASK = 8L;
-	public static long ISSUEDATE_COLUMN_BITMASK = 16L;
+	public static long ISSUENO_COLUMN_BITMASK = 1L;
+	public static long JOURNALARTICLEID_COLUMN_BITMASK = 2L;
+	public static long ISSUEDATE_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.liferay.training.newsletter.model.Issue"));
 
@@ -428,19 +426,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public void setIssueMonth(int issueMonth) {
-		_columnBitmask |= ISSUEMONTH_COLUMN_BITMASK;
-
-		if (!_setOriginalIssueMonth) {
-			_setOriginalIssueMonth = true;
-
-			_originalIssueMonth = _issueMonth;
-		}
-
 		_issueMonth = issueMonth;
-	}
-
-	public int getOriginalIssueMonth() {
-		return _originalIssueMonth;
 	}
 
 	@Override
@@ -450,19 +436,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public void setIssueYear(int issueYear) {
-		_columnBitmask |= ISSUEYEAR_COLUMN_BITMASK;
-
-		if (!_setOriginalIssueYear) {
-			_setOriginalIssueYear = true;
-
-			_originalIssueYear = _issueYear;
-		}
-
 		_issueYear = issueYear;
-	}
-
-	public int getOriginalIssueYear() {
-		return _originalIssueYear;
 	}
 
 	@Override
@@ -585,14 +559,6 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		issueModelImpl._originalIssueNo = issueModelImpl._issueNo;
 
 		issueModelImpl._setOriginalIssueNo = false;
-
-		issueModelImpl._originalIssueMonth = issueModelImpl._issueMonth;
-
-		issueModelImpl._setOriginalIssueMonth = false;
-
-		issueModelImpl._originalIssueYear = issueModelImpl._issueYear;
-
-		issueModelImpl._setOriginalIssueYear = false;
 
 		issueModelImpl._columnBitmask = 0;
 	}
@@ -812,11 +778,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	private String _description;
 	private Date _issueDate;
 	private int _issueMonth;
-	private int _originalIssueMonth;
-	private boolean _setOriginalIssueMonth;
 	private int _issueYear;
-	private int _originalIssueYear;
-	private boolean _setOriginalIssueYear;
 	private String _byline;
 	private long _columnBitmask;
 	private Issue _escapedModel;
