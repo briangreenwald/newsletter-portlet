@@ -62,16 +62,23 @@ public class NewsletterPortlet extends MVCPortlet {
 		monthMap.put(Calendar.DECEMBER, "December");
 		request.setAttribute("monthMap", monthMap);
 		
-		DateFormat dateFormat = new SimpleDateFormat(_ISSUE_DATE_FORMAT);
-		request.setAttribute("dateFormat", dateFormat);
-		
 		int currentMonth = -1;
 		request.setAttribute("currentMonth", currentMonth);
 		
 		super.doView(request, response);
 	}
 	
-	private static Log _log = LogFactoryUtil.getLog(NewsletterPortlet.class.getName());
+	public void render(RenderRequest request, RenderResponse response) 
+		throws PortletException, IOException {
+		
+		DateFormat dateFormat = new SimpleDateFormat(_ISSUE_DATE_FORMAT);
+		request.setAttribute("dateFormat", dateFormat);
+		
+		super.render(request, response);
+	}
+	
+	private static Log _log 
+		= LogFactoryUtil.getLog(NewsletterPortlet.class.getName());
 	
 	private static final String _ISSUE_DATE_FORMAT = "MMMM dd, yyyy";
 	
