@@ -1,65 +1,49 @@
 <%@ include file="/html/init.jsp" %>
 
-<%
-	String timestampFormat = "MMMM dd, yyyy";
-	DateFormat dateFormat = new SimpleDateFormat(timestampFormat);
-	
-	Map<Integer, String> monthMap = new HashMap<Integer, String>();
-	monthMap.put(0, "January");
-	monthMap.put(1, "February");
-	
-	Map<Integer, List<Issue>> issuesByMonth = new LinkedHashMap<Integer, List<Issue>>();
-	
-	for (int month = Calendar.DECEMBER; month >= Calendar.JANUARY; month--) {
-		List<Issue> issues = IssueLocalServiceUtil.getApprovedIssuesByMonthAndYear(month, 2012);
-		if (!issues.isEmpty()) {
-			issuesByMonth.put(month, issues);
-		}
-	}
+<c:set var="yearTabs" value="${fn:join(years, ',')}" />
 
-%>
+<liferay-ui:tabs names="${yearTabs}" refresh="false" tabsValues="${yearTabs}" >
 
-<liferay-ui:tabs names="2015,2014,2013,2012" refresh="false" tabsValues="2015,2014,2013,2012" >
-	<liferay-ui:section>
-		This is the 2015 tab
-	</liferay-ui:section>
-	<liferay-ui:section>
-		This is the 2014 tab
-	</liferay-ui:section>
-	<liferay-ui:section>
-		This is the 2013 tab
-	</liferay-ui:section>
-	<liferay-ui:section>
-		<%
-			for (Integer month : issuesByMonth.keySet()) {
-		%>
-			<div id="month-separator" style="background: #D3D3D3; color: #FFF; text-align: center;"><%= monthMap.get(month) %></div>
-			<%
-				for (Issue issue : issuesByMonth.get(month)) {
-					String issueTitle = issue.getTitle();
-					int issueNo = issue.getIssueNo();
-					Date issueDate = issue.getIssueDate();
-					String issueDateFormatted = dateFormat.format(issueDate);
-			%>
-			<div>
-				<p><%= String.format("Issue: #%d, %s", issueNo, issueDateFormatted) %></p>
-				<p style="font-size: 24px;"><%= issueTitle %></p>
-				<ul style="list-style: none;">
+	<c:forEach items="${issuesByYear.keySet()}" var="year">
+		<liferay-ui:section>
+			<c:forEach items="${issuesByYear.get(year)}" var="issue">
+				<c:set var="issueNo" value="${issue.getIssueNo()}" />
+				<c:set var="issueMonth" value="${issue.getIssueMonth()}" />
+				<c:set var="issueDate" value="${issue.getIssueDate()}" />
+				<c:set var="issueTitle" value="${issue.getTitle()}" />
+
+				<c:if test="${currentMonth != issueMonth}">
+					<div id="month-separator">${monthMap.get(issueMonth)}</div>
+					<c:set var="currentMonth" value="${issueMonth}" />
+				</c:if>
+
+				<portlet:renderURL var="viewIssueURL">
+					<portlet:param name="mvcPath" value="/html/newsletter/view_issue.jsp" />
+					<portlet:param name="issueNo" value="${issueNo}" />
+				</portlet:renderURL>
+
+				<div>
+					<p>Issue: #<c:out value="${issueNo}" />, <c:out value="${dateFormat.format(issueDate)}" /></p>
+
+					<a href="${viewIssueURL}">${issueTitle}</a>
+
 					<%
+						int issueNo = (Integer)pageContext.getAttribute("issueNo");
+
 						List<Article> articles = ArticleLocalServiceUtil.getApprovedArticlesByIssueNo(issueNo);
-						for (Article article : articles) {
-							String articleTitle = article.getTitle();
+
+						pageContext.setAttribute("articles", articles);
 					%>
-						<li><%= article.getTitle() %></li>
-					<%
-						}
-					%>
-				</ul>
-			</div>
-			<hr style="border-top: dashed 2px;" />
-		<%
-				}
-			}
-		%>
-	</liferay-ui:section>
+
+					<ul>
+						<c:forEach items="${articles}" var="article">
+							<li>
+								<c:out value="${article.getTitle()}" />
+							</li>
+						</c:forEach>
+					</ul>
+				</div>
+			</c:forEach>
+		</liferay-ui:section>
+	</c:forEach>
 </liferay-ui:tabs>

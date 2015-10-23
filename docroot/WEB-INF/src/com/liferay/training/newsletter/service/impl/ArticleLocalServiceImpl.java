@@ -59,7 +59,7 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		Article article = createArticle(articleId);
 		article.setArticleId(articleId);
 		
-		Issue issue = IssueLocalServiceUtil.getIssueByIssueNo(issueNo);
+		Issue issue = IssueLocalServiceUtil.getIssueByJournalArticleId(journalArticleId);
 		long issueId = issue.getIssueId();
 		article.setIssueId(issueId);
 		
@@ -91,7 +91,7 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		Article article = getArticleByJournalArticleId(journalArticleId);
 
 		Date now = new Date();
-		Issue issue = IssueLocalServiceUtil.getIssueByIssueNo(issueNo);
+		Issue issue = IssueLocalServiceUtil.getIssueByJournalArticleId(journalArticleId);
 		long issueId = issue.getIssueId();
 
 		article.setIssueId(issueId);
