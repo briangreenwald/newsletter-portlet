@@ -32,10 +32,15 @@ import java.util.List;
  * The implementation of the article local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.training.newsletter.service.ArticleLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are 
+ * added, rerun ServiceBuilder to copy their definitions into the 
+ * {@link com.liferay.training.newsletter.service.ArticleLocalService} 
+ * interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security 
+ * checks based on the propagated JAAS credentials because this service can only 
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Brian Greenwald
@@ -46,7 +51,9 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.training.newsletter.service.ArticleLocalServiceUtil} to access the article local service.
+	 * Never reference this interface directly. Always use 
+	 * {@link com.liferay.training.newsletter.service.ArticleLocalServiceUtil} 
+	 * to access the article local service.
 	 */
 	
 	public Article addArticle(
@@ -59,7 +66,8 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		Article article = createArticle(articleId);
 		article.setArticleId(articleId);
 		
-		Issue issue = IssueLocalServiceUtil.getIssueByJournalArticleId(journalArticleId);
+		Issue issue = 
+			IssueLocalServiceUtil.getIssueByJournalArticleId(journalArticleId);
 		long issueId = issue.getIssueId();
 		article.setIssueId(issueId);
 		
@@ -91,7 +99,8 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		Article article = getArticleByJournalArticleId(journalArticleId);
 
 		Date now = new Date();
-		Issue issue = IssueLocalServiceUtil.getIssueByJournalArticleId(journalArticleId);
+		Issue issue =
+			IssueLocalServiceUtil.getIssueByJournalArticleId(journalArticleId);
 		long issueId = issue.getIssueId();
 
 		article.setIssueId(issueId);
@@ -114,7 +123,7 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	public List<Article> getApprovedArticlesByIssueNo(int issueNo) 
 		throws SystemException, PortalException {
 		
-		List<Article> allArticles = getArticlesByIssueNo(issueNo);
+		List<Article> allArticles = articlePersistence.findByIssueNo(issueNo);
 		List<Article> approvedArticles = new ArrayList<Article>();
 		
 		for (Article article : allArticles) {
@@ -133,12 +142,6 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		throws NoSuchArticleException, SystemException {
 		
 		return articlePersistence.findByJournalArticleId(journalArticleId);
-	}
-	
-	public List<Article> getArticlesByIssueNo(int issueNo) 
-		throws SystemException {
-		
-		return articlePersistence.findByIssueNo(issueNo);
 	}
 	
 }

@@ -6,6 +6,10 @@
 	Issue issue = IssueLocalServiceUtil
 			.getApprovedIssueByIssueNo(issueNo);
 	pageContext.setAttribute("issue", issue);
+	
+	List<Article> articles = ArticleLocalServiceUtil.getApprovedArticlesByIssueNo(issueNo);
+
+	pageContext.setAttribute("articles", articles);
 %>
 
 <c:set var="issue" value="${issue}" />
@@ -23,12 +27,6 @@
 
 	<p>${issueDescription}</p>
 
-	<%
-		List<Article> articles = ArticleLocalServiceUtil
-				.getApprovedArticlesByIssueNo(issueNo);
-
-		pageContext.setAttribute("articles", articles);
-	%>
 	<ul>
 		<c:forEach items="${articles}" var="article">
 			<li>
