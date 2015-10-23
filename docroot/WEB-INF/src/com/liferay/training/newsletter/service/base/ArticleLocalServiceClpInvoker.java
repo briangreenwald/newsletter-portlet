@@ -137,10 +137,6 @@ public class ArticleLocalServiceClpInvoker {
 		_methodName45 = "getArticleByJournalArticleId";
 
 		_methodParameterTypes45 = new String[] { "long" };
-
-		_methodName46 = "getArticlesByIssueNo";
-
-		_methodParameterTypes46 = new String[] { "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -280,11 +276,6 @@ public class ArticleLocalServiceClpInvoker {
 			return ArticleLocalServiceUtil.getArticleByJournalArticleId(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName46.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
-			return ArticleLocalServiceUtil.getArticlesByIssueNo(((Integer)arguments[0]).intValue());
-		}
-
 		throw new UnsupportedOperationException();
 	}
 
@@ -332,6 +323,4 @@ public class ArticleLocalServiceClpInvoker {
 	private String[] _methodParameterTypes44;
 	private String _methodName45;
 	private String[] _methodParameterTypes45;
-	private String _methodName46;
-	private String[] _methodParameterTypes46;
 }
