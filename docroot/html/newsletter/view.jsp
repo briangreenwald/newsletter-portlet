@@ -13,7 +13,7 @@
 				<c:set var="issueTitle" value="${issue.getTitle()}" />
 
 				<c:if test="${currentMonth != issueMonth}">
-					<div id="month-separator">${monthMap.get(issueMonth)}</div>
+					<div class="month-separator">${monthMap.get(issueMonth)}</div>
 					<c:set var="currentMonth" value="${issueMonth}" />
 				</c:if>
 
@@ -22,10 +22,10 @@
 					<portlet:param name="issueNo" value="${issueNo}" />
 				</portlet:renderURL>
 
-				<div>
-					<p>Issue: #<c:out value="${issueNo}" />, <c:out value="${dateFormat.format(issueDate)}" /></p>
+				<div class="newsletter">
+					<p class="issue-info">Issue: #<c:out value="${issueNo}" />, <c:out value="${dateFormat.format(issueDate)}" /></p>
 
-					<a href="${viewIssueURL}">${issueTitle}</a>
+					<a class="issue-title" href="${viewIssueURL}">${issueTitle}</a>
 
 					<%
 						int issueNo = (Integer)pageContext.getAttribute("issueNo");
@@ -38,10 +38,11 @@
 					<ul>
 						<c:forEach items="${articles}" var="article">
 							<li>
-								<c:out value="${article.getTitle()}" />
+								<span class="article-title"> ${article.getTitle()}" </span>
 							</li>
 						</c:forEach>
 					</ul>
+					<hr class="issue-separator">
 				</div>
 			</c:forEach>
 		</liferay-ui:section>

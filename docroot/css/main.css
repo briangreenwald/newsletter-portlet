@@ -1,0 +1,40 @@
+
+.aui {
+	.month-separator {
+		background: #D3D3D3; 
+		color: #FFF; 
+		text-align: center; 
+	}
+	
+	.newsletter {
+	
+		.article-title {
+			color: #009AE5;
+			font-size: 14px;
+		}
+		
+		.issue-byline {
+			color: #009AE5;
+			font-size: 12px;
+		}
+		
+		.issue-title {
+			color: #009AE5;
+			font-weight: bold;
+			font-size: 24px;
+		}
+		
+		.issue-info {
+			color: #009AE5;
+			font-size: 12px;
+		}
+		
+		ul {
+			list-style: none;
+		}
+	}
+	
+
+	
+	
+}
