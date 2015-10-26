@@ -35,6 +35,7 @@
 		<column name="issueMonth" type="int" />
 		<column name="issueYear" type="int" />
 		<column name="byline" type="String" />
+		<column name="status" type="int" />
 
 		<!-- Order -->
 
@@ -46,6 +47,10 @@
 		
 		<finder name="IssueNo" return-type="Issue">
 			<finder-column name="issueNo" />
+		</finder>
+		
+		<finder name="Status" return-type="Issue">
+			<finder-column name="status" />
 		</finder>
 		
 		<finder name="JournalArticleId" return-type="Issue">
@@ -84,6 +89,7 @@
 		<column name="author" type="String" />
 		<column name="order" type="int" />
 		<column name="content" type="String" />
+		<column name="status" type="int" />
 		
 		<!-- Order -->
 
@@ -95,6 +101,10 @@
 
 		<finder name="IssueNo" return-type="Collection">
 			<finder-column name="issueNo" />
+		</finder>
+		
+		<finder name="Status" return-type="Issue">
+			<finder-column name="status" />
 		</finder>
 		
 		<finder name="JournalArticleId" return-type="Issue">
