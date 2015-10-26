@@ -127,6 +127,18 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return super.updateIssue(issue);
 	}
 	
+	@Override
+	public List<Issue> getIssues(int start, int end) throws SystemException {
+		
+		return issuePersistence.findByStatus(WorkflowConstants.STATUS_APPROVED, start, end);
+	}
+	
+	@Override 
+	public int getIssuesCount() throws SystemException {
+		
+		return issuePersistence.countByStatus(WorkflowConstants.STATUS_APPROVED);
+	}
+	
 	public Issue getIssueByIssueNo(int issueNo) 
 		throws SystemException, NoSuchIssueException{
 		
