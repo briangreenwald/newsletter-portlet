@@ -49,7 +49,16 @@
 			<finder-column name="issueNo" />
 		</finder>
 		
+		<finder name="IssueNoAndStatus" return-type="Issue">
+			<finder-column name="issueNo" />
+			<finder-column name="status" />
+		</finder>
+		
 		<finder name="Status" return-type="Issue">
+			<finder-column name="status" />
+		</finder>
+		
+		<finder name="Approved" return-type="Collection">
 			<finder-column name="status" />
 		</finder>
 		
@@ -101,6 +110,7 @@
 
 		<finder name="IssueNo" return-type="Collection">
 			<finder-column name="issueNo" />
+			<finder-column name="status" />
 		</finder>
 		
 		<finder name="Status" return-type="Issue">

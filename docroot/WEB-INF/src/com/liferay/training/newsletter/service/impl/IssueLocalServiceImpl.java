@@ -16,6 +16,9 @@ package com.liferay.training.newsletter.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.training.newsletter.NoSuchIssueException;
@@ -53,7 +56,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	public Issue addIssue(
 		long journalArticleId, long groupId, long companyId, long userId,
 		String userName, int issueNo, String title, String description,
-		Date issueDate, String byline)
+		Date issueDate, String byline, int status)
 		throws SystemException {
 
 		long issueId = counterLocalService.increment(Issue.class.getName());
@@ -83,6 +86,8 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		issue.setIssueMonth(issueMonth);
 		issue.setIssueYear(issueYear);
 		issue.setByline(byline);
+		
+		issue.setStatus(status);
 
 		return super.addIssue(issue);
 	}
@@ -90,7 +95,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	public Issue updateIssue(
 		long journalArticleId, long groupId, long companyId, long userId,
 		String userName, int issueNo, String title, String description,
-		Date issueDate, String byline)
+		Date issueDate, String byline, int status)
 		throws SystemException, PortalException {
 
 		Issue issue = getIssueByJournalArticleId(journalArticleId);
@@ -112,38 +117,39 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		cal.setTime(issueDate);
 		int issueMonth = cal.get(Calendar.MONTH);
 		int issueYear = cal.get(Calendar.YEAR);
+		issue.setIssueMonth(issueMonth);
+		issue.setIssueYear(issueYear);
 
 		issue.setByline(byline);
+		
+		issue.setStatus(status);
 
 		return super.updateIssue(issue);
 	}
+	
+	public Issue getIssueByIssueNo(int issueNo) 
+		throws SystemException, NoSuchIssueException{
+		
+		return issuePersistence.findByIssueNo(issueNo);
+	}
 
 	public Issue getApprovedIssueByIssueNo(int issueNo)
-		throws SystemException, PortalException {
+		throws SystemException, NoSuchIssueException {
 
-		Issue issue = issuePersistence.findByIssueNo(issueNo);
-		JournalArticle journalArticle =
-			JournalArticleLocalServiceUtil.getArticle(
-				issue.getJournalArticleId());
-		if (journalArticle.isApproved()) {
-			return issue;
-		}
-		else {
-			return null;
-		}
+		return issuePersistence.findByIssueNoAndStatus(
+			issueNo, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	public Map<Integer, List<Issue>> getApprovedIssuesByYear()
 		throws SystemException, PortalException {
 
-		List<Issue> allIssues = issuePersistence.findAll();
-		
-		List<Issue> approvedIssues = filterApprovedIssues(allIssues);
+		List<Issue> issues = 
+			issuePersistence.findByApproved(WorkflowConstants.STATUS_APPROVED);
 		
 		Map<Integer, List<Issue>> issuesByYear 
 			= new LinkedHashMap<Integer, List<Issue>>();
 		
-		for (Issue issue : approvedIssues) {
+		for (Issue issue : issues) {
 			int issueYear = issue.getIssueYear();
 
 			List<Issue> issuesThisYear;
@@ -167,21 +173,4 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return issuePersistence.findByJournalArticleId(journalArticleId);
 	}
 	
-	private List<Issue> filterApprovedIssues(List<Issue> allIssues) 
-		throws PortalException, SystemException {
-		
-		List<Issue> approvedIssues = new ArrayList<Issue>();
-		
-		for (Issue issue : allIssues) {
-			JournalArticle journalArticle 
-				= JournalArticleLocalServiceUtil.getArticle(
-					issue.getJournalArticleId());
-			
-			if (journalArticle.isApproved()) {
-				approvedIssues.add(issue);
-			}
-		}
-		return approvedIssues;
-	}
-
 }

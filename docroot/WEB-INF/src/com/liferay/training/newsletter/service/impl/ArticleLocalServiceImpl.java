@@ -16,15 +16,13 @@ package com.liferay.training.newsletter.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.training.newsletter.NoSuchArticleException;
 import com.liferay.training.newsletter.model.Article;
 import com.liferay.training.newsletter.model.Issue;
 import com.liferay.training.newsletter.service.IssueLocalServiceUtil;
 import com.liferay.training.newsletter.service.base.ArticleLocalServiceBaseImpl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -59,15 +57,14 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	public Article addArticle(
 			long journalArticleId, long groupId, long companyId, long userId, 
 			String userName, int issueNo, String title, String author, 
-			int order, String content) 
+			int order, String content, int status) 
 		throws SystemException, PortalException {
 
 		long articleId = counterLocalService.increment(Article.class.getName());
 		Article article = createArticle(articleId);
-		article.setArticleId(articleId);
 		
 		Issue issue = 
-			IssueLocalServiceUtil.getIssueByJournalArticleId(journalArticleId);
+			IssueLocalServiceUtil.getIssueByIssueNo(issueNo);
 		long issueId = issue.getIssueId();
 		article.setIssueId(issueId);
 		
@@ -86,6 +83,8 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		article.setAuthor(author);
 		article.setOrder(order);
 		article.setContent(content);
+		
+		article.setStatus(status);
 
 		return super.addArticle(article);
 	}
@@ -93,14 +92,14 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	public Article updateArticle(
 			long journalArticleId, long groupId, long companyId, 
 			long userId, String userName, int issueNo, String title, 
-			String author, int order, String content)
+			String author, int order, String content, int status)
 		throws SystemException, PortalException {
 
 		Article article = getArticleByJournalArticleId(journalArticleId);
 
 		Date now = new Date();
 		Issue issue =
-			IssueLocalServiceUtil.getIssueByJournalArticleId(journalArticleId);
+			IssueLocalServiceUtil.getIssueByIssueNo(issueNo);
 		long issueId = issue.getIssueId();
 
 		article.setIssueId(issueId);
@@ -116,26 +115,16 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		article.setAuthor(author);
 		article.setOrder(order);
 		article.setContent(content);
+		
+		article.setStatus(status);
 
 		return super.updateArticle(article);
 	}
 	
 	public List<Article> getApprovedArticlesByIssueNo(int issueNo) 
-		throws SystemException, PortalException {
+		throws SystemException {
 		
-		List<Article> allArticles = articlePersistence.findByIssueNo(issueNo);
-		List<Article> approvedArticles = new ArrayList<Article>();
-		
-		for (Article article : allArticles) {
-			long journalArticleId = article.getJournalArticleId();
-			JournalArticle journalArticle 
-				= JournalArticleLocalServiceUtil.getArticle(journalArticleId);
-			
-			if (journalArticle.isApproved()) {
-				approvedArticles.add(article);
-			}
-		}
-		return approvedArticles;
+		return articlePersistence.findByIssueNo(issueNo, WorkflowConstants.STATUS_APPROVED);
 	}
 	
 	public Article getArticleByJournalArticleId(long journalArticleId) 
