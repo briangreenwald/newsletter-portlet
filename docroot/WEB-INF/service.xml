@@ -12,7 +12,7 @@
 		
 		<!-- Foreign Key Field -->
 		
-		<column name="journalArticleId" type="long" /> <!-- A reference to the JournalArticle created through WCM -->
+		<column name="journalArticleId" type="String" /> <!-- A reference to the JournalArticle created through WCM -->
 
 		<!-- Group instance -->
 
@@ -73,7 +73,7 @@
 		<!-- Foreign Key fields -->
 		
 		<column name="issueId" type="long" /> <!-- The issue the article belongs to -->
-		<column name="journalArticleId" type="long" /> <!-- A reference to the JournalArticle created through WCM -->
+		<column name="journalArticleId" type="String" /> <!-- A reference to the JournalArticle created through WCM -->
 
 		<!-- Group instance -->
 

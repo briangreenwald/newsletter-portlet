@@ -59,7 +59,7 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	 */
 	
 	public Article addArticle(
-			long journalArticleId, long groupId, long companyId, long userId, 
+			String journalArticleId, long groupId, long companyId, long userId, 
 			String userName, int issueNo, String title, String author, 
 			int order, String content, int status) 
 		throws SystemException, PortalException {
@@ -90,20 +90,22 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		
 		article.setStatus(status);
 		
-		Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
-		
-		try {
-			indexer.reindex(issue);
-		}
-		catch (SearchException se) {
-			System.out.println("Search Exception:" + se);
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			
+			Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
+			try {
+				indexer.reindex(issue);
+			}
+			catch (SearchException se) {
+				System.out.println("Search Exception:" + se);
+			}
 		}
 
 		return super.addArticle(article);
 	}
 
 	public Article updateArticle(
-			long journalArticleId, long groupId, long companyId, 
+			String journalArticleId, long groupId, long companyId, 
 			long userId, String userName, int issueNo, String title, 
 			String author, int order, String content, int status)
 		throws SystemException, PortalException {
@@ -130,16 +132,17 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		article.setContent(content);
 		
 		article.setStatus(status);
-		
-		Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
-		
-		try {
-			indexer.reindex(issue);
-		}
-		catch (SearchException se) {
-			System.out.println("Search Exception:" + se);
-		}
 
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			
+			Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
+			try {
+				indexer.reindex(issue);
+			}
+			catch (SearchException se) {
+				System.out.println("Search Exception:" + se);
+			}
+		}
 		return super.updateArticle(article);
 	}
 	
@@ -172,7 +175,7 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		return articlePersistence.findByIssueNo(issueNo, WorkflowConstants.STATUS_APPROVED);
 	}
 	
-	public Article getArticleByJournalArticleId(long journalArticleId) 
+	public Article getArticleByJournalArticleId(String journalArticleId) 
 		throws NoSuchArticleException, SystemException {
 		
 		return articlePersistence.findByJournalArticleId(journalArticleId);

@@ -53,7 +53,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	 */
 
 	public Issue addIssue(
-		long journalArticleId, long groupId, long companyId, long userId,
+		String journalArticleId, long groupId, long companyId, long userId,
 		String userName, int issueNo, String title, String description,
 		Date issueDate, String byline, int status)
 		throws SystemException {
@@ -88,20 +88,22 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		
 		issue.setStatus(status);
 		
-		Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
-		
-		try {
-			indexer.reindex(issue);
-		}
-		catch (SearchException se) {
-			System.out.println("Search Exception:" + se);
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			
+			Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
+			try {
+				indexer.reindex(issue);
+			}
+			catch (SearchException se) {
+				System.out.println("Search Exception:" + se);
+			}
 		}
 
 		return super.addIssue(issue);
 	}
 
 	public Issue updateIssue(
-		long journalArticleId, long groupId, long companyId, long userId,
+		String journalArticleId, long groupId, long companyId, long userId,
 		String userName, int issueNo, String title, String description,
 		Date issueDate, String byline, int status)
 		throws SystemException, PortalException {
@@ -132,15 +134,17 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		
 		issue.setStatus(status);
 		
-		Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			
+			Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
+			try {
+				indexer.reindex(issue);
+			}
+			catch (SearchException se) {
+				System.out.println("Search Exception:" + se);
+			}
+		}
 		
-		try {
-			indexer.reindex(issue);
-		}
-		catch (SearchException se) {
-			System.out.println("Search Exception:" + se);
-		}
-
 		return super.updateIssue(issue);
 	}
 	
@@ -210,7 +214,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return issuesByYear;
 	}
 
-	public Issue getIssueByJournalArticleId(long journalArticleId)
+	public Issue getIssueByJournalArticleId(String journalArticleId)
 		throws NoSuchIssueException, SystemException {
 
 		return issuePersistence.findByJournalArticleId(journalArticleId);
