@@ -117,16 +117,16 @@ public class IssueLocalServiceClp implements IssueLocalService {
 		_methodName19 = "addIssue";
 
 		_methodParameterTypes19 = new String[] {
-				"long", "long", "long", "long", "java.lang.String", "int",
-				"java.lang.String", "java.lang.String", "java.util.Date",
+				"java.lang.String", "long", "long", "long", "java.lang.String",
+				"int", "java.lang.String", "java.lang.String", "java.util.Date",
 				"java.lang.String", "int"
 			};
 
 		_methodName20 = "updateIssue";
 
 		_methodParameterTypes20 = new String[] {
-				"long", "long", "long", "long", "java.lang.String", "int",
-				"java.lang.String", "java.lang.String", "java.util.Date",
+				"java.lang.String", "long", "long", "long", "java.lang.String",
+				"int", "java.lang.String", "java.lang.String", "java.util.Date",
 				"java.lang.String", "int"
 			};
 
@@ -144,7 +144,7 @@ public class IssueLocalServiceClp implements IssueLocalService {
 
 		_methodName24 = "getIssueByJournalArticleId";
 
-		_methodParameterTypes24 = new String[] { "long" };
+		_methodParameterTypes24 = new String[] { "java.lang.String" };
 	}
 
 	@Override
@@ -695,10 +695,10 @@ public class IssueLocalServiceClp implements IssueLocalService {
 
 	@Override
 	public com.liferay.training.newsletter.model.Issue addIssue(
-		long journalArticleId, long groupId, long companyId, long userId,
-		java.lang.String userName, int issueNo, java.lang.String title,
-		java.lang.String description, java.util.Date issueDate,
-		java.lang.String byline, int status)
+		java.lang.String journalArticleId, long groupId, long companyId,
+		long userId, java.lang.String userName, int issueNo,
+		java.lang.String title, java.lang.String description,
+		java.util.Date issueDate, java.lang.String byline, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -706,7 +706,7 @@ public class IssueLocalServiceClp implements IssueLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
 					_methodParameterTypes19,
 					new Object[] {
-						journalArticleId,
+						ClpSerializer.translateInput(journalArticleId),
 						
 					groupId,
 						
@@ -750,10 +750,10 @@ public class IssueLocalServiceClp implements IssueLocalService {
 
 	@Override
 	public com.liferay.training.newsletter.model.Issue updateIssue(
-		long journalArticleId, long groupId, long companyId, long userId,
-		java.lang.String userName, int issueNo, java.lang.String title,
-		java.lang.String description, java.util.Date issueDate,
-		java.lang.String byline, int status)
+		java.lang.String journalArticleId, long groupId, long companyId,
+		long userId, java.lang.String userName, int issueNo,
+		java.lang.String title, java.lang.String description,
+		java.util.Date issueDate, java.lang.String byline, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -762,7 +762,7 @@ public class IssueLocalServiceClp implements IssueLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName20,
 					_methodParameterTypes20,
 					new Object[] {
-						journalArticleId,
+						ClpSerializer.translateInput(journalArticleId),
 						
 					groupId,
 						
@@ -911,14 +911,16 @@ public class IssueLocalServiceClp implements IssueLocalService {
 
 	@Override
 	public com.liferay.training.newsletter.model.Issue getIssueByJournalArticleId(
-		long journalArticleId)
+		java.lang.String journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchIssueException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24, new Object[] { journalArticleId });
+					_methodParameterTypes24,
+					new Object[] { ClpSerializer.translateInput(
+							journalArticleId) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

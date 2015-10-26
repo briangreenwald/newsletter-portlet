@@ -1,7 +1,7 @@
 create table newsletter_Article (
 	articleId LONG not null primary key,
 	issueId LONG,
-	journalArticleId LONG,
+	journalArticleId VARCHAR(75) null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -18,7 +18,7 @@ create table newsletter_Article (
 
 create table newsletter_Issue (
 	issueId LONG not null primary key,
-	journalArticleId LONG,
+	journalArticleId VARCHAR(75) null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,

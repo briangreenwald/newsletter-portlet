@@ -77,7 +77,7 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 			setIssueId(issueId);
 		}
 
-		Long journalArticleId = (Long)attributes.get("journalArticleId");
+		String journalArticleId = (String)attributes.get("journalArticleId");
 
 		if (journalArticleId != null) {
 			setJournalArticleId(journalArticleId);
@@ -214,7 +214,7 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 	* @return the journal article ID of this issue
 	*/
 	@Override
-	public long getJournalArticleId() {
+	public java.lang.String getJournalArticleId() {
 		return _issue.getJournalArticleId();
 	}
 
@@ -224,7 +224,7 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 	* @param journalArticleId the journal article ID of this issue
 	*/
 	@Override
-	public void setJournalArticleId(long journalArticleId) {
+	public void setJournalArticleId(java.lang.String journalArticleId) {
 		_issue.setJournalArticleId(journalArticleId);
 	}
 

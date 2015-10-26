@@ -117,16 +117,16 @@ public class IssueLocalServiceClpInvoker {
 		_methodName42 = "addIssue";
 
 		_methodParameterTypes42 = new String[] {
-				"long", "long", "long", "long", "java.lang.String", "int",
-				"java.lang.String", "java.lang.String", "java.util.Date",
+				"java.lang.String", "long", "long", "long", "java.lang.String",
+				"int", "java.lang.String", "java.lang.String", "java.util.Date",
 				"java.lang.String", "int"
 			};
 
 		_methodName43 = "updateIssue";
 
 		_methodParameterTypes43 = new String[] {
-				"long", "long", "long", "long", "java.lang.String", "int",
-				"java.lang.String", "java.lang.String", "java.util.Date",
+				"java.lang.String", "long", "long", "long", "java.lang.String",
+				"int", "java.lang.String", "java.lang.String", "java.util.Date",
 				"java.lang.String", "int"
 			};
 
@@ -158,7 +158,7 @@ public class IssueLocalServiceClpInvoker {
 
 		_methodName50 = "getIssueByJournalArticleId";
 
-		_methodParameterTypes50 = new String[] { "long" };
+		_methodParameterTypes50 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -264,7 +264,7 @@ public class IssueLocalServiceClpInvoker {
 
 		if (_methodName42.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
-			return IssueLocalServiceUtil.addIssue(((Long)arguments[0]).longValue(),
+			return IssueLocalServiceUtil.addIssue((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
 				((Long)arguments[3]).longValue(),
@@ -277,7 +277,7 @@ public class IssueLocalServiceClpInvoker {
 
 		if (_methodName43.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes43, parameterTypes)) {
-			return IssueLocalServiceUtil.updateIssue(((Long)arguments[0]).longValue(),
+			return IssueLocalServiceUtil.updateIssue((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
 				((Long)arguments[3]).longValue(),
@@ -321,7 +321,7 @@ public class IssueLocalServiceClpInvoker {
 
 		if (_methodName50.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
-			return IssueLocalServiceUtil.getIssueByJournalArticleId(((Long)arguments[0]).longValue());
+			return IssueLocalServiceUtil.getIssueByJournalArticleId((java.lang.String)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();

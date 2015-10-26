@@ -117,26 +117,32 @@ public class ArticleLocalServiceClpInvoker {
 		_methodName42 = "addArticle";
 
 		_methodParameterTypes42 = new String[] {
-				"long", "long", "long", "long", "java.lang.String", "int",
-				"java.lang.String", "java.lang.String", "int",
+				"java.lang.String", "long", "long", "long", "java.lang.String",
+				"int", "java.lang.String", "java.lang.String", "int",
 				"java.lang.String", "int"
 			};
 
 		_methodName43 = "updateArticle";
 
 		_methodParameterTypes43 = new String[] {
-				"long", "long", "long", "long", "java.lang.String", "int",
-				"java.lang.String", "java.lang.String", "int",
+				"java.lang.String", "long", "long", "long", "java.lang.String",
+				"int", "java.lang.String", "java.lang.String", "int",
 				"java.lang.String", "int"
 			};
 
-		_methodName44 = "getApprovedArticlesByIssueNo";
+		_methodName44 = "deleteArticle";
 
-		_methodParameterTypes44 = new String[] { "int" };
+		_methodParameterTypes44 = new String[] {
+				"com.liferay.training.newsletter.model.Article"
+			};
 
-		_methodName45 = "getArticleByJournalArticleId";
+		_methodName45 = "getApprovedArticlesByIssueNo";
 
-		_methodParameterTypes45 = new String[] { "long" };
+		_methodParameterTypes45 = new String[] { "int" };
+
+		_methodName46 = "getArticleByJournalArticleId";
+
+		_methodParameterTypes46 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -242,7 +248,7 @@ public class ArticleLocalServiceClpInvoker {
 
 		if (_methodName42.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
-			return ArticleLocalServiceUtil.addArticle(((Long)arguments[0]).longValue(),
+			return ArticleLocalServiceUtil.addArticle((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
 				((Long)arguments[3]).longValue(),
@@ -256,7 +262,7 @@ public class ArticleLocalServiceClpInvoker {
 
 		if (_methodName43.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes43, parameterTypes)) {
-			return ArticleLocalServiceUtil.updateArticle(((Long)arguments[0]).longValue(),
+			return ArticleLocalServiceUtil.updateArticle((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
 				((Long)arguments[3]).longValue(),
@@ -270,12 +276,17 @@ public class ArticleLocalServiceClpInvoker {
 
 		if (_methodName44.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
-			return ArticleLocalServiceUtil.getApprovedArticlesByIssueNo(((Integer)arguments[0]).intValue());
+			return ArticleLocalServiceUtil.deleteArticle((com.liferay.training.newsletter.model.Article)arguments[0]);
 		}
 
 		if (_methodName45.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
-			return ArticleLocalServiceUtil.getArticleByJournalArticleId(((Long)arguments[0]).longValue());
+			return ArticleLocalServiceUtil.getApprovedArticlesByIssueNo(((Integer)arguments[0]).intValue());
+		}
+
+		if (_methodName46.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
+			return ArticleLocalServiceUtil.getArticleByJournalArticleId((java.lang.String)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -325,4 +336,6 @@ public class ArticleLocalServiceClpInvoker {
 	private String[] _methodParameterTypes44;
 	private String _methodName45;
 	private String[] _methodParameterTypes45;
+	private String _methodName46;
+	private String[] _methodParameterTypes46;
 }

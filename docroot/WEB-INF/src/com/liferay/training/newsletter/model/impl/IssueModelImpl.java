@@ -62,7 +62,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	public static final String TABLE_NAME = "newsletter_Issue";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "issueId", Types.BIGINT },
-			{ "journalArticleId", Types.BIGINT },
+			{ "journalArticleId", Types.VARCHAR },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
@@ -78,7 +78,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 			{ "byline", Types.VARCHAR },
 			{ "status", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table newsletter_Issue (issueId LONG not null primary key,journalArticleId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,description VARCHAR(75) null,issueDate DATE null,issueMonth INTEGER,issueYear INTEGER,byline VARCHAR(75) null,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table newsletter_Issue (issueId LONG not null primary key,journalArticleId VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,description VARCHAR(75) null,issueDate DATE null,issueMonth INTEGER,issueYear INTEGER,byline VARCHAR(75) null,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table newsletter_Issue";
 	public static final String ORDER_BY_JPQL = " ORDER BY issue.issueDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY newsletter_Issue.issueDate DESC";
@@ -166,7 +166,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 			setIssueId(issueId);
 		}
 
-		Long journalArticleId = (Long)attributes.get("journalArticleId");
+		String journalArticleId = (String)attributes.get("journalArticleId");
 
 		if (journalArticleId != null) {
 			setJournalArticleId(journalArticleId);
@@ -268,25 +268,28 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	}
 
 	@Override
-	public long getJournalArticleId() {
-		return _journalArticleId;
+	public String getJournalArticleId() {
+		if (_journalArticleId == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _journalArticleId;
+		}
 	}
 
 	@Override
-	public void setJournalArticleId(long journalArticleId) {
+	public void setJournalArticleId(String journalArticleId) {
 		_columnBitmask |= JOURNALARTICLEID_COLUMN_BITMASK;
 
-		if (!_setOriginalJournalArticleId) {
-			_setOriginalJournalArticleId = true;
-
+		if (_originalJournalArticleId == null) {
 			_originalJournalArticleId = _journalArticleId;
 		}
 
 		_journalArticleId = journalArticleId;
 	}
 
-	public long getOriginalJournalArticleId() {
-		return _originalJournalArticleId;
+	public String getOriginalJournalArticleId() {
+		return GetterUtil.getString(_originalJournalArticleId);
 	}
 
 	@Override
@@ -586,8 +589,6 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 		issueModelImpl._originalJournalArticleId = issueModelImpl._journalArticleId;
 
-		issueModelImpl._setOriginalJournalArticleId = false;
-
 		issueModelImpl._originalIssueNo = issueModelImpl._issueNo;
 
 		issueModelImpl._setOriginalIssueNo = false;
@@ -606,6 +607,12 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		issueCacheModel.issueId = getIssueId();
 
 		issueCacheModel.journalArticleId = getJournalArticleId();
+
+		String journalArticleId = issueCacheModel.journalArticleId;
+
+		if ((journalArticleId != null) && (journalArticleId.length() == 0)) {
+			issueCacheModel.journalArticleId = null;
+		}
 
 		issueCacheModel.groupId = getGroupId();
 
@@ -805,9 +812,8 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	private static ClassLoader _classLoader = Issue.class.getClassLoader();
 	private static Class<?>[] _escapedModelInterfaces = new Class[] { Issue.class };
 	private long _issueId;
-	private long _journalArticleId;
-	private long _originalJournalArticleId;
-	private boolean _setOriginalJournalArticleId;
+	private String _journalArticleId;
+	private String _originalJournalArticleId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

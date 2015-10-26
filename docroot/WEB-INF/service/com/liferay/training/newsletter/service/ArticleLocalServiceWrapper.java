@@ -286,9 +286,10 @@ public class ArticleLocalServiceWrapper implements ArticleLocalService,
 
 	@Override
 	public com.liferay.training.newsletter.model.Article addArticle(
-		long journalArticleId, long groupId, long companyId, long userId,
-		java.lang.String userName, int issueNo, java.lang.String title,
-		java.lang.String author, int order, java.lang.String content, int status)
+		java.lang.String journalArticleId, long groupId, long companyId,
+		long userId, java.lang.String userName, int issueNo,
+		java.lang.String title, java.lang.String author, int order,
+		java.lang.String content, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _articleLocalService.addArticle(journalArticleId, groupId,
@@ -298,9 +299,10 @@ public class ArticleLocalServiceWrapper implements ArticleLocalService,
 
 	@Override
 	public com.liferay.training.newsletter.model.Article updateArticle(
-		long journalArticleId, long groupId, long companyId, long userId,
-		java.lang.String userName, int issueNo, java.lang.String title,
-		java.lang.String author, int order, java.lang.String content, int status)
+		java.lang.String journalArticleId, long groupId, long companyId,
+		long userId, java.lang.String userName, int issueNo,
+		java.lang.String title, java.lang.String author, int order,
+		java.lang.String content, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _articleLocalService.updateArticle(journalArticleId, groupId,
@@ -316,7 +318,7 @@ public class ArticleLocalServiceWrapper implements ArticleLocalService,
 
 	@Override
 	public com.liferay.training.newsletter.model.Article getArticleByJournalArticleId(
-		long journalArticleId)
+		java.lang.String journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchArticleException {
 		return _articleLocalService.getArticleByJournalArticleId(journalArticleId);

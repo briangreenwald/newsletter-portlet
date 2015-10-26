@@ -10,7 +10,7 @@
 			<generator class="assigned" />
 		</id>
 		<property name="issueId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="journalArticleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="journalArticleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -29,7 +29,7 @@
 		<id name="issueId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="journalArticleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="journalArticleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

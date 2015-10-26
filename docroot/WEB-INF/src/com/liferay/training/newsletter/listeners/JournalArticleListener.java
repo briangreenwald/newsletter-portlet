@@ -53,7 +53,7 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 			String issueNumnber = parseField(articleContent, ISSUE_NO);
 			int issueNo = Integer.parseInt(issueNumnber);
 
-			long journalArticleId = journalArticle.getPrimaryKey();
+			String journalArticleId = journalArticle.getArticleId();
 			long groupId = journalArticle.getGroupId();
 			long companyId = journalArticle.getCompanyId();
 			long userId = journalArticle.getUserId();
@@ -68,9 +68,21 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 				String byline = parseField(articleContent, BYLINE);
 
 				try {
-					IssueLocalServiceUtil.addIssue(
-						journalArticleId, groupId, companyId, userId, userName,
-						issueNo, title, description, issueDate, byline, status);
+					// If this is the first version, create a new Issue object.
+					// Otherwise, update the existing issue associated with the
+					// JournalArticle
+					if (journalArticle.getVersion() == 1) {
+						IssueLocalServiceUtil.addIssue(
+							journalArticleId, groupId, companyId, userId, 
+							userName, issueNo, title, description, issueDate, 
+							byline, status);
+					}
+					else {
+						IssueLocalServiceUtil.updateIssue(
+							journalArticleId, groupId, companyId, userId, 
+							userName, issueNo, title, description, issueDate, 
+							byline, status);
+					}
 				}
 				catch (Exception e) {
 					_log.error(String.format(
@@ -84,9 +96,21 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 				String content = parseField(articleContent, CONTENT);
 
 				try {
-					ArticleLocalServiceUtil.addArticle(
-						journalArticleId, groupId, companyId, userId, userName,
-						issueNo, title, author, order, content, status);
+					// If this is the first version, create a new Article 
+					// object. Otherwise, update the existing article associated
+					// with the JournalArticle
+					if (journalArticle.getVersion() == 1) {
+						ArticleLocalServiceUtil.addArticle(
+							journalArticleId, groupId, companyId, userId, 
+							userName, issueNo, title, author, order, content, 
+							status);
+					}
+					else {
+						ArticleLocalServiceUtil.updateArticle(
+							journalArticleId, groupId, companyId, userId, 
+							userName, issueNo, title, author, order, content, 
+							status);
+					}
 				}
 				catch (Exception e) {
 					_log.error(String.format(
@@ -130,7 +154,7 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 			String issueNumnber = parseField(articleContent, ISSUE_NO);
 			int issueNo = Integer.parseInt(issueNumnber);
 
-			long journalArticleId = journalArticle.getPrimaryKey();
+			String journalArticleId = journalArticle.getArticleId();
 			long groupId = journalArticle.getGroupId();
 			long companyId = journalArticle.getCompanyId();
 			long userId = journalArticle.getUserId();
@@ -193,7 +217,7 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 				journalArticle.getStructureId(), e));
 		}
 		
-		long journalArticleId = journalArticle.getPrimaryKey();
+		String journalArticleId = journalArticle.getArticleId();
 		
 		if (structureName.equalsIgnoreCase(NEWSLETTER_ISSUE)) {
 			try {

@@ -80,14 +80,15 @@ public interface IssueModel extends BaseModel<Issue>, GroupedModel {
 	 *
 	 * @return the journal article ID of this issue
 	 */
-	public long getJournalArticleId();
+	@AutoEscape
+	public String getJournalArticleId();
 
 	/**
 	 * Sets the journal article ID of this issue.
 	 *
 	 * @param journalArticleId the journal article ID of this issue
 	 */
-	public void setJournalArticleId(long journalArticleId);
+	public void setJournalArticleId(String journalArticleId);
 
 	/**
 	 * Returns the group ID of this issue.

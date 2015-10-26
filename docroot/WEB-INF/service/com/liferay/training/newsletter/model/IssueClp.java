@@ -103,7 +103,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 			setIssueId(issueId);
 		}
 
-		Long journalArticleId = (Long)attributes.get("journalArticleId");
+		String journalArticleId = (String)attributes.get("journalArticleId");
 
 		if (journalArticleId != null) {
 			setJournalArticleId(journalArticleId);
@@ -218,12 +218,12 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 	}
 
 	@Override
-	public long getJournalArticleId() {
+	public String getJournalArticleId() {
 		return _journalArticleId;
 	}
 
 	@Override
-	public void setJournalArticleId(long journalArticleId) {
+	public void setJournalArticleId(String journalArticleId) {
 		_journalArticleId = journalArticleId;
 
 		if (_issueRemoteModel != null) {
@@ -231,7 +231,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 				Class<?> clazz = _issueRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setJournalArticleId",
-						long.class);
+						String.class);
 
 				method.invoke(_issueRemoteModel, journalArticleId);
 			}
@@ -828,7 +828,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 	}
 
 	private long _issueId;
-	private long _journalArticleId;
+	private String _journalArticleId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

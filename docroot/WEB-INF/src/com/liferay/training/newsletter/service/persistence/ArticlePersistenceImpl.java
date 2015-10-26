@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -615,12 +616,12 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 	public static final FinderPath FINDER_PATH_FETCH_BY_JOURNALARTICLEID = new FinderPath(ArticleModelImpl.ENTITY_CACHE_ENABLED,
 			ArticleModelImpl.FINDER_CACHE_ENABLED, ArticleImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByJournalArticleId",
-			new String[] { Long.class.getName() },
+			new String[] { String.class.getName() },
 			ArticleModelImpl.JOURNALARTICLEID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_JOURNALARTICLEID = new FinderPath(ArticleModelImpl.ENTITY_CACHE_ENABLED,
 			ArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByJournalArticleId", new String[] { Long.class.getName() });
+			"countByJournalArticleId", new String[] { String.class.getName() });
 
 	/**
 	 * Returns the article where journalArticleId = &#63; or throws a {@link com.liferay.training.newsletter.NoSuchArticleException} if it could not be found.
@@ -631,7 +632,7 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Article findByJournalArticleId(long journalArticleId)
+	public Article findByJournalArticleId(String journalArticleId)
 		throws NoSuchArticleException, SystemException {
 		Article article = fetchByJournalArticleId(journalArticleId);
 
@@ -663,7 +664,7 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Article fetchByJournalArticleId(long journalArticleId)
+	public Article fetchByJournalArticleId(String journalArticleId)
 		throws SystemException {
 		return fetchByJournalArticleId(journalArticleId, true);
 	}
@@ -677,7 +678,7 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Article fetchByJournalArticleId(long journalArticleId,
+	public Article fetchByJournalArticleId(String journalArticleId,
 		boolean retrieveFromCache) throws SystemException {
 		Object[] finderArgs = new Object[] { journalArticleId };
 
@@ -691,7 +692,8 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 		if (result instanceof Article) {
 			Article article = (Article)result;
 
-			if ((journalArticleId != article.getJournalArticleId())) {
+			if (!Validator.equals(journalArticleId,
+						article.getJournalArticleId())) {
 				result = null;
 			}
 		}
@@ -701,7 +703,19 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 
 			query.append(_SQL_SELECT_ARTICLE_WHERE);
 
-			query.append(_FINDER_COLUMN_JOURNALARTICLEID_JOURNALARTICLEID_2);
+			boolean bindJournalArticleId = false;
+
+			if (journalArticleId == null) {
+				query.append(_FINDER_COLUMN_JOURNALARTICLEID_JOURNALARTICLEID_1);
+			}
+			else if (journalArticleId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_JOURNALARTICLEID_JOURNALARTICLEID_3);
+			}
+			else {
+				bindJournalArticleId = true;
+
+				query.append(_FINDER_COLUMN_JOURNALARTICLEID_JOURNALARTICLEID_2);
+			}
 
 			String sql = query.toString();
 
@@ -714,7 +728,9 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(journalArticleId);
+				if (bindJournalArticleId) {
+					qPos.add(journalArticleId);
+				}
 
 				List<Article> list = q.list();
 
@@ -725,7 +741,7 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 				else {
 					if ((list.size() > 1) && _log.isWarnEnabled()) {
 						_log.warn(
-							"ArticlePersistenceImpl.fetchByJournalArticleId(long, boolean) with parameters (" +
+							"ArticlePersistenceImpl.fetchByJournalArticleId(String, boolean) with parameters (" +
 							StringUtil.merge(finderArgs) +
 							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 					}
@@ -736,7 +752,9 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 
 					cacheResult(article);
 
-					if ((article.getJournalArticleId() != journalArticleId)) {
+					if ((article.getJournalArticleId() == null) ||
+							!article.getJournalArticleId()
+										.equals(journalArticleId)) {
 						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_JOURNALARTICLEID,
 							finderArgs, article);
 					}
@@ -769,7 +787,7 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Article removeByJournalArticleId(long journalArticleId)
+	public Article removeByJournalArticleId(String journalArticleId)
 		throws NoSuchArticleException, SystemException {
 		Article article = findByJournalArticleId(journalArticleId);
 
@@ -784,7 +802,7 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByJournalArticleId(long journalArticleId)
+	public int countByJournalArticleId(String journalArticleId)
 		throws SystemException {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_JOURNALARTICLEID;
 
@@ -798,7 +816,19 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 
 			query.append(_SQL_COUNT_ARTICLE_WHERE);
 
-			query.append(_FINDER_COLUMN_JOURNALARTICLEID_JOURNALARTICLEID_2);
+			boolean bindJournalArticleId = false;
+
+			if (journalArticleId == null) {
+				query.append(_FINDER_COLUMN_JOURNALARTICLEID_JOURNALARTICLEID_1);
+			}
+			else if (journalArticleId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_JOURNALARTICLEID_JOURNALARTICLEID_3);
+			}
+			else {
+				bindJournalArticleId = true;
+
+				query.append(_FINDER_COLUMN_JOURNALARTICLEID_JOURNALARTICLEID_2);
+			}
 
 			String sql = query.toString();
 
@@ -811,7 +841,9 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(journalArticleId);
+				if (bindJournalArticleId) {
+					qPos.add(journalArticleId);
+				}
 
 				count = (Long)q.uniqueResult();
 
@@ -830,8 +862,12 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 		return count.intValue();
 	}
 
+	private static final String _FINDER_COLUMN_JOURNALARTICLEID_JOURNALARTICLEID_1 =
+		"article.journalArticleId IS NULL";
 	private static final String _FINDER_COLUMN_JOURNALARTICLEID_JOURNALARTICLEID_2 =
 		"article.journalArticleId = ?";
+	private static final String _FINDER_COLUMN_JOURNALARTICLEID_JOURNALARTICLEID_3 =
+		"(article.journalArticleId IS NULL OR article.journalArticleId = '')";
 
 	public ArticlePersistenceImpl() {
 		setModelClass(Article.class);

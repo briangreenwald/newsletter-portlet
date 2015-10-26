@@ -293,7 +293,7 @@ public class ArticleUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.training.newsletter.model.Article findByJournalArticleId(
-		long journalArticleId)
+		java.lang.String journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchArticleException {
 		return getPersistence().findByJournalArticleId(journalArticleId);
@@ -307,7 +307,7 @@ public class ArticleUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.training.newsletter.model.Article fetchByJournalArticleId(
-		long journalArticleId)
+		java.lang.String journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByJournalArticleId(journalArticleId);
 	}
@@ -321,7 +321,7 @@ public class ArticleUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.training.newsletter.model.Article fetchByJournalArticleId(
-		long journalArticleId, boolean retrieveFromCache)
+		java.lang.String journalArticleId, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
 				   .fetchByJournalArticleId(journalArticleId, retrieveFromCache);
@@ -335,7 +335,7 @@ public class ArticleUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.training.newsletter.model.Article removeByJournalArticleId(
-		long journalArticleId)
+		java.lang.String journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchArticleException {
 		return getPersistence().removeByJournalArticleId(journalArticleId);
@@ -348,7 +348,7 @@ public class ArticleUtil {
 	* @return the number of matching articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByJournalArticleId(long journalArticleId)
+	public static int countByJournalArticleId(java.lang.String journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByJournalArticleId(journalArticleId);
 	}

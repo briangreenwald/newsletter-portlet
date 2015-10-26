@@ -282,10 +282,10 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 
 	@Override
 	public com.liferay.training.newsletter.model.Issue addIssue(
-		long journalArticleId, long groupId, long companyId, long userId,
-		java.lang.String userName, int issueNo, java.lang.String title,
-		java.lang.String description, java.util.Date issueDate,
-		java.lang.String byline, int status)
+		java.lang.String journalArticleId, long groupId, long companyId,
+		long userId, java.lang.String userName, int issueNo,
+		java.lang.String title, java.lang.String description,
+		java.util.Date issueDate, java.lang.String byline, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _issueLocalService.addIssue(journalArticleId, groupId,
 			companyId, userId, userName, issueNo, title, description,
@@ -294,10 +294,10 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 
 	@Override
 	public com.liferay.training.newsletter.model.Issue updateIssue(
-		long journalArticleId, long groupId, long companyId, long userId,
-		java.lang.String userName, int issueNo, java.lang.String title,
-		java.lang.String description, java.util.Date issueDate,
-		java.lang.String byline, int status)
+		java.lang.String journalArticleId, long groupId, long companyId,
+		long userId, java.lang.String userName, int issueNo,
+		java.lang.String title, java.lang.String description,
+		java.util.Date issueDate, java.lang.String byline, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _issueLocalService.updateIssue(journalArticleId, groupId,
@@ -330,7 +330,7 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 
 	@Override
 	public com.liferay.training.newsletter.model.Issue getIssueByJournalArticleId(
-		long journalArticleId)
+		java.lang.String journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchIssueException {
 		return _issueLocalService.getIssueByJournalArticleId(journalArticleId);

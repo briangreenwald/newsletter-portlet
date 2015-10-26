@@ -303,7 +303,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.training.newsletter.model.Issue findByJournalArticleId(
-		long journalArticleId)
+		java.lang.String journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchIssueException;
 
@@ -315,7 +315,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.training.newsletter.model.Issue fetchByJournalArticleId(
-		long journalArticleId)
+		java.lang.String journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -327,7 +327,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.training.newsletter.model.Issue fetchByJournalArticleId(
-		long journalArticleId, boolean retrieveFromCache)
+		java.lang.String journalArticleId, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -338,7 +338,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.training.newsletter.model.Issue removeByJournalArticleId(
-		long journalArticleId)
+		java.lang.String journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchIssueException;
 
@@ -349,7 +349,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @return the number of matching issues
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByJournalArticleId(long journalArticleId)
+	public int countByJournalArticleId(java.lang.String journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

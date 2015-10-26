@@ -117,16 +117,16 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 		_methodName19 = "addArticle";
 
 		_methodParameterTypes19 = new String[] {
-				"long", "long", "long", "long", "java.lang.String", "int",
-				"java.lang.String", "java.lang.String", "int",
+				"java.lang.String", "long", "long", "long", "java.lang.String",
+				"int", "java.lang.String", "java.lang.String", "int",
 				"java.lang.String", "int"
 			};
 
 		_methodName20 = "updateArticle";
 
 		_methodParameterTypes20 = new String[] {
-				"long", "long", "long", "long", "java.lang.String", "int",
-				"java.lang.String", "java.lang.String", "int",
+				"java.lang.String", "long", "long", "long", "java.lang.String",
+				"int", "java.lang.String", "java.lang.String", "int",
 				"java.lang.String", "int"
 			};
 
@@ -136,7 +136,7 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 
 		_methodName22 = "getArticleByJournalArticleId";
 
-		_methodParameterTypes22 = new String[] { "long" };
+		_methodParameterTypes22 = new String[] { "java.lang.String" };
 	}
 
 	@Override
@@ -691,9 +691,10 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 
 	@Override
 	public com.liferay.training.newsletter.model.Article addArticle(
-		long journalArticleId, long groupId, long companyId, long userId,
-		java.lang.String userName, int issueNo, java.lang.String title,
-		java.lang.String author, int order, java.lang.String content, int status)
+		java.lang.String journalArticleId, long groupId, long companyId,
+		long userId, java.lang.String userName, int issueNo,
+		java.lang.String title, java.lang.String author, int order,
+		java.lang.String content, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -702,7 +703,7 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
 					_methodParameterTypes19,
 					new Object[] {
-						journalArticleId,
+						ClpSerializer.translateInput(journalArticleId),
 						
 					groupId,
 						
@@ -750,9 +751,10 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 
 	@Override
 	public com.liferay.training.newsletter.model.Article updateArticle(
-		long journalArticleId, long groupId, long companyId, long userId,
-		java.lang.String userName, int issueNo, java.lang.String title,
-		java.lang.String author, int order, java.lang.String content, int status)
+		java.lang.String journalArticleId, long groupId, long companyId,
+		long userId, java.lang.String userName, int issueNo,
+		java.lang.String title, java.lang.String author, int order,
+		java.lang.String content, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -761,7 +763,7 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName20,
 					_methodParameterTypes20,
 					new Object[] {
-						journalArticleId,
+						ClpSerializer.translateInput(journalArticleId),
 						
 					groupId,
 						
@@ -837,14 +839,16 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 
 	@Override
 	public com.liferay.training.newsletter.model.Article getArticleByJournalArticleId(
-		long journalArticleId)
+		java.lang.String journalArticleId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchArticleException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22, new Object[] { journalArticleId });
+					_methodParameterTypes22,
+					new Object[] { ClpSerializer.translateInput(
+							journalArticleId) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

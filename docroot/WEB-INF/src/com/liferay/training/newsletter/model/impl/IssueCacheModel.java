@@ -81,7 +81,14 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 		IssueImpl issueImpl = new IssueImpl();
 
 		issueImpl.setIssueId(issueId);
-		issueImpl.setJournalArticleId(journalArticleId);
+
+		if (journalArticleId == null) {
+			issueImpl.setJournalArticleId(StringPool.BLANK);
+		}
+		else {
+			issueImpl.setJournalArticleId(journalArticleId);
+		}
+
 		issueImpl.setGroupId(groupId);
 		issueImpl.setCompanyId(companyId);
 		issueImpl.setUserId(userId);
@@ -150,7 +157,7 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		issueId = objectInput.readLong();
-		journalArticleId = objectInput.readLong();
+		journalArticleId = objectInput.readUTF();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
@@ -171,7 +178,14 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(issueId);
-		objectOutput.writeLong(journalArticleId);
+
+		if (journalArticleId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(journalArticleId);
+		}
+
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
@@ -216,7 +230,7 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 	}
 
 	public long issueId;
-	public long journalArticleId;
+	public String journalArticleId;
 	public long groupId;
 	public long companyId;
 	public long userId;

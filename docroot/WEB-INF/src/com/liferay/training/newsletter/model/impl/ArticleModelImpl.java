@@ -63,7 +63,7 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "articleId", Types.BIGINT },
 			{ "issueId", Types.BIGINT },
-			{ "journalArticleId", Types.BIGINT },
+			{ "journalArticleId", Types.VARCHAR },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
@@ -77,7 +77,7 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 			{ "content", Types.VARCHAR },
 			{ "status", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table newsletter_Article (articleId LONG not null primary key,issueId LONG,journalArticleId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,author VARCHAR(75) null,order_ INTEGER,content STRING null,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table newsletter_Article (articleId LONG not null primary key,issueId LONG,journalArticleId VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,author VARCHAR(75) null,order_ INTEGER,content STRING null,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table newsletter_Article";
 	public static final String ORDER_BY_JPQL = " ORDER BY article.order ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY newsletter_Article.order_ ASC";
@@ -170,7 +170,7 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 			setIssueId(issueId);
 		}
 
-		Long journalArticleId = (Long)attributes.get("journalArticleId");
+		String journalArticleId = (String)attributes.get("journalArticleId");
 
 		if (journalArticleId != null) {
 			setJournalArticleId(journalArticleId);
@@ -270,25 +270,28 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 	}
 
 	@Override
-	public long getJournalArticleId() {
-		return _journalArticleId;
+	public String getJournalArticleId() {
+		if (_journalArticleId == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _journalArticleId;
+		}
 	}
 
 	@Override
-	public void setJournalArticleId(long journalArticleId) {
+	public void setJournalArticleId(String journalArticleId) {
 		_columnBitmask |= JOURNALARTICLEID_COLUMN_BITMASK;
 
-		if (!_setOriginalJournalArticleId) {
-			_setOriginalJournalArticleId = true;
-
+		if (_originalJournalArticleId == null) {
 			_originalJournalArticleId = _journalArticleId;
 		}
 
 		_journalArticleId = journalArticleId;
 	}
 
-	public long getOriginalJournalArticleId() {
-		return _originalJournalArticleId;
+	public String getOriginalJournalArticleId() {
+		return GetterUtil.getString(_originalJournalArticleId);
 	}
 
 	@Override
@@ -573,8 +576,6 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 
 		articleModelImpl._originalJournalArticleId = articleModelImpl._journalArticleId;
 
-		articleModelImpl._setOriginalJournalArticleId = false;
-
 		articleModelImpl._originalIssueNo = articleModelImpl._issueNo;
 
 		articleModelImpl._setOriginalIssueNo = false;
@@ -595,6 +596,12 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 		articleCacheModel.issueId = getIssueId();
 
 		articleCacheModel.journalArticleId = getJournalArticleId();
+
+		String journalArticleId = articleCacheModel.journalArticleId;
+
+		if ((journalArticleId != null) && (journalArticleId.length() == 0)) {
+			articleCacheModel.journalArticleId = null;
+		}
 
 		articleCacheModel.groupId = getGroupId();
 
@@ -780,9 +787,8 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 		};
 	private long _articleId;
 	private long _issueId;
-	private long _journalArticleId;
-	private long _originalJournalArticleId;
-	private boolean _setOriginalJournalArticleId;
+	private String _journalArticleId;
+	private String _originalJournalArticleId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

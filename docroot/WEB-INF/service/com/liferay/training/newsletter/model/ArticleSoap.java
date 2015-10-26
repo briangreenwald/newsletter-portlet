@@ -113,11 +113,11 @@ public class ArticleSoap implements Serializable {
 		_issueId = issueId;
 	}
 
-	public long getJournalArticleId() {
+	public String getJournalArticleId() {
 		return _journalArticleId;
 	}
 
-	public void setJournalArticleId(long journalArticleId) {
+	public void setJournalArticleId(String journalArticleId) {
 		_journalArticleId = journalArticleId;
 	}
 
@@ -219,7 +219,7 @@ public class ArticleSoap implements Serializable {
 
 	private long _articleId;
 	private long _issueId;
-	private long _journalArticleId;
+	private String _journalArticleId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
