@@ -612,223 +612,6 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 
 	private static final String _FINDER_COLUMN_ISSUENO_ISSUENO_2 = "article.issueNo = ? AND ";
 	private static final String _FINDER_COLUMN_ISSUENO_STATUS_2 = "article.status = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_STATUS = new FinderPath(ArticleModelImpl.ENTITY_CACHE_ENABLED,
-			ArticleModelImpl.FINDER_CACHE_ENABLED, ArticleImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByStatus",
-			new String[] { Integer.class.getName() },
-			ArticleModelImpl.STATUS_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_STATUS = new FinderPath(ArticleModelImpl.ENTITY_CACHE_ENABLED,
-			ArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStatus",
-			new String[] { Integer.class.getName() });
-
-	/**
-	 * Returns the article where status = &#63; or throws a {@link com.liferay.training.newsletter.NoSuchArticleException} if it could not be found.
-	 *
-	 * @param status the status
-	 * @return the matching article
-	 * @throws com.liferay.training.newsletter.NoSuchArticleException if a matching article could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Article findByStatus(int status)
-		throws NoSuchArticleException, SystemException {
-		Article article = fetchByStatus(status);
-
-		if (article == null) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchArticleException(msg.toString());
-		}
-
-		return article;
-	}
-
-	/**
-	 * Returns the article where status = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param status the status
-	 * @return the matching article, or <code>null</code> if a matching article could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Article fetchByStatus(int status) throws SystemException {
-		return fetchByStatus(status, true);
-	}
-
-	/**
-	 * Returns the article where status = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param status the status
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching article, or <code>null</code> if a matching article could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Article fetchByStatus(int status, boolean retrieveFromCache)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { status };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_STATUS,
-					finderArgs, this);
-		}
-
-		if (result instanceof Article) {
-			Article article = (Article)result;
-
-			if ((status != article.getStatus())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_SELECT_ARTICLE_WHERE);
-
-			query.append(_FINDER_COLUMN_STATUS_STATUS_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(status);
-
-				List<Article> list = q.list();
-
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_STATUS,
-						finderArgs, list);
-				}
-				else {
-					if ((list.size() > 1) && _log.isWarnEnabled()) {
-						_log.warn(
-							"ArticlePersistenceImpl.fetchByStatus(int, boolean) with parameters (" +
-							StringUtil.merge(finderArgs) +
-							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-					}
-
-					Article article = list.get(0);
-
-					result = article;
-
-					cacheResult(article);
-
-					if ((article.getStatus() != status)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_STATUS,
-							finderArgs, article);
-					}
-				}
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_STATUS,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (Article)result;
-		}
-	}
-
-	/**
-	 * Removes the article where status = &#63; from the database.
-	 *
-	 * @param status the status
-	 * @return the article that was removed
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Article removeByStatus(int status)
-		throws NoSuchArticleException, SystemException {
-		Article article = findByStatus(status);
-
-		return remove(article);
-	}
-
-	/**
-	 * Returns the number of articles where status = &#63;.
-	 *
-	 * @param status the status
-	 * @return the number of matching articles
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public int countByStatus(int status) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_STATUS;
-
-		Object[] finderArgs = new Object[] { status };
-
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_ARTICLE_WHERE);
-
-			query.append(_FINDER_COLUMN_STATUS_STATUS_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(status);
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_STATUS_STATUS_2 = "article.status = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_JOURNALARTICLEID = new FinderPath(ArticleModelImpl.ENTITY_CACHE_ENABLED,
 			ArticleModelImpl.FINDER_CACHE_ENABLED, ArticleImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByJournalArticleId",
@@ -1064,9 +847,6 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 		EntityCacheUtil.putResult(ArticleModelImpl.ENTITY_CACHE_ENABLED,
 			ArticleImpl.class, article.getPrimaryKey(), article);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_STATUS,
-			new Object[] { article.getStatus() }, article);
-
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_JOURNALARTICLEID,
 			new Object[] { article.getJournalArticleId() }, article);
 
@@ -1145,13 +925,7 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 
 	protected void cacheUniqueFindersCache(Article article) {
 		if (article.isNew()) {
-			Object[] args = new Object[] { article.getStatus() };
-
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_STATUS, args,
-				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_STATUS, args, article);
-
-			args = new Object[] { article.getJournalArticleId() };
+			Object[] args = new Object[] { article.getJournalArticleId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_JOURNALARTICLEID,
 				args, Long.valueOf(1));
@@ -1160,16 +934,6 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 		}
 		else {
 			ArticleModelImpl articleModelImpl = (ArticleModelImpl)article;
-
-			if ((articleModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_STATUS.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { article.getStatus() };
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_STATUS, args,
-					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_STATUS, args,
-					article);
-			}
 
 			if ((articleModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_JOURNALARTICLEID.getColumnBitmask()) != 0) {
@@ -1186,20 +950,7 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 	protected void clearUniqueFindersCache(Article article) {
 		ArticleModelImpl articleModelImpl = (ArticleModelImpl)article;
 
-		Object[] args = new Object[] { article.getStatus() };
-
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_STATUS, args);
-
-		if ((articleModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_STATUS.getColumnBitmask()) != 0) {
-			args = new Object[] { articleModelImpl.getOriginalStatus() };
-
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_STATUS, args);
-		}
-
-		args = new Object[] { article.getJournalArticleId() };
+		Object[] args = new Object[] { article.getJournalArticleId() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_JOURNALARTICLEID, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_JOURNALARTICLEID, args);

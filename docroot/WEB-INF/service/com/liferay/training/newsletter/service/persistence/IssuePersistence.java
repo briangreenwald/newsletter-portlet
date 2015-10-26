@@ -158,69 +158,13 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the issue where status = &#63; or throws a {@link com.liferay.training.newsletter.NoSuchIssueException} if it could not be found.
-	*
-	* @param status the status
-	* @return the matching issue
-	* @throws com.liferay.training.newsletter.NoSuchIssueException if a matching issue could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.training.newsletter.model.Issue findByStatus(int status)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.training.newsletter.NoSuchIssueException;
-
-	/**
-	* Returns the issue where status = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param status the status
-	* @return the matching issue, or <code>null</code> if a matching issue could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.training.newsletter.model.Issue fetchByStatus(int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the issue where status = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param status the status
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching issue, or <code>null</code> if a matching issue could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.training.newsletter.model.Issue fetchByStatus(
-		int status, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the issue where status = &#63; from the database.
-	*
-	* @param status the status
-	* @return the issue that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.training.newsletter.model.Issue removeByStatus(
-		int status)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.training.newsletter.NoSuchIssueException;
-
-	/**
-	* Returns the number of issues where status = &#63;.
-	*
-	* @param status the status
-	* @return the number of matching issues
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByStatus(int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the issues where status = &#63;.
 	*
 	* @param status the status
 	* @return the matching issues
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.training.newsletter.model.Issue> findByApproved(
+	public java.util.List<com.liferay.training.newsletter.model.Issue> findByStatus(
 		int status) throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -236,7 +180,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @return the range of matching issues
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.training.newsletter.model.Issue> findByApproved(
+	public java.util.List<com.liferay.training.newsletter.model.Issue> findByStatus(
 		int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -254,7 +198,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @return the ordered range of matching issues
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.training.newsletter.model.Issue> findByApproved(
+	public java.util.List<com.liferay.training.newsletter.model.Issue> findByStatus(
 		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -268,7 +212,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @throws com.liferay.training.newsletter.NoSuchIssueException if a matching issue could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.training.newsletter.model.Issue findByApproved_First(
+	public com.liferay.training.newsletter.model.Issue findByStatus_First(
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -282,7 +226,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @return the first matching issue, or <code>null</code> if a matching issue could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.training.newsletter.model.Issue fetchByApproved_First(
+	public com.liferay.training.newsletter.model.Issue fetchByStatus_First(
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -296,7 +240,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @throws com.liferay.training.newsletter.NoSuchIssueException if a matching issue could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.training.newsletter.model.Issue findByApproved_Last(
+	public com.liferay.training.newsletter.model.Issue findByStatus_Last(
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -310,7 +254,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @return the last matching issue, or <code>null</code> if a matching issue could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.training.newsletter.model.Issue fetchByApproved_Last(
+	public com.liferay.training.newsletter.model.Issue fetchByStatus_Last(
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -325,7 +269,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @throws com.liferay.training.newsletter.NoSuchIssueException if a issue with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.training.newsletter.model.Issue[] findByApproved_PrevAndNext(
+	public com.liferay.training.newsletter.model.Issue[] findByStatus_PrevAndNext(
 		long issueId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -337,7 +281,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @param status the status
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByApproved(int status)
+	public void removeByStatus(int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -347,7 +291,7 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	* @return the number of matching issues
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByApproved(int status)
+	public int countByStatus(int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

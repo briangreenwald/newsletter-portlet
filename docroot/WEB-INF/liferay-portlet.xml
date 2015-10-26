@@ -6,6 +6,9 @@
 	<portlet>
 		<portlet-name>newsletter</portlet-name>
 		<icon>/icon.png</icon>
+		<indexer-class>
+			com.liferay.training.newsletter.search.IssueIndexer
+		</indexer-class>
 		<friendly-url-mapper-class>
 			com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper
 		</friendly-url-mapper-class>

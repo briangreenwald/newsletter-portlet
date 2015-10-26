@@ -130,21 +130,35 @@ public class IssueLocalServiceClpInvoker {
 				"java.lang.String", "int"
 			};
 
-		_methodName44 = "getIssueByIssueNo";
+		_methodName44 = "deleteIssue";
 
-		_methodParameterTypes44 = new String[] { "int" };
+		_methodParameterTypes44 = new String[] {
+				"com.liferay.training.newsletter.model.Issue"
+			};
 
-		_methodName45 = "getApprovedIssueByIssueNo";
+		_methodName45 = "getIssues";
 
-		_methodParameterTypes45 = new String[] { "int" };
+		_methodParameterTypes45 = new String[] { "int", "int" };
 
-		_methodName46 = "getApprovedIssuesByYear";
+		_methodName46 = "getIssuesCount";
 
 		_methodParameterTypes46 = new String[] {  };
 
-		_methodName47 = "getIssueByJournalArticleId";
+		_methodName47 = "getIssueByIssueNo";
 
-		_methodParameterTypes47 = new String[] { "long" };
+		_methodParameterTypes47 = new String[] { "int" };
+
+		_methodName48 = "getApprovedIssueByIssueNo";
+
+		_methodParameterTypes48 = new String[] { "int" };
+
+		_methodName49 = "getApprovedIssuesByYear";
+
+		_methodParameterTypes49 = new String[] {  };
+
+		_methodName50 = "getIssueByJournalArticleId";
+
+		_methodParameterTypes50 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -276,21 +290,37 @@ public class IssueLocalServiceClpInvoker {
 
 		if (_methodName44.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
-			return IssueLocalServiceUtil.getIssueByIssueNo(((Integer)arguments[0]).intValue());
+			return IssueLocalServiceUtil.deleteIssue((com.liferay.training.newsletter.model.Issue)arguments[0]);
 		}
 
 		if (_methodName45.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
-			return IssueLocalServiceUtil.getApprovedIssueByIssueNo(((Integer)arguments[0]).intValue());
+			return IssueLocalServiceUtil.getIssues(((Integer)arguments[0]).intValue(),
+				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName46.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
-			return IssueLocalServiceUtil.getApprovedIssuesByYear();
+			return IssueLocalServiceUtil.getIssuesCount();
 		}
 
 		if (_methodName47.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
+			return IssueLocalServiceUtil.getIssueByIssueNo(((Integer)arguments[0]).intValue());
+		}
+
+		if (_methodName48.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
+			return IssueLocalServiceUtil.getApprovedIssueByIssueNo(((Integer)arguments[0]).intValue());
+		}
+
+		if (_methodName49.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
+			return IssueLocalServiceUtil.getApprovedIssuesByYear();
+		}
+
+		if (_methodName50.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
 			return IssueLocalServiceUtil.getIssueByJournalArticleId(((Long)arguments[0]).longValue());
 		}
 
@@ -345,4 +375,10 @@ public class IssueLocalServiceClpInvoker {
 	private String[] _methodParameterTypes46;
 	private String _methodName47;
 	private String[] _methodParameterTypes47;
+	private String _methodName48;
+	private String[] _methodParameterTypes48;
+	private String _methodName49;
+	private String[] _methodParameterTypes49;
+	private String _methodName50;
+	private String[] _methodParameterTypes50;
 }

@@ -186,63 +186,6 @@ public interface ArticlePersistence extends BasePersistence<Article> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the article where status = &#63; or throws a {@link com.liferay.training.newsletter.NoSuchArticleException} if it could not be found.
-	*
-	* @param status the status
-	* @return the matching article
-	* @throws com.liferay.training.newsletter.NoSuchArticleException if a matching article could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.training.newsletter.model.Article findByStatus(
-		int status)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.training.newsletter.NoSuchArticleException;
-
-	/**
-	* Returns the article where status = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param status the status
-	* @return the matching article, or <code>null</code> if a matching article could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.training.newsletter.model.Article fetchByStatus(
-		int status) throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the article where status = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param status the status
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching article, or <code>null</code> if a matching article could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.training.newsletter.model.Article fetchByStatus(
-		int status, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the article where status = &#63; from the database.
-	*
-	* @param status the status
-	* @return the article that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.training.newsletter.model.Article removeByStatus(
-		int status)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.training.newsletter.NoSuchArticleException;
-
-	/**
-	* Returns the number of articles where status = &#63;.
-	*
-	* @param status the status
-	* @return the number of matching articles
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByStatus(int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns the article where journalArticleId = &#63; or throws a {@link com.liferay.training.newsletter.NoSuchArticleException} if it could not be found.
 	*
 	* @param journalArticleId the journal article ID
