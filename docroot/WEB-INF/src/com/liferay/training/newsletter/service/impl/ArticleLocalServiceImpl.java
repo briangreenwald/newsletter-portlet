@@ -16,8 +16,12 @@ package com.liferay.training.newsletter.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.training.newsletter.NoSuchArticleException;
+import com.liferay.training.newsletter.NoSuchIssueException;
 import com.liferay.training.newsletter.model.Article;
 import com.liferay.training.newsletter.model.Issue;
 import com.liferay.training.newsletter.service.IssueLocalServiceUtil;
@@ -85,6 +89,15 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		article.setContent(content);
 		
 		article.setStatus(status);
+		
+		Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
+		
+		try {
+			indexer.reindex(issue);
+		}
+		catch (SearchException se) {
+			System.out.println("Search Exception:" + se);
+		}
 
 		return super.addArticle(article);
 	}
@@ -117,8 +130,40 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		article.setContent(content);
 		
 		article.setStatus(status);
+		
+		Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
+		
+		try {
+			indexer.reindex(issue);
+		}
+		catch (SearchException se) {
+			System.out.println("Search Exception:" + se);
+		}
 
 		return super.updateArticle(article);
+	}
+	
+	public Article deleteArticle(Article article) throws SystemException {
+		
+		int issueNo = article.getIssueNo();
+		
+		try {
+			Issue issue = IssueLocalServiceUtil.getIssueByIssueNo(issueNo);
+		
+			Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
+		
+			try {
+				indexer.delete(issue);
+			}
+			catch (SearchException se) {
+				System.out.println("Search Exception:" + se);
+			}
+		}
+		catch (NoSuchIssueException e) {
+			
+		}
+		
+		return super.deleteArticle(article);
 	}
 	
 	public List<Article> getApprovedArticlesByIssueNo(int issueNo) 

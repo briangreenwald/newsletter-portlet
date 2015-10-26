@@ -16,11 +16,10 @@ package com.liferay.training.newsletter.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.training.newsletter.NoSuchIssueException;
 import com.liferay.training.newsletter.model.Issue;
 import com.liferay.training.newsletter.service.base.IssueLocalServiceBaseImpl;
@@ -88,6 +87,15 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		issue.setByline(byline);
 		
 		issue.setStatus(status);
+		
+		Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
+		
+		try {
+			indexer.reindex(issue);
+		}
+		catch (SearchException se) {
+			System.out.println("Search Exception:" + se);
+		}
 
 		return super.addIssue(issue);
 	}
@@ -123,8 +131,31 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		issue.setByline(byline);
 		
 		issue.setStatus(status);
+		
+		Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
+		
+		try {
+			indexer.reindex(issue);
+		}
+		catch (SearchException se) {
+			System.out.println("Search Exception:" + se);
+		}
 
 		return super.updateIssue(issue);
+	}
+	
+	public Issue deleteIssue(Issue issue) throws SystemException {
+		
+		Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
+		
+		try {
+			indexer.delete(issue);
+		}
+		catch (SearchException se) {
+			System.out.println("Search Exception:" + se);
+		}
+		
+		return super.deleteIssue(issue);
 	}
 	
 	@Override
@@ -156,7 +187,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		throws SystemException, PortalException {
 
 		List<Issue> issues = 
-			issuePersistence.findByApproved(WorkflowConstants.STATUS_APPROVED);
+			issuePersistence.findByStatus(WorkflowConstants.STATUS_APPROVED);
 		
 		Map<Integer, List<Issue>> issuesByYear 
 			= new LinkedHashMap<Integer, List<Issue>>();

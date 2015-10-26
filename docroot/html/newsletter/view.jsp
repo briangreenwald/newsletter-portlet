@@ -1,10 +1,10 @@
 <%@ include file="/html/init.jsp" %>
 
-<portlet:actionURL var="searchURL">
-    <portlet:param name="mvcPath" value="/html/parts/search.jsp" />
-</portlet:actionURL>
+<portlet:renderURL var="searchURL">
+    <portlet:param name="mvcPath" value="/html/newsletter/search.jsp" />
+</portlet:renderURL>
 
-<aui:form action="${searchURL}" method="get" name="fm">
+<aui:form action="${searchURL}" method="post" name="fm">
     <div class="portlet-toolbar search-form">
     	<span class="aui-search-bar">
 			<aui:input inlineField="true" label="" name="keywords" size="30" title="search-entries" type="text" />
