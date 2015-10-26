@@ -44,6 +44,7 @@ public class ArticleSoap implements Serializable {
 		soapModel.setAuthor(model.getAuthor());
 		soapModel.setOrder(model.getOrder());
 		soapModel.setContent(model.getContent());
+		soapModel.setStatus(model.getStatus());
 
 		return soapModel;
 	}
@@ -208,6 +209,14 @@ public class ArticleSoap implements Serializable {
 		_content = content;
 	}
 
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_status = status;
+	}
+
 	private long _articleId;
 	private long _issueId;
 	private long _journalArticleId;
@@ -222,4 +231,5 @@ public class ArticleSoap implements Serializable {
 	private String _author;
 	private int _order;
 	private String _content;
+	private int _status;
 }

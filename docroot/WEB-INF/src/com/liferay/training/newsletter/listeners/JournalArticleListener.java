@@ -58,6 +58,7 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 			long companyId = journalArticle.getCompanyId();
 			long userId = journalArticle.getUserId();
 			String userName = journalArticle.getUserName();
+			int status = journalArticle.getStatus();
 
 			if (structureName.equalsIgnoreCase(NEWSLETTER_ISSUE)) {
 				String description = parseField(articleContent, DESCRIPTION);
@@ -69,7 +70,7 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 				try {
 					IssueLocalServiceUtil.addIssue(
 						journalArticleId, groupId, companyId, userId, userName,
-						issueNo, title, description, issueDate, byline);
+						issueNo, title, description, issueDate, byline, status);
 				}
 				catch (Exception e) {
 					_log.error(String.format(
@@ -85,7 +86,7 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 				try {
 					ArticleLocalServiceUtil.addArticle(
 						journalArticleId, groupId, companyId, userId, userName,
-						issueNo, title, author, order, content);
+						issueNo, title, author, order, content, status);
 				}
 				catch (Exception e) {
 					_log.error(String.format(
@@ -134,6 +135,7 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 			long companyId = journalArticle.getCompanyId();
 			long userId = journalArticle.getUserId();
 			String userName = journalArticle.getUserName();
+			int status = journalArticle.getStatus();
 
 			if (structureName.equalsIgnoreCase(NEWSLETTER_ISSUE)) {
 				String description = parseField(articleContent, DESCRIPTION);
@@ -145,11 +147,11 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 				try {
 					IssueLocalServiceUtil.updateIssue(
 						journalArticleId, groupId, companyId, userId, userName,
-						issueNo, title, description, issueDate, byline);
+						issueNo, title, description, issueDate, byline, status);
 				}
 				catch (Exception e) {
 					_log.error(String.format(
-						"Unable to add Issue entitled \"%s\": %s", title, e));
+						"Unable to update Issue entitled \"%s\": %s", title, e));
 				}
 			}
 			else if (structureName.equalsIgnoreCase(NEWSLETTER_ARTICLE)) {
@@ -161,11 +163,11 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 				try {
 					ArticleLocalServiceUtil.updateArticle(
 						journalArticleId, groupId, companyId, userId, userName,
-						issueNo, title, author, order, content);
+						issueNo, title, author, order, content, status);
 				}
 				catch (Exception e) {
 					_log.error(String.format(
-						"Unable to add Article entitled \"%s\": %s", title, e));
+						"Unable to update Article entitled \"%s\": %s", title, e));
 				}
 			}
 
@@ -184,7 +186,6 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 		String structureName = StringPool.BLANK;
 		try {
 			structureName = getStructureName(journalArticle);
-			System.out.println(structureName);
 		}
 		catch (Exception e) {
 			_log.error(String.format(
@@ -200,7 +201,6 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 					IssueLocalServiceUtil.getIssueByJournalArticleId(
 						journalArticleId);
 				IssueLocalServiceUtil.deleteIssue(issue);
-				System.out.println("Issue should be deleted");
 			}
 			catch (Exception e) {
 				_log.error(String.format(
@@ -214,7 +214,6 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 					ArticleLocalServiceUtil.getArticleByJournalArticleId(
 						journalArticleId);
 				ArticleLocalServiceUtil.deleteArticle(article);
-				System.out.println("Article should be deleted");
 			}
 			catch (Exception e) {
 				_log.error(String.format(

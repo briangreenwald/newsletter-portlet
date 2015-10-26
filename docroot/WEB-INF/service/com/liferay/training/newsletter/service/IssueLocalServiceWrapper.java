@@ -285,11 +285,11 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 		long journalArticleId, long groupId, long companyId, long userId,
 		java.lang.String userName, int issueNo, java.lang.String title,
 		java.lang.String description, java.util.Date issueDate,
-		java.lang.String byline)
+		java.lang.String byline, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _issueLocalService.addIssue(journalArticleId, groupId,
 			companyId, userId, userName, issueNo, title, description,
-			issueDate, byline);
+			issueDate, byline, status);
 	}
 
 	@Override
@@ -297,19 +297,27 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 		long journalArticleId, long groupId, long companyId, long userId,
 		java.lang.String userName, int issueNo, java.lang.String title,
 		java.lang.String description, java.util.Date issueDate,
-		java.lang.String byline)
+		java.lang.String byline, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _issueLocalService.updateIssue(journalArticleId, groupId,
 			companyId, userId, userName, issueNo, title, description,
-			issueDate, byline);
+			issueDate, byline, status);
+	}
+
+	@Override
+	public com.liferay.training.newsletter.model.Issue getIssueByIssueNo(
+		int issueNo)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchIssueException {
+		return _issueLocalService.getIssueByIssueNo(issueNo);
 	}
 
 	@Override
 	public com.liferay.training.newsletter.model.Issue getApprovedIssueByIssueNo(
 		int issueNo)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchIssueException {
 		return _issueLocalService.getApprovedIssueByIssueNo(issueNo);
 	}
 

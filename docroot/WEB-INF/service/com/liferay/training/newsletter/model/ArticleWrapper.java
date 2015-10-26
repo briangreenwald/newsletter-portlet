@@ -63,6 +63,7 @@ public class ArticleWrapper implements Article, ModelWrapper<Article> {
 		attributes.put("author", getAuthor());
 		attributes.put("order", getOrder());
 		attributes.put("content", getContent());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -151,6 +152,12 @@ public class ArticleWrapper implements Article, ModelWrapper<Article> {
 
 		if (content != null) {
 			setContent(content);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -474,6 +481,26 @@ public class ArticleWrapper implements Article, ModelWrapper<Article> {
 	@Override
 	public void setContent(java.lang.String content) {
 		_article.setContent(content);
+	}
+
+	/**
+	* Returns the status of this article.
+	*
+	* @return the status of this article
+	*/
+	@Override
+	public int getStatus() {
+		return _article.getStatus();
+	}
+
+	/**
+	* Sets the status of this article.
+	*
+	* @param status the status of this article
+	*/
+	@Override
+	public void setStatus(int status) {
+		_article.setStatus(status);
 	}
 
 	@Override

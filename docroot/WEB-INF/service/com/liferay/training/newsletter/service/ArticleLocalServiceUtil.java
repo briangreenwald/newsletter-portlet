@@ -278,29 +278,27 @@ public class ArticleLocalServiceUtil {
 	public static com.liferay.training.newsletter.model.Article addArticle(
 		long journalArticleId, long groupId, long companyId, long userId,
 		java.lang.String userName, int issueNo, java.lang.String title,
-		java.lang.String author, int order, java.lang.String content)
+		java.lang.String author, int order, java.lang.String content, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addArticle(journalArticleId, groupId, companyId, userId,
-			userName, issueNo, title, author, order, content);
+			userName, issueNo, title, author, order, content, status);
 	}
 
 	public static com.liferay.training.newsletter.model.Article updateArticle(
 		long journalArticleId, long groupId, long companyId, long userId,
 		java.lang.String userName, int issueNo, java.lang.String title,
-		java.lang.String author, int order, java.lang.String content)
+		java.lang.String author, int order, java.lang.String content, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateArticle(journalArticleId, groupId, companyId, userId,
-			userName, issueNo, title, author, order, content);
+			userName, issueNo, title, author, order, content, status);
 	}
 
 	public static java.util.List<com.liferay.training.newsletter.model.Article> getApprovedArticlesByIssueNo(
-		int issueNo)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		int issueNo) throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getApprovedArticlesByIssueNo(issueNo);
 	}
 

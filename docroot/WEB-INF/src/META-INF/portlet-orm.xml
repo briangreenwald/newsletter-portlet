@@ -29,6 +29,7 @@
 				<column name="ORDER_" />
 			</basic>
 			<basic name="content" />
+			<basic name="status" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -58,6 +59,7 @@
 			<basic name="issueMonth" />
 			<basic name="issueYear" />
 			<basic name="byline" />
+			<basic name="status" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

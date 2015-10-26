@@ -45,6 +45,7 @@ public class IssueSoap implements Serializable {
 		soapModel.setIssueMonth(model.getIssueMonth());
 		soapModel.setIssueYear(model.getIssueYear());
 		soapModel.setByline(model.getByline());
+		soapModel.setStatus(model.getStatus());
 
 		return soapModel;
 	}
@@ -217,6 +218,14 @@ public class IssueSoap implements Serializable {
 		_byline = byline;
 	}
 
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_status = status;
+	}
+
 	private long _issueId;
 	private long _journalArticleId;
 	private long _groupId;
@@ -232,4 +241,5 @@ public class IssueSoap implements Serializable {
 	private int _issueMonth;
 	private int _issueYear;
 	private String _byline;
+	private int _status;
 }

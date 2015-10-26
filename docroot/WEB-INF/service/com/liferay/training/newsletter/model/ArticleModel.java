@@ -290,6 +290,20 @@ public interface ArticleModel extends BaseModel<Article>, GroupedModel {
 	 */
 	public void setContent(String content);
 
+	/**
+	 * Returns the status of this article.
+	 *
+	 * @return the status of this article
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this article.
+	 *
+	 * @param status the status of this article
+	 */
+	public void setStatus(int status);
+
 	@Override
 	public boolean isNew();
 

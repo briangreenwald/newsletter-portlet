@@ -88,6 +88,7 @@ public class ArticleClp extends BaseModelImpl<Article> implements Article {
 		attributes.put("author", getAuthor());
 		attributes.put("order", getOrder());
 		attributes.put("content", getContent());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -176,6 +177,12 @@ public class ArticleClp extends BaseModelImpl<Article> implements Article {
 
 		if (content != null) {
 			setContent(content);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -512,6 +519,29 @@ public class ArticleClp extends BaseModelImpl<Article> implements Article {
 		}
 	}
 
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		_status = status;
+
+		if (_articleRemoteModel != null) {
+			try {
+				Class<?> clazz = _articleRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setStatus", int.class);
+
+				method.invoke(_articleRemoteModel, status);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getArticleRemoteModel() {
 		return _articleRemoteModel;
 	}
@@ -595,6 +625,7 @@ public class ArticleClp extends BaseModelImpl<Article> implements Article {
 		clone.setAuthor(getAuthor());
 		clone.setOrder(getOrder());
 		clone.setContent(getContent());
+		clone.setStatus(getStatus());
 
 		return clone;
 	}
@@ -653,7 +684,7 @@ public class ArticleClp extends BaseModelImpl<Article> implements Article {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{articleId=");
 		sb.append(getArticleId());
@@ -683,6 +714,8 @@ public class ArticleClp extends BaseModelImpl<Article> implements Article {
 		sb.append(getOrder());
 		sb.append(", content=");
 		sb.append(getContent());
+		sb.append(", status=");
+		sb.append(getStatus());
 		sb.append("}");
 
 		return sb.toString();
@@ -690,7 +723,7 @@ public class ArticleClp extends BaseModelImpl<Article> implements Article {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.training.newsletter.model.Article");
@@ -752,6 +785,10 @@ public class ArticleClp extends BaseModelImpl<Article> implements Article {
 			"<column><column-name>content</column-name><column-value><![CDATA[");
 		sb.append(getContent());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>status</column-name><column-value><![CDATA[");
+		sb.append(getStatus());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -773,6 +810,7 @@ public class ArticleClp extends BaseModelImpl<Article> implements Article {
 	private String _author;
 	private int _order;
 	private String _content;
+	private int _status;
 	private BaseModel<?> _articleRemoteModel;
 	private Class<?> _clpSerializerClass = com.liferay.training.newsletter.service.ClpSerializer.class;
 }

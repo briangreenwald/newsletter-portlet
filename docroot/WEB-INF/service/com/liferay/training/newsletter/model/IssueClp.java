@@ -90,6 +90,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 		attributes.put("issueMonth", getIssueMonth());
 		attributes.put("issueYear", getIssueYear());
 		attributes.put("byline", getByline());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -184,6 +185,12 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 
 		if (byline != null) {
 			setByline(byline);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -543,6 +550,29 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 		}
 	}
 
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		_status = status;
+
+		if (_issueRemoteModel != null) {
+			try {
+				Class<?> clazz = _issueRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setStatus", int.class);
+
+				method.invoke(_issueRemoteModel, status);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getIssueRemoteModel() {
 		return _issueRemoteModel;
 	}
@@ -627,6 +657,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 		clone.setIssueMonth(getIssueMonth());
 		clone.setIssueYear(getIssueYear());
 		clone.setByline(getByline());
+		clone.setStatus(getStatus());
 
 		return clone;
 	}
@@ -679,7 +710,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{issueId=");
 		sb.append(getIssueId());
@@ -711,6 +742,8 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 		sb.append(getIssueYear());
 		sb.append(", byline=");
 		sb.append(getByline());
+		sb.append(", status=");
+		sb.append(getStatus());
 		sb.append("}");
 
 		return sb.toString();
@@ -718,7 +751,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.training.newsletter.model.Issue");
@@ -784,6 +817,10 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 			"<column><column-name>byline</column-name><column-value><![CDATA[");
 		sb.append(getByline());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>status</column-name><column-value><![CDATA[");
+		sb.append(getStatus());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -806,6 +843,7 @@ public class IssueClp extends BaseModelImpl<Issue> implements Issue {
 	private int _issueMonth;
 	private int _issueYear;
 	private String _byline;
+	private int _status;
 	private BaseModel<?> _issueRemoteModel;
 	private Class<?> _clpSerializerClass = com.liferay.training.newsletter.service.ClpSerializer.class;
 }

@@ -18,6 +18,7 @@
 		<field name="content" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.training.newsletter.model.Issue">
 		<field name="issueId" type="long" />
@@ -35,5 +36,6 @@
 		<field name="issueMonth" type="int" />
 		<field name="issueYear" type="int" />
 		<field name="byline" type="String" />
+		<field name="status" type="int" />
 	</model>
 </model-hints>

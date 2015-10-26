@@ -74,9 +74,10 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 			{ "title", Types.VARCHAR },
 			{ "author", Types.VARCHAR },
 			{ "order_", Types.INTEGER },
-			{ "content", Types.VARCHAR }
+			{ "content", Types.VARCHAR },
+			{ "status", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table newsletter_Article (articleId LONG not null primary key,issueId LONG,journalArticleId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,author VARCHAR(75) null,order_ INTEGER,content STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table newsletter_Article (articleId LONG not null primary key,issueId LONG,journalArticleId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,author VARCHAR(75) null,order_ INTEGER,content STRING null,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table newsletter_Article";
 	public static final String ORDER_BY_JPQL = " ORDER BY article.order ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY newsletter_Article.order_ ASC";
@@ -94,7 +95,8 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 			true);
 	public static long ISSUENO_COLUMN_BITMASK = 1L;
 	public static long JOURNALARTICLEID_COLUMN_BITMASK = 2L;
-	public static long ORDER_COLUMN_BITMASK = 4L;
+	public static long STATUS_COLUMN_BITMASK = 4L;
+	public static long ORDER_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.liferay.training.newsletter.model.Article"));
 
@@ -149,6 +151,7 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 		attributes.put("author", getAuthor());
 		attributes.put("order", getOrder());
 		attributes.put("content", getContent());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -237,6 +240,12 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 
 		if (content != null) {
 			setContent(content);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -436,6 +445,28 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 		_content = content;
 	}
 
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
+		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -481,6 +512,7 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 		articleImpl.setAuthor(getAuthor());
 		articleImpl.setOrder(getOrder());
 		articleImpl.setContent(getContent());
+		articleImpl.setStatus(getStatus());
 
 		articleImpl.resetOriginalValues();
 
@@ -546,6 +578,10 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 		articleModelImpl._originalIssueNo = articleModelImpl._issueNo;
 
 		articleModelImpl._setOriginalIssueNo = false;
+
+		articleModelImpl._originalStatus = articleModelImpl._status;
+
+		articleModelImpl._setOriginalStatus = false;
 
 		articleModelImpl._columnBitmask = 0;
 	}
@@ -620,12 +656,14 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 			articleCacheModel.content = null;
 		}
 
+		articleCacheModel.status = getStatus();
+
 		return articleCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{articleId=");
 		sb.append(getArticleId());
@@ -655,6 +693,8 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 		sb.append(getOrder());
 		sb.append(", content=");
 		sb.append(getContent());
+		sb.append(", status=");
+		sb.append(getStatus());
 		sb.append("}");
 
 		return sb.toString();
@@ -662,7 +702,7 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.training.newsletter.model.Article");
@@ -724,6 +764,10 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 			"<column><column-name>content</column-name><column-value><![CDATA[");
 		sb.append(getContent());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>status</column-name><column-value><![CDATA[");
+		sb.append(getStatus());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -753,6 +797,9 @@ public class ArticleModelImpl extends BaseModelImpl<Article>
 	private String _author;
 	private int _order;
 	private String _content;
+	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _columnBitmask;
 	private Article _escapedModel;
 }

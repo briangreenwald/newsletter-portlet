@@ -119,7 +119,7 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 		_methodParameterTypes19 = new String[] {
 				"long", "long", "long", "long", "java.lang.String", "int",
 				"java.lang.String", "java.lang.String", "int",
-				"java.lang.String"
+				"java.lang.String", "int"
 			};
 
 		_methodName20 = "updateArticle";
@@ -127,7 +127,7 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 		_methodParameterTypes20 = new String[] {
 				"long", "long", "long", "long", "java.lang.String", "int",
 				"java.lang.String", "java.lang.String", "int",
-				"java.lang.String"
+				"java.lang.String", "int"
 			};
 
 		_methodName21 = "getApprovedArticlesByIssueNo";
@@ -693,7 +693,7 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 	public com.liferay.training.newsletter.model.Article addArticle(
 		long journalArticleId, long groupId, long companyId, long userId,
 		java.lang.String userName, int issueNo, java.lang.String title,
-		java.lang.String author, int order, java.lang.String content)
+		java.lang.String author, int order, java.lang.String content, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -720,7 +720,9 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 						
 					order,
 						
-					ClpSerializer.translateInput(content)
+					ClpSerializer.translateInput(content),
+						
+					status
 					});
 		}
 		catch (Throwable t) {
@@ -750,7 +752,7 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 	public com.liferay.training.newsletter.model.Article updateArticle(
 		long journalArticleId, long groupId, long companyId, long userId,
 		java.lang.String userName, int issueNo, java.lang.String title,
-		java.lang.String author, int order, java.lang.String content)
+		java.lang.String author, int order, java.lang.String content, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -777,7 +779,9 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 						
 					order,
 						
-					ClpSerializer.translateInput(content)
+					ClpSerializer.translateInput(content),
+						
+					status
 					});
 		}
 		catch (Throwable t) {
@@ -805,9 +809,7 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 
 	@Override
 	public java.util.List<com.liferay.training.newsletter.model.Article> getApprovedArticlesByIssueNo(
-		int issueNo)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		int issueNo) throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
@@ -816,10 +818,6 @@ public class ArticleLocalServiceClp implements ArticleLocalService {
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
 
 			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
 				throw (com.liferay.portal.kernel.exception.SystemException)t;

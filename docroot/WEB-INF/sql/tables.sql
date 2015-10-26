@@ -12,7 +12,8 @@ create table newsletter_Article (
 	title VARCHAR(75) null,
 	author VARCHAR(75) null,
 	order_ INTEGER,
-	content STRING null
+	content STRING null,
+	status INTEGER
 );
 
 create table newsletter_Issue (
@@ -30,5 +31,6 @@ create table newsletter_Issue (
 	issueDate DATE null,
 	issueMonth INTEGER,
 	issueYear INTEGER,
-	byline VARCHAR(75) null
+	byline VARCHAR(75) null,
+	status INTEGER
 );

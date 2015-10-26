@@ -22,6 +22,7 @@
 		<property name="author" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="order" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="order_" />
 		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.training.newsletter.model.impl.IssueImpl" table="newsletter_Issue">
 		<cache usage="read-write" />
@@ -42,5 +43,6 @@
 		<property name="issueMonth" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="issueYear" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="byline" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 </hibernate-mapping>

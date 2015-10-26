@@ -299,6 +299,949 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 	}
 
 	private static final String _FINDER_COLUMN_ISSUENO_ISSUENO_2 = "issue.issueNo = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_ISSUENOANDSTATUS = new FinderPath(IssueModelImpl.ENTITY_CACHE_ENABLED,
+			IssueModelImpl.FINDER_CACHE_ENABLED, IssueImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByIssueNoAndStatus",
+			new String[] { Integer.class.getName(), Integer.class.getName() },
+			IssueModelImpl.ISSUENO_COLUMN_BITMASK |
+			IssueModelImpl.STATUS_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_ISSUENOANDSTATUS = new FinderPath(IssueModelImpl.ENTITY_CACHE_ENABLED,
+			IssueModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByIssueNoAndStatus",
+			new String[] { Integer.class.getName(), Integer.class.getName() });
+
+	/**
+	 * Returns the issue where issueNo = &#63; and status = &#63; or throws a {@link com.liferay.training.newsletter.NoSuchIssueException} if it could not be found.
+	 *
+	 * @param issueNo the issue no
+	 * @param status the status
+	 * @return the matching issue
+	 * @throws com.liferay.training.newsletter.NoSuchIssueException if a matching issue could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue findByIssueNoAndStatus(int issueNo, int status)
+		throws NoSuchIssueException, SystemException {
+		Issue issue = fetchByIssueNoAndStatus(issueNo, status);
+
+		if (issue == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("issueNo=");
+			msg.append(issueNo);
+
+			msg.append(", status=");
+			msg.append(status);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchIssueException(msg.toString());
+		}
+
+		return issue;
+	}
+
+	/**
+	 * Returns the issue where issueNo = &#63; and status = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param issueNo the issue no
+	 * @param status the status
+	 * @return the matching issue, or <code>null</code> if a matching issue could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue fetchByIssueNoAndStatus(int issueNo, int status)
+		throws SystemException {
+		return fetchByIssueNoAndStatus(issueNo, status, true);
+	}
+
+	/**
+	 * Returns the issue where issueNo = &#63; and status = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param issueNo the issue no
+	 * @param status the status
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching issue, or <code>null</code> if a matching issue could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue fetchByIssueNoAndStatus(int issueNo, int status,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { issueNo, status };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_ISSUENOANDSTATUS,
+					finderArgs, this);
+		}
+
+		if (result instanceof Issue) {
+			Issue issue = (Issue)result;
+
+			if ((issueNo != issue.getIssueNo()) ||
+					(status != issue.getStatus())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_ISSUE_WHERE);
+
+			query.append(_FINDER_COLUMN_ISSUENOANDSTATUS_ISSUENO_2);
+
+			query.append(_FINDER_COLUMN_ISSUENOANDSTATUS_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(issueNo);
+
+				qPos.add(status);
+
+				List<Issue> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ISSUENOANDSTATUS,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"IssuePersistenceImpl.fetchByIssueNoAndStatus(int, int, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					Issue issue = list.get(0);
+
+					result = issue;
+
+					cacheResult(issue);
+
+					if ((issue.getIssueNo() != issueNo) ||
+							(issue.getStatus() != status)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ISSUENOANDSTATUS,
+							finderArgs, issue);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ISSUENOANDSTATUS,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Issue)result;
+		}
+	}
+
+	/**
+	 * Removes the issue where issueNo = &#63; and status = &#63; from the database.
+	 *
+	 * @param issueNo the issue no
+	 * @param status the status
+	 * @return the issue that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue removeByIssueNoAndStatus(int issueNo, int status)
+		throws NoSuchIssueException, SystemException {
+		Issue issue = findByIssueNoAndStatus(issueNo, status);
+
+		return remove(issue);
+	}
+
+	/**
+	 * Returns the number of issues where issueNo = &#63; and status = &#63;.
+	 *
+	 * @param issueNo the issue no
+	 * @param status the status
+	 * @return the number of matching issues
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByIssueNoAndStatus(int issueNo, int status)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_ISSUENOANDSTATUS;
+
+		Object[] finderArgs = new Object[] { issueNo, status };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_ISSUE_WHERE);
+
+			query.append(_FINDER_COLUMN_ISSUENOANDSTATUS_ISSUENO_2);
+
+			query.append(_FINDER_COLUMN_ISSUENOANDSTATUS_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(issueNo);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ISSUENOANDSTATUS_ISSUENO_2 = "issue.issueNo = ? AND ";
+	private static final String _FINDER_COLUMN_ISSUENOANDSTATUS_STATUS_2 = "issue.status = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_STATUS = new FinderPath(IssueModelImpl.ENTITY_CACHE_ENABLED,
+			IssueModelImpl.FINDER_CACHE_ENABLED, IssueImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByStatus",
+			new String[] { Integer.class.getName() },
+			IssueModelImpl.STATUS_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_STATUS = new FinderPath(IssueModelImpl.ENTITY_CACHE_ENABLED,
+			IssueModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStatus",
+			new String[] { Integer.class.getName() });
+
+	/**
+	 * Returns the issue where status = &#63; or throws a {@link com.liferay.training.newsletter.NoSuchIssueException} if it could not be found.
+	 *
+	 * @param status the status
+	 * @return the matching issue
+	 * @throws com.liferay.training.newsletter.NoSuchIssueException if a matching issue could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue findByStatus(int status)
+		throws NoSuchIssueException, SystemException {
+		Issue issue = fetchByStatus(status);
+
+		if (issue == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("status=");
+			msg.append(status);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchIssueException(msg.toString());
+		}
+
+		return issue;
+	}
+
+	/**
+	 * Returns the issue where status = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param status the status
+	 * @return the matching issue, or <code>null</code> if a matching issue could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue fetchByStatus(int status) throws SystemException {
+		return fetchByStatus(status, true);
+	}
+
+	/**
+	 * Returns the issue where status = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param status the status
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching issue, or <code>null</code> if a matching issue could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue fetchByStatus(int status, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { status };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_STATUS,
+					finderArgs, this);
+		}
+
+		if (result instanceof Issue) {
+			Issue issue = (Issue)result;
+
+			if ((status != issue.getStatus())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_ISSUE_WHERE);
+
+			query.append(_FINDER_COLUMN_STATUS_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(status);
+
+				List<Issue> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_STATUS,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"IssuePersistenceImpl.fetchByStatus(int, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					Issue issue = list.get(0);
+
+					result = issue;
+
+					cacheResult(issue);
+
+					if ((issue.getStatus() != status)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_STATUS,
+							finderArgs, issue);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_STATUS,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Issue)result;
+		}
+	}
+
+	/**
+	 * Removes the issue where status = &#63; from the database.
+	 *
+	 * @param status the status
+	 * @return the issue that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue removeByStatus(int status)
+		throws NoSuchIssueException, SystemException {
+		Issue issue = findByStatus(status);
+
+		return remove(issue);
+	}
+
+	/**
+	 * Returns the number of issues where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the number of matching issues
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByStatus(int status) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_STATUS;
+
+		Object[] finderArgs = new Object[] { status };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_ISSUE_WHERE);
+
+			query.append(_FINDER_COLUMN_STATUS_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_STATUS_STATUS_2 = "issue.status = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_APPROVED = new FinderPath(IssueModelImpl.ENTITY_CACHE_ENABLED,
+			IssueModelImpl.FINDER_CACHE_ENABLED, IssueImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByApproved",
+			new String[] {
+				Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_APPROVED =
+		new FinderPath(IssueModelImpl.ENTITY_CACHE_ENABLED,
+			IssueModelImpl.FINDER_CACHE_ENABLED, IssueImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByApproved",
+			new String[] { Integer.class.getName() },
+			IssueModelImpl.STATUS_COLUMN_BITMASK |
+			IssueModelImpl.ISSUEDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_APPROVED = new FinderPath(IssueModelImpl.ENTITY_CACHE_ENABLED,
+			IssueModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByApproved",
+			new String[] { Integer.class.getName() });
+
+	/**
+	 * Returns all the issues where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the matching issues
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Issue> findByApproved(int status) throws SystemException {
+		return findByApproved(status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the issues where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.training.newsletter.model.impl.IssueModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of issues
+	 * @param end the upper bound of the range of issues (not inclusive)
+	 * @return the range of matching issues
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Issue> findByApproved(int status, int start, int end)
+		throws SystemException {
+		return findByApproved(status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the issues where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.training.newsletter.model.impl.IssueModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of issues
+	 * @param end the upper bound of the range of issues (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching issues
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Issue> findByApproved(int status, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_APPROVED;
+			finderArgs = new Object[] { status };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_APPROVED;
+			finderArgs = new Object[] { status, start, end, orderByComparator };
+		}
+
+		List<Issue> list = (List<Issue>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Issue issue : list) {
+				if ((status != issue.getStatus())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_ISSUE_WHERE);
+
+			query.append(_FINDER_COLUMN_APPROVED_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(IssueModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(status);
+
+				if (!pagination) {
+					list = (List<Issue>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Issue>(list);
+				}
+				else {
+					list = (List<Issue>)QueryUtil.list(q, getDialect(), start,
+							end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first issue in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching issue
+	 * @throws com.liferay.training.newsletter.NoSuchIssueException if a matching issue could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue findByApproved_First(int status,
+		OrderByComparator orderByComparator)
+		throws NoSuchIssueException, SystemException {
+		Issue issue = fetchByApproved_First(status, orderByComparator);
+
+		if (issue != null) {
+			return issue;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchIssueException(msg.toString());
+	}
+
+	/**
+	 * Returns the first issue in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching issue, or <code>null</code> if a matching issue could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue fetchByApproved_First(int status,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Issue> list = findByApproved(status, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last issue in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching issue
+	 * @throws com.liferay.training.newsletter.NoSuchIssueException if a matching issue could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue findByApproved_Last(int status,
+		OrderByComparator orderByComparator)
+		throws NoSuchIssueException, SystemException {
+		Issue issue = fetchByApproved_Last(status, orderByComparator);
+
+		if (issue != null) {
+			return issue;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchIssueException(msg.toString());
+	}
+
+	/**
+	 * Returns the last issue in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching issue, or <code>null</code> if a matching issue could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue fetchByApproved_Last(int status,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByApproved(status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Issue> list = findByApproved(status, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the issues before and after the current issue in the ordered set where status = &#63;.
+	 *
+	 * @param issueId the primary key of the current issue
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next issue
+	 * @throws com.liferay.training.newsletter.NoSuchIssueException if a issue with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Issue[] findByApproved_PrevAndNext(long issueId, int status,
+		OrderByComparator orderByComparator)
+		throws NoSuchIssueException, SystemException {
+		Issue issue = findByPrimaryKey(issueId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Issue[] array = new IssueImpl[3];
+
+			array[0] = getByApproved_PrevAndNext(session, issue, status,
+					orderByComparator, true);
+
+			array[1] = issue;
+
+			array[2] = getByApproved_PrevAndNext(session, issue, status,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Issue getByApproved_PrevAndNext(Session session, Issue issue,
+		int status, OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_ISSUE_WHERE);
+
+		query.append(_FINDER_COLUMN_APPROVED_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(IssueModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(issue);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Issue> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the issues where status = &#63; from the database.
+	 *
+	 * @param status the status
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByApproved(int status) throws SystemException {
+		for (Issue issue : findByApproved(status, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(issue);
+		}
+	}
+
+	/**
+	 * Returns the number of issues where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the number of matching issues
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByApproved(int status) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_APPROVED;
+
+		Object[] finderArgs = new Object[] { status };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_ISSUE_WHERE);
+
+			query.append(_FINDER_COLUMN_APPROVED_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_APPROVED_STATUS_2 = "issue.status = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_JOURNALARTICLEID = new FinderPath(IssueModelImpl.ENTITY_CACHE_ENABLED,
 			IssueModelImpl.FINDER_CACHE_ENABLED, IssueImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByJournalArticleId",
@@ -537,6 +1480,12 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ISSUENO,
 			new Object[] { issue.getIssueNo() }, issue);
 
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ISSUENOANDSTATUS,
+			new Object[] { issue.getIssueNo(), issue.getStatus() }, issue);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_STATUS,
+			new Object[] { issue.getStatus() }, issue);
+
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_JOURNALARTICLEID,
 			new Object[] { issue.getJournalArticleId() }, issue);
 
@@ -620,6 +1569,19 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ISSUENO, args, issue);
 
+			args = new Object[] { issue.getIssueNo(), issue.getStatus() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ISSUENOANDSTATUS,
+				args, Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ISSUENOANDSTATUS,
+				args, issue);
+
+			args = new Object[] { issue.getStatus() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_STATUS, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_STATUS, args, issue);
+
 			args = new Object[] { issue.getJournalArticleId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_JOURNALARTICLEID,
@@ -637,6 +1599,28 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ISSUENO, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ISSUENO, args,
+					issue);
+			}
+
+			if ((issueModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_ISSUENOANDSTATUS.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						issue.getIssueNo(), issue.getStatus()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ISSUENOANDSTATUS,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ISSUENOANDSTATUS,
+					args, issue);
+			}
+
+			if ((issueModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_STATUS.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { issue.getStatus() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_STATUS, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_STATUS, args,
 					issue);
 			}
 
@@ -666,6 +1650,37 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ISSUENO, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ISSUENO, args);
+		}
+
+		args = new Object[] { issue.getIssueNo(), issue.getStatus() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ISSUENOANDSTATUS, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ISSUENOANDSTATUS, args);
+
+		if ((issueModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_ISSUENOANDSTATUS.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					issueModelImpl.getOriginalIssueNo(),
+					issueModelImpl.getOriginalStatus()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ISSUENOANDSTATUS,
+				args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ISSUENOANDSTATUS,
+				args);
+		}
+
+		args = new Object[] { issue.getStatus() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_STATUS, args);
+
+		if ((issueModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_STATUS.getColumnBitmask()) != 0) {
+			args = new Object[] { issueModelImpl.getOriginalStatus() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_STATUS, args);
 		}
 
 		args = new Object[] { issue.getJournalArticleId() };
@@ -793,6 +1808,8 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 
 		boolean isNew = issue.isNew();
 
+		IssueModelImpl issueModelImpl = (IssueModelImpl)issue;
+
 		Session session = null;
 
 		try {
@@ -818,6 +1835,23 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 
 		if (isNew || !IssueModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
+
+		else {
+			if ((issueModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_APPROVED.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { issueModelImpl.getOriginalStatus() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_APPROVED, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_APPROVED,
+					args);
+
+				args = new Object[] { issueModelImpl.getStatus() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_APPROVED, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_APPROVED,
+					args);
+			}
 		}
 
 		EntityCacheUtil.putResult(IssueModelImpl.ENTITY_CACHE_ENABLED,
@@ -854,6 +1888,7 @@ public class IssuePersistenceImpl extends BasePersistenceImpl<Issue>
 		issueImpl.setIssueMonth(issue.getIssueMonth());
 		issueImpl.setIssueYear(issue.getIssueYear());
 		issueImpl.setByline(issue.getByline());
+		issueImpl.setStatus(issue.getStatus());
 
 		return issueImpl;
 	}

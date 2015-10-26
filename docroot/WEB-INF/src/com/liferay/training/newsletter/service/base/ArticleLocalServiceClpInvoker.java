@@ -119,7 +119,7 @@ public class ArticleLocalServiceClpInvoker {
 		_methodParameterTypes42 = new String[] {
 				"long", "long", "long", "long", "java.lang.String", "int",
 				"java.lang.String", "java.lang.String", "int",
-				"java.lang.String"
+				"java.lang.String", "int"
 			};
 
 		_methodName43 = "updateArticle";
@@ -127,7 +127,7 @@ public class ArticleLocalServiceClpInvoker {
 		_methodParameterTypes43 = new String[] {
 				"long", "long", "long", "long", "java.lang.String", "int",
 				"java.lang.String", "java.lang.String", "int",
-				"java.lang.String"
+				"java.lang.String", "int"
 			};
 
 		_methodName44 = "getApprovedArticlesByIssueNo";
@@ -250,7 +250,8 @@ public class ArticleLocalServiceClpInvoker {
 				((Integer)arguments[5]).intValue(),
 				(java.lang.String)arguments[6], (java.lang.String)arguments[7],
 				((Integer)arguments[8]).intValue(),
-				(java.lang.String)arguments[9]);
+				(java.lang.String)arguments[9],
+				((Integer)arguments[10]).intValue());
 		}
 
 		if (_methodName43.equals(name) &&
@@ -263,7 +264,8 @@ public class ArticleLocalServiceClpInvoker {
 				((Integer)arguments[5]).intValue(),
 				(java.lang.String)arguments[6], (java.lang.String)arguments[7],
 				((Integer)arguments[8]).intValue(),
-				(java.lang.String)arguments[9]);
+				(java.lang.String)arguments[9],
+				((Integer)arguments[10]).intValue());
 		}
 
 		if (_methodName44.equals(name) &&

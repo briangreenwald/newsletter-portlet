@@ -304,6 +304,20 @@ public interface IssueModel extends BaseModel<Issue>, GroupedModel {
 	 */
 	public void setByline(String byline);
 
+	/**
+	 * Returns the status of this issue.
+	 *
+	 * @return the status of this issue
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this issue.
+	 *
+	 * @param status the status of this issue
+	 */
+	public void setStatus(int status);
+
 	@Override
 	public boolean isNew();
 

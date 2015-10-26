@@ -64,6 +64,7 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 		attributes.put("issueMonth", getIssueMonth());
 		attributes.put("issueYear", getIssueYear());
 		attributes.put("byline", getByline());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -158,6 +159,12 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 
 		if (byline != null) {
 			setByline(byline);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -501,6 +508,26 @@ public class IssueWrapper implements Issue, ModelWrapper<Issue> {
 	@Override
 	public void setByline(java.lang.String byline) {
 		_issue.setByline(byline);
+	}
+
+	/**
+	* Returns the status of this issue.
+	*
+	* @return the status of this issue
+	*/
+	@Override
+	public int getStatus() {
+		return _issue.getStatus();
+	}
+
+	/**
+	* Sets the status of this issue.
+	*
+	* @param status the status of this issue
+	*/
+	@Override
+	public void setStatus(int status) {
+		_issue.setStatus(status);
 	}
 
 	@Override

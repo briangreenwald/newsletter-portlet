@@ -75,9 +75,10 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 			{ "issueDate", Types.TIMESTAMP },
 			{ "issueMonth", Types.INTEGER },
 			{ "issueYear", Types.INTEGER },
-			{ "byline", Types.VARCHAR }
+			{ "byline", Types.VARCHAR },
+			{ "status", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table newsletter_Issue (issueId LONG not null primary key,journalArticleId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,description VARCHAR(75) null,issueDate DATE null,issueMonth INTEGER,issueYear INTEGER,byline VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table newsletter_Issue (issueId LONG not null primary key,journalArticleId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNo INTEGER,title VARCHAR(75) null,description VARCHAR(75) null,issueDate DATE null,issueMonth INTEGER,issueYear INTEGER,byline VARCHAR(75) null,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table newsletter_Issue";
 	public static final String ORDER_BY_JPQL = " ORDER BY issue.issueDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY newsletter_Issue.issueDate DESC";
@@ -95,7 +96,8 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 			true);
 	public static long ISSUENO_COLUMN_BITMASK = 1L;
 	public static long JOURNALARTICLEID_COLUMN_BITMASK = 2L;
-	public static long ISSUEDATE_COLUMN_BITMASK = 4L;
+	public static long STATUS_COLUMN_BITMASK = 4L;
+	public static long ISSUEDATE_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.liferay.training.newsletter.model.Issue"));
 
@@ -151,6 +153,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		attributes.put("issueMonth", getIssueMonth());
 		attributes.put("issueYear", getIssueYear());
 		attributes.put("byline", getByline());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -245,6 +248,12 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 		if (byline != null) {
 			setByline(byline);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -454,6 +463,28 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		_byline = byline;
 	}
 
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
+		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -500,6 +531,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		issueImpl.setIssueMonth(getIssueMonth());
 		issueImpl.setIssueYear(getIssueYear());
 		issueImpl.setByline(getByline());
+		issueImpl.setStatus(getStatus());
 
 		issueImpl.resetOriginalValues();
 
@@ -559,6 +591,10 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		issueModelImpl._originalIssueNo = issueModelImpl._issueNo;
 
 		issueModelImpl._setOriginalIssueNo = false;
+
+		issueModelImpl._originalStatus = issueModelImpl._status;
+
+		issueModelImpl._setOriginalStatus = false;
 
 		issueModelImpl._columnBitmask = 0;
 	}
@@ -642,12 +678,14 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 			issueCacheModel.byline = null;
 		}
 
+		issueCacheModel.status = getStatus();
+
 		return issueCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{issueId=");
 		sb.append(getIssueId());
@@ -679,6 +717,8 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		sb.append(getIssueYear());
 		sb.append(", byline=");
 		sb.append(getByline());
+		sb.append(", status=");
+		sb.append(getStatus());
 		sb.append("}");
 
 		return sb.toString();
@@ -686,7 +726,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.training.newsletter.model.Issue");
@@ -752,6 +792,10 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 			"<column><column-name>byline</column-name><column-value><![CDATA[");
 		sb.append(getByline());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>status</column-name><column-value><![CDATA[");
+		sb.append(getStatus());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -780,6 +824,9 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	private int _issueMonth;
 	private int _issueYear;
 	private String _byline;
+	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _columnBitmask;
 	private Issue _escapedModel;
 }

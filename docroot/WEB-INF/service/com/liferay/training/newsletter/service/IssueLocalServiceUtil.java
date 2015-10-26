@@ -279,29 +279,36 @@ public class IssueLocalServiceUtil {
 		long journalArticleId, long groupId, long companyId, long userId,
 		java.lang.String userName, int issueNo, java.lang.String title,
 		java.lang.String description, java.util.Date issueDate,
-		java.lang.String byline)
+		java.lang.String byline, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addIssue(journalArticleId, groupId, companyId, userId,
-			userName, issueNo, title, description, issueDate, byline);
+			userName, issueNo, title, description, issueDate, byline, status);
 	}
 
 	public static com.liferay.training.newsletter.model.Issue updateIssue(
 		long journalArticleId, long groupId, long companyId, long userId,
 		java.lang.String userName, int issueNo, java.lang.String title,
 		java.lang.String description, java.util.Date issueDate,
-		java.lang.String byline)
+		java.lang.String byline, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateIssue(journalArticleId, groupId, companyId, userId,
-			userName, issueNo, title, description, issueDate, byline);
+			userName, issueNo, title, description, issueDate, byline, status);
+	}
+
+	public static com.liferay.training.newsletter.model.Issue getIssueByIssueNo(
+		int issueNo)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchIssueException {
+		return getService().getIssueByIssueNo(issueNo);
 	}
 
 	public static com.liferay.training.newsletter.model.Issue getApprovedIssueByIssueNo(
 		int issueNo)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchIssueException {
 		return getService().getApprovedIssueByIssueNo(issueNo);
 	}
 

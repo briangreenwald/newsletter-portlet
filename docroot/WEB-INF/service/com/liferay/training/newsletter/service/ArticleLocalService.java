@@ -257,22 +257,20 @@ public interface ArticleLocalService extends BaseLocalService,
 	public com.liferay.training.newsletter.model.Article addArticle(
 		long journalArticleId, long groupId, long companyId, long userId,
 		java.lang.String userName, int issueNo, java.lang.String title,
-		java.lang.String author, int order, java.lang.String content)
+		java.lang.String author, int order, java.lang.String content, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.training.newsletter.model.Article updateArticle(
 		long journalArticleId, long groupId, long companyId, long userId,
 		java.lang.String userName, int issueNo, java.lang.String title,
-		java.lang.String author, int order, java.lang.String content)
+		java.lang.String author, int order, java.lang.String content, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.training.newsletter.model.Article> getApprovedArticlesByIssueNo(
-		int issueNo)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		int issueNo) throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.training.newsletter.model.Article getArticleByJournalArticleId(

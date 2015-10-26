@@ -37,7 +37,7 @@ import java.util.Date;
 public class ArticleCacheModel implements CacheModel<Article>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{articleId=");
 		sb.append(articleId);
@@ -67,6 +67,8 @@ public class ArticleCacheModel implements CacheModel<Article>, Externalizable {
 		sb.append(order);
 		sb.append(", content=");
 		sb.append(content);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -129,6 +131,8 @@ public class ArticleCacheModel implements CacheModel<Article>, Externalizable {
 			articleImpl.setContent(content);
 		}
 
+		articleImpl.setStatus(status);
+
 		articleImpl.resetOriginalValues();
 
 		return articleImpl;
@@ -150,6 +154,7 @@ public class ArticleCacheModel implements CacheModel<Article>, Externalizable {
 		author = objectInput.readUTF();
 		order = objectInput.readInt();
 		content = objectInput.readUTF();
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -195,6 +200,8 @@ public class ArticleCacheModel implements CacheModel<Article>, Externalizable {
 		else {
 			objectOutput.writeUTF(content);
 		}
+
+		objectOutput.writeInt(status);
 	}
 
 	public long articleId;
@@ -211,4 +218,5 @@ public class ArticleCacheModel implements CacheModel<Article>, Externalizable {
 	public String author;
 	public int order;
 	public String content;
+	public int status;
 }

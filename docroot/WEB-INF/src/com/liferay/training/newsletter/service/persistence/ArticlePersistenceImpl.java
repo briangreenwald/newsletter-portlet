@@ -88,7 +88,7 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 			ArticleModelImpl.FINDER_CACHE_ENABLED, ArticleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByIssueNo",
 			new String[] {
-				Integer.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -97,53 +97,59 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 		new FinderPath(ArticleModelImpl.ENTITY_CACHE_ENABLED,
 			ArticleModelImpl.FINDER_CACHE_ENABLED, ArticleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByIssueNo",
-			new String[] { Integer.class.getName() },
+			new String[] { Integer.class.getName(), Integer.class.getName() },
 			ArticleModelImpl.ISSUENO_COLUMN_BITMASK |
+			ArticleModelImpl.STATUS_COLUMN_BITMASK |
 			ArticleModelImpl.ORDER_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_ISSUENO = new FinderPath(ArticleModelImpl.ENTITY_CACHE_ENABLED,
 			ArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByIssueNo",
-			new String[] { Integer.class.getName() });
+			new String[] { Integer.class.getName(), Integer.class.getName() });
 
 	/**
-	 * Returns all the articles where issueNo = &#63;.
+	 * Returns all the articles where issueNo = &#63; and status = &#63;.
 	 *
 	 * @param issueNo the issue no
+	 * @param status the status
 	 * @return the matching articles
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Article> findByIssueNo(int issueNo) throws SystemException {
-		return findByIssueNo(issueNo, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<Article> findByIssueNo(int issueNo, int status)
+		throws SystemException {
+		return findByIssueNo(issueNo, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the articles where issueNo = &#63;.
+	 * Returns a range of all the articles where issueNo = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.training.newsletter.model.impl.ArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param issueNo the issue no
+	 * @param status the status
 	 * @param start the lower bound of the range of articles
 	 * @param end the upper bound of the range of articles (not inclusive)
 	 * @return the range of matching articles
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Article> findByIssueNo(int issueNo, int start, int end)
-		throws SystemException {
-		return findByIssueNo(issueNo, start, end, null);
+	public List<Article> findByIssueNo(int issueNo, int status, int start,
+		int end) throws SystemException {
+		return findByIssueNo(issueNo, status, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the articles where issueNo = &#63;.
+	 * Returns an ordered range of all the articles where issueNo = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.training.newsletter.model.impl.ArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param issueNo the issue no
+	 * @param status the status
 	 * @param start the lower bound of the range of articles
 	 * @param end the upper bound of the range of articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -151,8 +157,8 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Article> findByIssueNo(int issueNo, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+	public List<Article> findByIssueNo(int issueNo, int status, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -161,11 +167,15 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ISSUENO;
-			finderArgs = new Object[] { issueNo };
+			finderArgs = new Object[] { issueNo, status };
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ISSUENO;
-			finderArgs = new Object[] { issueNo, start, end, orderByComparator };
+			finderArgs = new Object[] {
+					issueNo, status,
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<Article> list = (List<Article>)FinderCacheUtil.getResult(finderPath,
@@ -173,7 +183,8 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (Article article : list) {
-				if ((issueNo != article.getIssueNo())) {
+				if ((issueNo != article.getIssueNo()) ||
+						(status != article.getStatus())) {
 					list = null;
 
 					break;
@@ -185,16 +196,18 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
+				query = new StringBundler(4 +
 						(orderByComparator.getOrderByFields().length * 3));
 			}
 			else {
-				query = new StringBundler(3);
+				query = new StringBundler(4);
 			}
 
 			query.append(_SQL_SELECT_ARTICLE_WHERE);
 
 			query.append(_FINDER_COLUMN_ISSUENO_ISSUENO_2);
+
+			query.append(_FINDER_COLUMN_ISSUENO_STATUS_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -217,6 +230,8 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(issueNo);
+
+				qPos.add(status);
 
 				if (!pagination) {
 					list = (List<Article>)QueryUtil.list(q, getDialect(),
@@ -249,30 +264,35 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 	}
 
 	/**
-	 * Returns the first article in the ordered set where issueNo = &#63;.
+	 * Returns the first article in the ordered set where issueNo = &#63; and status = &#63;.
 	 *
 	 * @param issueNo the issue no
+	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching article
 	 * @throws com.liferay.training.newsletter.NoSuchArticleException if a matching article could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Article findByIssueNo_First(int issueNo,
+	public Article findByIssueNo_First(int issueNo, int status,
 		OrderByComparator orderByComparator)
 		throws NoSuchArticleException, SystemException {
-		Article article = fetchByIssueNo_First(issueNo, orderByComparator);
+		Article article = fetchByIssueNo_First(issueNo, status,
+				orderByComparator);
 
 		if (article != null) {
 			return article;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler msg = new StringBundler(6);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 		msg.append("issueNo=");
 		msg.append(issueNo);
+
+		msg.append(", status=");
+		msg.append(status);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -280,74 +300,18 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 	}
 
 	/**
-	 * Returns the first article in the ordered set where issueNo = &#63;.
+	 * Returns the first article in the ordered set where issueNo = &#63; and status = &#63;.
 	 *
 	 * @param issueNo the issue no
+	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching article, or <code>null</code> if a matching article could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Article fetchByIssueNo_First(int issueNo,
+	public Article fetchByIssueNo_First(int issueNo, int status,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<Article> list = findByIssueNo(issueNo, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last article in the ordered set where issueNo = &#63;.
-	 *
-	 * @param issueNo the issue no
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching article
-	 * @throws com.liferay.training.newsletter.NoSuchArticleException if a matching article could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Article findByIssueNo_Last(int issueNo,
-		OrderByComparator orderByComparator)
-		throws NoSuchArticleException, SystemException {
-		Article article = fetchByIssueNo_Last(issueNo, orderByComparator);
-
-		if (article != null) {
-			return article;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("issueNo=");
-		msg.append(issueNo);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchArticleException(msg.toString());
-	}
-
-	/**
-	 * Returns the last article in the ordered set where issueNo = &#63;.
-	 *
-	 * @param issueNo the issue no
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching article, or <code>null</code> if a matching article could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Article fetchByIssueNo_Last(int issueNo,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByIssueNo(issueNo);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Article> list = findByIssueNo(issueNo, count - 1, count,
+		List<Article> list = findByIssueNo(issueNo, status, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -358,10 +322,74 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 	}
 
 	/**
-	 * Returns the articles before and after the current article in the ordered set where issueNo = &#63;.
+	 * Returns the last article in the ordered set where issueNo = &#63; and status = &#63;.
+	 *
+	 * @param issueNo the issue no
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching article
+	 * @throws com.liferay.training.newsletter.NoSuchArticleException if a matching article could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Article findByIssueNo_Last(int issueNo, int status,
+		OrderByComparator orderByComparator)
+		throws NoSuchArticleException, SystemException {
+		Article article = fetchByIssueNo_Last(issueNo, status, orderByComparator);
+
+		if (article != null) {
+			return article;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("issueNo=");
+		msg.append(issueNo);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchArticleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last article in the ordered set where issueNo = &#63; and status = &#63;.
+	 *
+	 * @param issueNo the issue no
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching article, or <code>null</code> if a matching article could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Article fetchByIssueNo_Last(int issueNo, int status,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByIssueNo(issueNo, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Article> list = findByIssueNo(issueNo, status, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the articles before and after the current article in the ordered set where issueNo = &#63; and status = &#63;.
 	 *
 	 * @param articleId the primary key of the current article
 	 * @param issueNo the issue no
+	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next article
 	 * @throws com.liferay.training.newsletter.NoSuchArticleException if a article with the primary key could not be found
@@ -369,7 +397,7 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 	 */
 	@Override
 	public Article[] findByIssueNo_PrevAndNext(long articleId, int issueNo,
-		OrderByComparator orderByComparator)
+		int status, OrderByComparator orderByComparator)
 		throws NoSuchArticleException, SystemException {
 		Article article = findByPrimaryKey(articleId);
 
@@ -381,12 +409,12 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 			Article[] array = new ArticleImpl[3];
 
 			array[0] = getByIssueNo_PrevAndNext(session, article, issueNo,
-					orderByComparator, true);
+					status, orderByComparator, true);
 
 			array[1] = article;
 
 			array[2] = getByIssueNo_PrevAndNext(session, article, issueNo,
-					orderByComparator, false);
+					status, orderByComparator, false);
 
 			return array;
 		}
@@ -399,8 +427,8 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 	}
 
 	protected Article getByIssueNo_PrevAndNext(Session session,
-		Article article, int issueNo, OrderByComparator orderByComparator,
-		boolean previous) {
+		Article article, int issueNo, int status,
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -414,6 +442,8 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 		query.append(_SQL_SELECT_ARTICLE_WHERE);
 
 		query.append(_FINDER_COLUMN_ISSUENO_ISSUENO_2);
+
+		query.append(_FINDER_COLUMN_ISSUENO_STATUS_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -485,6 +515,8 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 
 		qPos.add(issueNo);
 
+		qPos.add(status);
+
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(article);
 
@@ -504,41 +536,47 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 	}
 
 	/**
-	 * Removes all the articles where issueNo = &#63; from the database.
+	 * Removes all the articles where issueNo = &#63; and status = &#63; from the database.
 	 *
 	 * @param issueNo the issue no
+	 * @param status the status
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByIssueNo(int issueNo) throws SystemException {
-		for (Article article : findByIssueNo(issueNo, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+	public void removeByIssueNo(int issueNo, int status)
+		throws SystemException {
+		for (Article article : findByIssueNo(issueNo, status,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(article);
 		}
 	}
 
 	/**
-	 * Returns the number of articles where issueNo = &#63;.
+	 * Returns the number of articles where issueNo = &#63; and status = &#63;.
 	 *
 	 * @param issueNo the issue no
+	 * @param status the status
 	 * @return the number of matching articles
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByIssueNo(int issueNo) throws SystemException {
+	public int countByIssueNo(int issueNo, int status)
+		throws SystemException {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_ISSUENO;
 
-		Object[] finderArgs = new Object[] { issueNo };
+		Object[] finderArgs = new Object[] { issueNo, status };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_COUNT_ARTICLE_WHERE);
 
 			query.append(_FINDER_COLUMN_ISSUENO_ISSUENO_2);
+
+			query.append(_FINDER_COLUMN_ISSUENO_STATUS_2);
 
 			String sql = query.toString();
 
@@ -552,6 +590,8 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(issueNo);
+
+				qPos.add(status);
 
 				count = (Long)q.uniqueResult();
 
@@ -570,7 +610,225 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ISSUENO_ISSUENO_2 = "article.issueNo = ?";
+	private static final String _FINDER_COLUMN_ISSUENO_ISSUENO_2 = "article.issueNo = ? AND ";
+	private static final String _FINDER_COLUMN_ISSUENO_STATUS_2 = "article.status = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_STATUS = new FinderPath(ArticleModelImpl.ENTITY_CACHE_ENABLED,
+			ArticleModelImpl.FINDER_CACHE_ENABLED, ArticleImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByStatus",
+			new String[] { Integer.class.getName() },
+			ArticleModelImpl.STATUS_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_STATUS = new FinderPath(ArticleModelImpl.ENTITY_CACHE_ENABLED,
+			ArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStatus",
+			new String[] { Integer.class.getName() });
+
+	/**
+	 * Returns the article where status = &#63; or throws a {@link com.liferay.training.newsletter.NoSuchArticleException} if it could not be found.
+	 *
+	 * @param status the status
+	 * @return the matching article
+	 * @throws com.liferay.training.newsletter.NoSuchArticleException if a matching article could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Article findByStatus(int status)
+		throws NoSuchArticleException, SystemException {
+		Article article = fetchByStatus(status);
+
+		if (article == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("status=");
+			msg.append(status);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchArticleException(msg.toString());
+		}
+
+		return article;
+	}
+
+	/**
+	 * Returns the article where status = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param status the status
+	 * @return the matching article, or <code>null</code> if a matching article could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Article fetchByStatus(int status) throws SystemException {
+		return fetchByStatus(status, true);
+	}
+
+	/**
+	 * Returns the article where status = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param status the status
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching article, or <code>null</code> if a matching article could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Article fetchByStatus(int status, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { status };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_STATUS,
+					finderArgs, this);
+		}
+
+		if (result instanceof Article) {
+			Article article = (Article)result;
+
+			if ((status != article.getStatus())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_ARTICLE_WHERE);
+
+			query.append(_FINDER_COLUMN_STATUS_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(status);
+
+				List<Article> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_STATUS,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"ArticlePersistenceImpl.fetchByStatus(int, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					Article article = list.get(0);
+
+					result = article;
+
+					cacheResult(article);
+
+					if ((article.getStatus() != status)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_STATUS,
+							finderArgs, article);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_STATUS,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Article)result;
+		}
+	}
+
+	/**
+	 * Removes the article where status = &#63; from the database.
+	 *
+	 * @param status the status
+	 * @return the article that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Article removeByStatus(int status)
+		throws NoSuchArticleException, SystemException {
+		Article article = findByStatus(status);
+
+		return remove(article);
+	}
+
+	/**
+	 * Returns the number of articles where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the number of matching articles
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByStatus(int status) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_STATUS;
+
+		Object[] finderArgs = new Object[] { status };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_ARTICLE_WHERE);
+
+			query.append(_FINDER_COLUMN_STATUS_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_STATUS_STATUS_2 = "article.status = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_JOURNALARTICLEID = new FinderPath(ArticleModelImpl.ENTITY_CACHE_ENABLED,
 			ArticleModelImpl.FINDER_CACHE_ENABLED, ArticleImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByJournalArticleId",
@@ -806,6 +1064,9 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 		EntityCacheUtil.putResult(ArticleModelImpl.ENTITY_CACHE_ENABLED,
 			ArticleImpl.class, article.getPrimaryKey(), article);
 
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_STATUS,
+			new Object[] { article.getStatus() }, article);
+
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_JOURNALARTICLEID,
 			new Object[] { article.getJournalArticleId() }, article);
 
@@ -884,7 +1145,13 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 
 	protected void cacheUniqueFindersCache(Article article) {
 		if (article.isNew()) {
-			Object[] args = new Object[] { article.getJournalArticleId() };
+			Object[] args = new Object[] { article.getStatus() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_STATUS, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_STATUS, args, article);
+
+			args = new Object[] { article.getJournalArticleId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_JOURNALARTICLEID,
 				args, Long.valueOf(1));
@@ -893,6 +1160,16 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 		}
 		else {
 			ArticleModelImpl articleModelImpl = (ArticleModelImpl)article;
+
+			if ((articleModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_STATUS.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { article.getStatus() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_STATUS, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_STATUS, args,
+					article);
+			}
 
 			if ((articleModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_JOURNALARTICLEID.getColumnBitmask()) != 0) {
@@ -909,7 +1186,20 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 	protected void clearUniqueFindersCache(Article article) {
 		ArticleModelImpl articleModelImpl = (ArticleModelImpl)article;
 
-		Object[] args = new Object[] { article.getJournalArticleId() };
+		Object[] args = new Object[] { article.getStatus() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_STATUS, args);
+
+		if ((articleModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_STATUS.getColumnBitmask()) != 0) {
+			args = new Object[] { articleModelImpl.getOriginalStatus() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_STATUS, args);
+		}
+
+		args = new Object[] { article.getJournalArticleId() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_JOURNALARTICLEID, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_JOURNALARTICLEID, args);
@@ -1068,14 +1358,18 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 			if ((articleModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ISSUENO.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						articleModelImpl.getOriginalIssueNo()
+						articleModelImpl.getOriginalIssueNo(),
+						articleModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ISSUENO, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ISSUENO,
 					args);
 
-				args = new Object[] { articleModelImpl.getIssueNo() };
+				args = new Object[] {
+						articleModelImpl.getIssueNo(),
+						articleModelImpl.getStatus()
+					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ISSUENO, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ISSUENO,
@@ -1116,6 +1410,7 @@ public class ArticlePersistenceImpl extends BasePersistenceImpl<Article>
 		articleImpl.setAuthor(article.getAuthor());
 		articleImpl.setOrder(article.getOrder());
 		articleImpl.setContent(article.getContent());
+		articleImpl.setStatus(article.getStatus());
 
 		return articleImpl;
 	}
