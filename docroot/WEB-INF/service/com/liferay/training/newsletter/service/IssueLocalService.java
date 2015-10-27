@@ -301,6 +301,12 @@ public interface IssueLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.training.newsletter.model.Issue getApprovedIssueByIssueNo(
+		int issueNo)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchIssueException;
+
 	/**
 	* Gets the Issue matching the IssueNo.
 	*

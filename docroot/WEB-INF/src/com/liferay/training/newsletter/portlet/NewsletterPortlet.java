@@ -76,7 +76,6 @@ public class NewsletterPortlet extends MVCPortlet {
 		request.setAttribute("currentMonth", currentMonth);
 		
 		super.doView(request, response);
-		
 	}
 	
 	private static Log _log 

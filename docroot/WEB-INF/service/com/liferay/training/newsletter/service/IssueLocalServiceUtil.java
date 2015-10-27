@@ -334,6 +334,13 @@ public class IssueLocalServiceUtil {
 			userName, issueNo, title, description, issueDate, byline, status);
 	}
 
+	public static com.liferay.training.newsletter.model.Issue getApprovedIssueByIssueNo(
+		int issueNo)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchIssueException {
+		return getService().getApprovedIssueByIssueNo(issueNo);
+	}
+
 	/**
 	* Gets the Issue matching the IssueNo.
 	*

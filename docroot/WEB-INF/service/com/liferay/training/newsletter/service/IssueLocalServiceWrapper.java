@@ -341,6 +341,14 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 			issueDate, byline, status);
 	}
 
+	@Override
+	public com.liferay.training.newsletter.model.Issue getApprovedIssueByIssueNo(
+		int issueNo)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.training.newsletter.NoSuchIssueException {
+		return _issueLocalService.getApprovedIssueByIssueNo(issueNo);
+	}
+
 	/**
 	* Gets the Issue matching the IssueNo.
 	*
