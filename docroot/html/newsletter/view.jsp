@@ -23,6 +23,7 @@
 				<c:set var="issueNo" value="${issue.getIssueNo()}" />
 				<c:set var="issueMonth" value="${issue.getIssueMonth()}" />
 				<c:set var="issueDate" value="${issue.getIssueDate()}" />
+				<fmt:formatDate value="${issueDate}" var="formattedDate" pattern="MMMM dd, yyyy" />
 				<c:set var="issueTitle" value="${issue.getTitle()}" />
 
 				<c:if test="${currentMonth != issueMonth}">
@@ -36,7 +37,7 @@
 				</portlet:renderURL>
 
 				<div class="newsletter">
-					<p class="issue-info">Issue: #<c:out value="${issueNo}" />, <c:out value="${dateFormat.format(issueDate)}" /></p>
+					<p class="issue-info">Issue: #<c:out value="${issueNo}" />, <c:out value="${formattedDate}" /></p>
 
 					<a class="issue-title" href="${viewIssueURL}">${issueTitle}</a>
 

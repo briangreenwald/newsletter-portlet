@@ -10,16 +10,21 @@
 	List<Article> articles = ArticleLocalServiceUtil.getApprovedArticlesByIssueNo(issueNo);
 
 	pageContext.setAttribute("articles", articles);
+	
+	DateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
+	
+	pageContext.setAttribute("dateFormat", dateFormat);
 %>
 
 <c:set var="issue" value="${issue}" />
 <c:set var="issueDate" value="${issue.getIssueDate()}" />
+<fmt:formatDate value="${issueDate}" var="formattedDate" pattern="MMMM dd, yyyy" />
 <c:set var="issueTitle" value="${issue.getTitle()}" />
 <c:set var="issueByline" value="${issue.getByline()}" />
 <c:set var="issueDescription" value="${issue.getDescription()}" />
 
 <div class="newsletter">
-	<p class="issue-info">Issue: #${issueNo}, ${dateFormat.format(issueDate)}</p>
+	<p class="issue-info">Issue: #${issueNo}, ${formattedDate}</p>
 
 	<p class="issue-title">${issueTitle}</p>
 

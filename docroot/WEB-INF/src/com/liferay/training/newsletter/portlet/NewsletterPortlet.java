@@ -28,7 +28,6 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-import javax.portlet.ProcessAction;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -39,7 +38,7 @@ public class NewsletterPortlet extends MVCPortlet {
 
 	public void doView(RenderRequest request, RenderResponse response) 
 		throws IOException, PortletException {
-
+		
 		Map<Integer, List<Issue>> issuesByYear 
 			= new LinkedHashMap<Integer, List<Issue>>();
 		List<String> years = new ArrayList<String>();
@@ -77,15 +76,7 @@ public class NewsletterPortlet extends MVCPortlet {
 		request.setAttribute("currentMonth", currentMonth);
 		
 		super.doView(request, response);
-	}
-	
-	public void render(RenderRequest request, RenderResponse response) 
-		throws PortletException, IOException {
 		
-		DateFormat dateFormat = new SimpleDateFormat(_ISSUE_DATE_FORMAT);
-		request.setAttribute("dateFormat", dateFormat);
-		
-		super.render(request, response);
 	}
 	
 	private static Log _log 

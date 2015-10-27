@@ -7,6 +7,8 @@
 
 	searchContext.setKeywords(keywords);
 	searchContext.setAttribute("paginationType", "more");
+
+
 	
 	Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
 
@@ -29,6 +31,9 @@
 		
 		issues.add(issue);
 	}
+	
+	PortletURL iteratorURL = renderResponse.createRenderURL();
+	iteratorURL.setParameter("mvcPath", "/html/newsletter/search.jsp");
 %>
 
 <portlet:renderURL var="searchURL">
@@ -46,21 +51,29 @@
 
 <liferay-ui:header title='<%= String.format("Search Results for: %s", keywords) %>' />
 
-<liferay-ui:search-container emptyResultsMessage="issue-empty-results-message" delta="5">
-	<liferay-ui:search-container-results results="<%= issues %>" total="<%= issues.size() %>" />
+<liferay-ui:search-container emptyResultsMessage="issue-empty-results-message" delta="5" iteratorURL="<%= iteratorURL %>">
+	<liferay-ui:search-container-results results="<%= ListUtil.subList(issues, searchContainer.getStart(), searchContainer.getEnd()) %>" total="<%= issues.size() %>"/>
 
 	<liferay-ui:search-container-row
 		className="com.liferay.training.newsletter.model.Issue" keyProperty="issueId"
 		modelVar="issue" escapedModel="true">
+		
+		<c:set var="issueNo" value="${issue.getIssueNo()}" />
+		<c:set var="issueDate" value="${issue.getIssueDate()}" />
+		<fmt:formatDate value="${issueDate}" var="formattedDate" pattern="MMMM dd, yyyy" />
+		<c:set var="issueTitle" value="${issue.getTitle()}" />
 
 		<portlet:renderURL var="rowURL">
 			<portlet:param name="mvcPath" value="/html/newsletter/view_issue.jsp" />
-			<portlet:param name="issueNo" value="<%=String.valueOf(issue.getIssueNo())%>" />
+			<portlet:param name="issueNo" value="${issueNo}" />
 		</portlet:renderURL>
 
-		<liferay-ui:search-container-column-text name="issue"
-			value="<%=issue.getTitle()%>" href="<%=rowURL %>" />
+		<liferay-ui:search-container-column-text name=""
+			value="
+				<p class='issue-info'>Issue: #${issueNo}, ${formattedDate}</p>
+				<p class='issue-title'>${issueTitle}</p>" 
+			href="<%=rowURL %>" />
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator paginate="true" />
 </liferay-ui:search-container>

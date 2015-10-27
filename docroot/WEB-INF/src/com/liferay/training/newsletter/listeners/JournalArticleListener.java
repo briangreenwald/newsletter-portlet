@@ -270,8 +270,9 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 	private String parseField(Document articleContent, String fieldName) {
 
 		Node field =
-			articleContent.selectSingleNode("/root/dynamic-element[@name='" +
-				fieldName + "']/dynamic-content");
+			articleContent.selectSingleNode(
+				"/root/dynamic-element[@name='" + fieldName 
+				+ "']/dynamic-content");
 
 		return field.getText();
 	}
