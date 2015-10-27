@@ -218,9 +218,9 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 				"Failed to retrieve structure with id %s: %s",
 				journalArticle.getStructureId(), e));
 		}
-		
+
 		String journalArticleId = journalArticle.getArticleId();
-		
+
 		if (structureName.equalsIgnoreCase(NEWSLETTER_ISSUE)) {
 			try {
 				Issue issue = 
@@ -247,7 +247,7 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 					journalArticleId, e));
 			}
 		}
-		
+
 	}
 
 	private String getStructureName(JournalArticle article)

@@ -22,6 +22,7 @@
 <%@ page import="com.liferay.portal.kernel.search.SearchContext" %>
 <%@ page import="com.liferay.portal.kernel.search.SearchContextFactory" %>
 <%@ page import="com.liferay.portal.kernel.search.SearchEngineUtil" %>
+<%@ page import="com.liferay.portal.kernel.servlet.SessionErrors" %>
 
 <%@ page import="com.liferay.training.newsletter.model.Article" %>
 <%@ page import="com.liferay.training.newsletter.model.Issue" %>

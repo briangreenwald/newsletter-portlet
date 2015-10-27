@@ -72,8 +72,8 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	 * @param issueNo the issueNo that this Article belongs to.
 	 * @param title the title of this Article.
 	 * @param author the author of this Article.
-	 * @param order the order in which this Article is to appear in an Issue's article
-	 * list.
+	 * @param order the order in which this Article is to appear in an Issue's 
+	 * list of Articles.
 	 * @param content the html content of this Article.
 	 * @param status the workflow status of this Article 
 	 * (0=Approved, 1=Unapproved)
@@ -85,14 +85,14 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 			int order, String content, int status) 
 		throws SystemException, PortalException {
 
-		long articleId = counterLocalService.increment(Article.class.getName());
+		long articleId = Long.valueOf(journalArticleId) + groupId;
 		Article article = createArticle(articleId);
-		
+
 		Issue issue = 
 			IssueLocalServiceUtil.getIssueByIssueNo(issueNo);
 		long issueId = issue.getIssueId();
 		article.setIssueId(issueId);
-		
+
 		article.setJournalArticleId(journalArticleId);
 		article.setGroupId(groupId);
 		article.setCompanyId(companyId);
@@ -108,11 +108,10 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		article.setAuthor(author);
 		article.setOrder(order);
 		article.setContent(content);
-		
+
 		article.setStatus(status);
-		
+
 		if (status == WorkflowConstants.STATUS_APPROVED) {
-			
 			Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
 			try {
 				indexer.reindex(issue);
@@ -126,7 +125,7 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 
 		return super.addArticle(article);
 	}
-	
+
 	/**
 	 * Updates an Article object and persists the changes to the database.
 	 * 
@@ -176,11 +175,11 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		article.setAuthor(author);
 		article.setOrder(order);
 		article.setContent(content);
-		
+
 		article.setStatus(status);
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
-			
+
 			Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
 			try {
 				indexer.reindex(issue);
@@ -193,7 +192,7 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		}
 		return super.updateArticle(article);
 	}
-	
+
 	/**
 	 * Removes the specified Article from the database.
 	 * 
@@ -203,17 +202,17 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	 * 
 	 */
 	public Article deleteArticle(Article article) throws SystemException {
-		
+
 		int issueNo = article.getIssueNo();
-		
+
 		super.deleteArticle(article);
-		
+
 		// Reindex the issue to reflect the removal of an article
 		try {
 			Issue issue = IssueLocalServiceUtil.getIssueByIssueNo(issueNo);
-		
+
 			Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
-		
+
 			try {
 				indexer.reindex(issue);
 			}
@@ -226,10 +225,10 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		catch (NoSuchIssueException e) {
 			_log.error(String.format("Unable to locate"));
 		}
-		
+
 		return article;
 	}
-	
+
 	/**
 	 * Gets all Articles with the specified IssueNo that are Approved.
 	 * 
@@ -239,17 +238,18 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	 */
 	public List<Article> getApprovedArticlesByIssueNo(int issueNo) 
 		throws SystemException {
-		
-		return articlePersistence.findByIssueNo(issueNo, WorkflowConstants.STATUS_APPROVED);
+
+		return articlePersistence.findByIssueNo(
+			issueNo, WorkflowConstants.STATUS_APPROVED);
 	}
-	
+
 	public Article getArticleByJournalArticleId(String journalArticleId) 
 		throws NoSuchArticleException, SystemException {
-		
+
 		return articlePersistence.findByJournalArticleId(journalArticleId);
 	}
-	
+
 	private static Log _log = 
 		LogFactoryUtil.getLog(ArticleLocalServiceImpl.class.getName());
-	
+
 }

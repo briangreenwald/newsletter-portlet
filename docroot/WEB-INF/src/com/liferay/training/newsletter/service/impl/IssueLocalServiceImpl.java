@@ -75,7 +75,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		Date issueDate, String byline, int status)
 		throws SystemException {
 
-		long issueId = counterLocalService.increment(Issue.class.getName());
+		long issueId = Long.valueOf(journalArticleId) + groupId;
 		Issue issue = createIssue(issueId);
 
 		issue.setJournalArticleId(journalArticleId);

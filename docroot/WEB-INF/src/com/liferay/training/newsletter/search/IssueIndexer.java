@@ -62,7 +62,6 @@ public class IssueIndexer extends BaseIndexer {
 		long scopeGroupId = issue.getGroupId();
 		long companyId = issue.getCompanyId();
 
-		String issueTitle = issue.getTitle();
 		int issueNo = issue.getIssueNo();
 
 		Document document = getBaseModelDocument(PORTLET_ID, issue);
@@ -71,23 +70,22 @@ public class IssueIndexer extends BaseIndexer {
 		document.addKeyword(Field.SCOPE_GROUP_ID, scopeGroupId);
 		document.addKeyword(Field.COMPANY_ID, companyId);
 		document.addKeyword("issueNo", issueNo);
-		document.addText(Field.DESCRIPTION, issueTitle);
+		
+		String[] description = { issue.getTitle(), issue.getDescription() };
+		document.addText(Field.DESCRIPTION, description);
 
 		List<Article> articles =
 			ArticleLocalServiceUtil.getApprovedArticlesByIssueNo(issueNo);
 
 		List<String> articleTitles = new ArrayList<String>();
-		List<String> articleAuthors = new ArrayList<String>();
 		List<String> articleContent = new ArrayList<String>();
 
 		for (Article article : articles) {
 			articleTitles.add(article.getTitle());
-			articleAuthors.add(article.getAuthor());
 			articleContent.add(article.getContent());
 		}
 
 		document.addText(Field.TITLE, articleTitles.toArray(new String[0]));
-		document.addText("author", articleAuthors.toArray(new String[0]));
 		document.addText(Field.CONTENT, articleContent.toArray(new String[0]));
 
 		return document;
