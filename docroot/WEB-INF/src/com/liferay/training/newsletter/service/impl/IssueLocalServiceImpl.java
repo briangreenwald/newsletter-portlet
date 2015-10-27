@@ -208,6 +208,13 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return super.deleteIssue(issue);
 	}
 	
+	public Issue getApprovedIssueByIssueNo(int issueNo)
+		throws SystemException, NoSuchIssueException {
+
+		return issuePersistence.findByIssueNoAndStatus(
+				issueNo, WorkflowConstants.STATUS_APPROVED);
+	}
+	
 	/**
 	 * Gets a range of Issues that are approved.
 	 * 
