@@ -175,7 +175,8 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 				}
 				catch (Exception e) {
 					_log.error(String.format(
-						"Unable to update Issue entitled \"%s\": %s", title, e));
+						"Unable to update Issue entitled \"%s\": %s", title, 
+						e));
 				}
 			}
 			else if (structureName.equalsIgnoreCase(NEWSLETTER_ARTICLE)) {
@@ -191,7 +192,8 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 				}
 				catch (Exception e) {
 					_log.error(String.format(
-						"Unable to update Article entitled \"%s\": %s", title, e));
+						"Unable to update Article entitled \"%s\": %s", title, 
+						e));
 				}
 			}
 

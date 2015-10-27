@@ -16,6 +16,8 @@ package com.liferay.training.newsletter.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
@@ -58,6 +60,25 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	 * to access the article local service.
 	 */
 	
+	/**
+	 * Creates a new Article object and persists it to the database. 
+	 * 
+	 * @param journalArticleId the articleId of the JournalArticle that this
+	 * Article is created from.
+	 * @param groupId the groupId of the Article.
+	 * @param companyId the companyId of the Article.
+	 * @param userId the userId of the Article's creator.
+	 * @param userName the screenName of the Article's creator
+	 * @param issueNo the issueNo that this Article belongs to.
+	 * @param title the title of this Article.
+	 * @param author the author of this Article.
+	 * @param order the order in which this Article is to appear in an Issue's article
+	 * list.
+	 * @param content the html content of this Article.
+	 * @param status the workflow status of this Article 
+	 * (0=Approved, 1=Unapproved)
+	 * 
+	 */
 	public Article addArticle(
 			String journalArticleId, long groupId, long companyId, long userId, 
 			String userName, int issueNo, String title, String author, 
@@ -97,13 +118,38 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 				indexer.reindex(issue);
 			}
 			catch (SearchException se) {
-				System.out.println("Search Exception:" + se);
+				_log.error(String.format(
+					"Unable to index Issue{id = %d} for Article{id = %d}: %s", 
+					article.getArticleId(), issue.getIssueId(), se));
 			}
 		}
 
 		return super.addArticle(article);
 	}
-
+	
+	/**
+	 * Updates an Article object and persists the changes to the database.
+	 * 
+	 * This method will be called when either the workflow status of the 
+	 * associated JournalArticle changes and when a new version of said
+	 * JournalArticle is approved.
+	 * 
+	 * @param journalArticleId the articleId of the JournalArticle that this
+	 * Article is created from.
+	 * @param groupId the groupId of the Article.
+	 * @param companyId the companyId of the Article.
+	 * @param userId the userId of the Article's creator.
+	 * @param userName the screenName of the Article's creator
+	 * @param issueNo the issueNo that this Article belongs to.
+	 * @param title the title of this Article.
+	 * @param author the author of this Article.
+	 * @param order the order in which this Article is to appear in an Issue's article
+	 * list.
+	 * @param content the html content of this Article.
+	 * @param status the workflow status of this Article 
+	 * (0=Approved, 1=Unapproved)
+	 * 
+	 */
 	public Article updateArticle(
 			String journalArticleId, long groupId, long companyId, 
 			long userId, String userName, int issueNo, String title, 
@@ -140,45 +186,70 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 				indexer.reindex(issue);
 			}
 			catch (SearchException se) {
-				System.out.println("Search Exception:" + se);
+				_log.error(String.format(
+					"Unable to index Issue{id = %d} for Article{id = %d}: %s", 
+					article.getArticleId(), issue.getIssueId(), se));
 			}
 		}
 		return super.updateArticle(article);
 	}
 	
+	/**
+	 * Removes the specified Article from the database.
+	 * 
+	 * @param article the article to be removed.
+	 * 
+	 * @return the removed article.
+	 * 
+	 */
 	public Article deleteArticle(Article article) throws SystemException {
 		
 		int issueNo = article.getIssueNo();
 		
+		super.deleteArticle(article);
+		
+		// Reindex the issue to reflect the removal of an article
 		try {
 			Issue issue = IssueLocalServiceUtil.getIssueByIssueNo(issueNo);
 		
 			Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
 		
 			try {
-				indexer.delete(issue);
+				indexer.reindex(issue);
 			}
 			catch (SearchException se) {
-				System.out.println("Search Exception:" + se);
+				_log.error(String.format(
+					"Unable to index Issue{id = %d} for Article{id = %d}: %s", 
+					article.getArticleId(), issue.getIssueId(), se));
 			}
 		}
 		catch (NoSuchIssueException e) {
-			
+			_log.error(String.format("Unable to locate"));
 		}
 		
-		return super.deleteArticle(article);
+		return article;
 	}
 	
+	/**
+	 * Gets all Articles with the specified IssueNo that are Approved.
+	 * 
+	 * @param issueNo the issueNo for which to get Articles.
+	 * 
+	 * @return the approved Articles with the given issueNo.
+	 */
 	public List<Article> getApprovedArticlesByIssueNo(int issueNo) 
 		throws SystemException {
 		
 		return articlePersistence.findByIssueNo(issueNo, WorkflowConstants.STATUS_APPROVED);
 	}
 	
-	public Article getArticleByJournalArticleId(String journalArticleId) 
+	private Article getArticleByJournalArticleId(String journalArticleId) 
 		throws NoSuchArticleException, SystemException {
 		
 		return articlePersistence.findByJournalArticleId(journalArticleId);
 	}
+	
+	private static Log _log = 
+		LogFactoryUtil.getLog(ArticleLocalServiceImpl.class.getName());
 	
 }

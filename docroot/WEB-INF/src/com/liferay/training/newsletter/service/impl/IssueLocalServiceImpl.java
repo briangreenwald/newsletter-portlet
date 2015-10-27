@@ -52,6 +52,23 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	 * access the issue local service.
 	 */
 
+	/**
+	 * Creates a new Issue object and persists it to the database. 
+	 * 
+	 * @param journalIssueId the articleId of the JournalArticle that this
+	 * Issue is created from.
+	 * @param groupId the groupId of the Issue.
+	 * @param companyId the companyId of the Issue.
+	 * @param userId the userId of the Issue's creator.
+	 * @param userName the screenName of the Issue's creator
+	 * @param issueNo the issueNo that this Issue belongs to.
+	 * @param title the title of this Issue.
+	 * @param byline the byline of this Issue.
+	 * @param description the description of the Issue.
+	 * @param status the workflow status of this Issue 
+	 * (0=Approved, 1=Unapproved)
+	 * 
+	 */
 	public Issue addIssue(
 		String journalArticleId, long groupId, long companyId, long userId,
 		String userName, int issueNo, String title, String description,
@@ -102,6 +119,27 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return super.addIssue(issue);
 	}
 
+	/**
+	 * Updates an Issue object and persists it to the database. 
+	 * 
+	 * This method will be called when either the workflow status of the 
+	 * associated JournalArticle changes and when a new version of said
+	 * JournalArticle is approved.
+	 * 
+	 * @param journalIssueId the articleId of the JournalArticle that this
+	 * Issue is created from.
+	 * @param groupId the groupId of the Issue.
+	 * @param companyId the companyId of the Issue.
+	 * @param userId the userId of the Issue's creator.
+	 * @param userName the screenName of the Issue's creator
+	 * @param issueNo the issueNo that this Issue belongs to.
+	 * @param title the title of this Issue.
+	 * @param byline the byline of this Issue.
+	 * @param description the description of the Issue.
+	 * @param status the workflow status of this Issue 
+	 * (0=Approved, 1=Unapproved)
+	 * 
+	 */
 	public Issue updateIssue(
 		String journalArticleId, long groupId, long companyId, long userId,
 		String userName, int issueNo, String title, String description,
@@ -148,6 +186,14 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return super.updateIssue(issue);
 	}
 	
+	/**
+	 * Removes the Issue from the database.
+	 * 
+	 * @param issue the issue to be removed.
+	 * 
+	 * @retun the removed Issue.
+	 * 
+	 */
 	public Issue deleteIssue(Issue issue) throws SystemException {
 		
 		Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
@@ -162,31 +208,47 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return super.deleteIssue(issue);
 	}
 	
+	/**
+	 * Gets a range of Issues that are approved.
+	 * 
+	 * @return the range of approved Issues.
+	 */
 	@Override
 	public List<Issue> getIssues(int start, int end) throws SystemException {
 		
 		return issuePersistence.findByStatus(WorkflowConstants.STATUS_APPROVED, start, end);
 	}
 	
+	/**
+	 * Gets the count of all issues that are approved.
+	 * 
+	 * @return the number of all issues that are approved.
+	 */
 	@Override 
 	public int getIssuesCount() throws SystemException {
 		
 		return issuePersistence.countByStatus(WorkflowConstants.STATUS_APPROVED);
 	}
 	
+	/**
+	 * Gets the Issue matching the IssueNo.
+	 * 
+	 * @param issueNo the issueNo to find the Issue by.
+	 * 
+	 * @return the Issue with the given issueNo.
+	 */
 	public Issue getIssueByIssueNo(int issueNo) 
 		throws SystemException, NoSuchIssueException{
 		
 		return issuePersistence.findByIssueNo(issueNo);
 	}
 
-	public Issue getApprovedIssueByIssueNo(int issueNo)
-		throws SystemException, NoSuchIssueException {
-
-		return issuePersistence.findByIssueNoAndStatus(
-			issueNo, WorkflowConstants.STATUS_APPROVED);
-	}
-
+	/**
+	 * Gets a mapping of all approved Issues by year.
+	 * 
+	 * @return the mapping of all approved Issues by year.
+	 * 
+	 */
 	public Map<Integer, List<Issue>> getApprovedIssuesByYear()
 		throws SystemException, PortalException {
 
@@ -214,7 +276,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return issuesByYear;
 	}
 
-	public Issue getIssueByJournalArticleId(String journalArticleId)
+	private Issue getIssueByJournalArticleId(String journalArticleId)
 		throws NoSuchIssueException, SystemException {
 
 		return issuePersistence.findByJournalArticleId(journalArticleId);

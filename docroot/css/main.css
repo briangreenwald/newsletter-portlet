@@ -1,5 +1,10 @@
 
 .aui {
+	
+	.search-form .control-group {
+		margin-bottom: 0px;
+	}
+	
 	.month-separator {
 		background: #D3D3D3; 
 		color: #FFF; 
