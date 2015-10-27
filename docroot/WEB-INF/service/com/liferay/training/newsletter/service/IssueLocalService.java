@@ -250,6 +250,22 @@ public interface IssueLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	/**
+	* Creates a new Issue object and persists it to the database.
+	*
+	* @param journalIssueId the articleId of the JournalArticle that this
+	Issue is created from.
+	* @param groupId the groupId of the Issue.
+	* @param companyId the companyId of the Issue.
+	* @param userId the userId of the Issue's creator.
+	* @param userName the screenName of the Issue's creator
+	* @param issueNo the issueNo that this Issue belongs to.
+	* @param title the title of this Issue.
+	* @param byline the byline of this Issue.
+	* @param description the description of the Issue.
+	* @param status the workflow status of this Issue
+	(0=Approved, 1=Unapproved)
+	*/
 	public com.liferay.training.newsletter.model.Issue addIssue(
 		java.lang.String journalArticleId, long groupId, long companyId,
 		long userId, java.lang.String userName, int issueNo,
@@ -257,6 +273,26 @@ public interface IssueLocalService extends BaseLocalService,
 		java.util.Date issueDate, java.lang.String byline, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Updates an Issue object and persists it to the database.
+	*
+	* This method will be called when either the workflow status of the
+	* associated JournalArticle changes and when a new version of said
+	* JournalArticle is approved.
+	*
+	* @param journalIssueId the articleId of the JournalArticle that this
+	Issue is created from.
+	* @param groupId the groupId of the Issue.
+	* @param companyId the companyId of the Issue.
+	* @param userId the userId of the Issue's creator.
+	* @param userName the screenName of the Issue's creator
+	* @param issueNo the issueNo that this Issue belongs to.
+	* @param title the title of this Issue.
+	* @param byline the byline of this Issue.
+	* @param description the description of the Issue.
+	* @param status the workflow status of this Issue
+	(0=Approved, 1=Unapproved)
+	*/
 	public com.liferay.training.newsletter.model.Issue updateIssue(
 		java.lang.String journalArticleId, long groupId, long companyId,
 		long userId, java.lang.String userName, int issueNo,
@@ -265,18 +301,23 @@ public interface IssueLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Gets the Issue matching the IssueNo.
+	*
+	* @param issueNo the issueNo to find the Issue by.
+	* @return the Issue with the given issueNo.
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.training.newsletter.model.Issue getIssueByIssueNo(
 		int issueNo)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.training.newsletter.NoSuchIssueException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.training.newsletter.model.Issue getApprovedIssueByIssueNo(
-		int issueNo)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.training.newsletter.NoSuchIssueException;
-
+	/**
+	* Gets a mapping of all approved Issues by year.
+	*
+	* @return the mapping of all approved Issues by year.
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.Map<java.lang.Integer, java.util.List<com.liferay.training.newsletter.model.Issue>> getApprovedIssuesByYear()
 		throws com.liferay.portal.kernel.exception.PortalException,

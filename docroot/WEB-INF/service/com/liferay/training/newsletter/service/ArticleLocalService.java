@@ -254,6 +254,24 @@ public interface ArticleLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	/**
+	* Creates a new Article object and persists it to the database.
+	*
+	* @param journalArticleId the articleId of the JournalArticle that this
+	Article is created from.
+	* @param groupId the groupId of the Article.
+	* @param companyId the companyId of the Article.
+	* @param userId the userId of the Article's creator.
+	* @param userName the screenName of the Article's creator
+	* @param issueNo the issueNo that this Article belongs to.
+	* @param title the title of this Article.
+	* @param author the author of this Article.
+	* @param order the order in which this Article is to appear in an Issue's article
+	list.
+	* @param content the html content of this Article.
+	* @param status the workflow status of this Article
+	(0=Approved, 1=Unapproved)
+	*/
 	public com.liferay.training.newsletter.model.Article addArticle(
 		java.lang.String journalArticleId, long groupId, long companyId,
 		long userId, java.lang.String userName, int issueNo,
@@ -262,6 +280,28 @@ public interface ArticleLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Updates an Article object and persists the changes to the database.
+	*
+	* This method will be called when either the workflow status of the
+	* associated JournalArticle changes and when a new version of said
+	* JournalArticle is approved.
+	*
+	* @param journalArticleId the articleId of the JournalArticle that this
+	Article is created from.
+	* @param groupId the groupId of the Article.
+	* @param companyId the companyId of the Article.
+	* @param userId the userId of the Article's creator.
+	* @param userName the screenName of the Article's creator
+	* @param issueNo the issueNo that this Article belongs to.
+	* @param title the title of this Article.
+	* @param author the author of this Article.
+	* @param order the order in which this Article is to appear in an Issue's article
+	list.
+	* @param content the html content of this Article.
+	* @param status the workflow status of this Article
+	(0=Approved, 1=Unapproved)
+	*/
 	public com.liferay.training.newsletter.model.Article updateArticle(
 		java.lang.String journalArticleId, long groupId, long companyId,
 		long userId, java.lang.String userName, int issueNo,
@@ -270,6 +310,12 @@ public interface ArticleLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Gets all Articles with the specified IssueNo that are Approved.
+	*
+	* @param issueNo the issueNo for which to get Articles.
+	* @return the approved Articles with the given issueNo.
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.training.newsletter.model.Article> getApprovedArticlesByIssueNo(
 		int issueNo) throws com.liferay.portal.kernel.exception.SystemException;

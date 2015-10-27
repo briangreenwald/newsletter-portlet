@@ -280,6 +280,22 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 		return _issueLocalService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	/**
+	* Creates a new Issue object and persists it to the database.
+	*
+	* @param journalIssueId the articleId of the JournalArticle that this
+	Issue is created from.
+	* @param groupId the groupId of the Issue.
+	* @param companyId the companyId of the Issue.
+	* @param userId the userId of the Issue's creator.
+	* @param userName the screenName of the Issue's creator
+	* @param issueNo the issueNo that this Issue belongs to.
+	* @param title the title of this Issue.
+	* @param byline the byline of this Issue.
+	* @param description the description of the Issue.
+	* @param status the workflow status of this Issue
+	(0=Approved, 1=Unapproved)
+	*/
 	@Override
 	public com.liferay.training.newsletter.model.Issue addIssue(
 		java.lang.String journalArticleId, long groupId, long companyId,
@@ -292,6 +308,26 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 			issueDate, byline, status);
 	}
 
+	/**
+	* Updates an Issue object and persists it to the database.
+	*
+	* This method will be called when either the workflow status of the
+	* associated JournalArticle changes and when a new version of said
+	* JournalArticle is approved.
+	*
+	* @param journalIssueId the articleId of the JournalArticle that this
+	Issue is created from.
+	* @param groupId the groupId of the Issue.
+	* @param companyId the companyId of the Issue.
+	* @param userId the userId of the Issue's creator.
+	* @param userName the screenName of the Issue's creator
+	* @param issueNo the issueNo that this Issue belongs to.
+	* @param title the title of this Issue.
+	* @param byline the byline of this Issue.
+	* @param description the description of the Issue.
+	* @param status the workflow status of this Issue
+	(0=Approved, 1=Unapproved)
+	*/
 	@Override
 	public com.liferay.training.newsletter.model.Issue updateIssue(
 		java.lang.String journalArticleId, long groupId, long companyId,
@@ -305,6 +341,12 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 			issueDate, byline, status);
 	}
 
+	/**
+	* Gets the Issue matching the IssueNo.
+	*
+	* @param issueNo the issueNo to find the Issue by.
+	* @return the Issue with the given issueNo.
+	*/
 	@Override
 	public com.liferay.training.newsletter.model.Issue getIssueByIssueNo(
 		int issueNo)
@@ -313,14 +355,11 @@ public class IssueLocalServiceWrapper implements IssueLocalService,
 		return _issueLocalService.getIssueByIssueNo(issueNo);
 	}
 
-	@Override
-	public com.liferay.training.newsletter.model.Issue getApprovedIssueByIssueNo(
-		int issueNo)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.training.newsletter.NoSuchIssueException {
-		return _issueLocalService.getApprovedIssueByIssueNo(issueNo);
-	}
-
+	/**
+	* Gets a mapping of all approved Issues by year.
+	*
+	* @return the mapping of all approved Issues by year.
+	*/
 	@Override
 	public java.util.Map<java.lang.Integer, java.util.List<com.liferay.training.newsletter.model.Issue>> getApprovedIssuesByYear()
 		throws com.liferay.portal.kernel.exception.PortalException,
