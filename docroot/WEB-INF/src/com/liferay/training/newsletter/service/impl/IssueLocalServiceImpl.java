@@ -102,11 +102,11 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		issue.setIssueMonth(issueMonth);
 		issue.setIssueYear(issueYear);
 		issue.setByline(byline);
-		
+
 		issue.setStatus(status);
-		
+
 		if (status == WorkflowConstants.STATUS_APPROVED) {
-			
+
 			Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
 			try {
 				indexer.reindex(issue);
@@ -169,11 +169,11 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		issue.setIssueYear(issueYear);
 
 		issue.setByline(byline);
-		
+
 		issue.setStatus(status);
-		
+
 		if (status == WorkflowConstants.STATUS_APPROVED) {
-			
+
 			Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
 			try {
 				indexer.reindex(issue);
@@ -182,10 +182,10 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 				System.out.println("Search Exception:" + se);
 			}
 		}
-		
+
 		return super.updateIssue(issue);
 	}
-	
+
 	/**
 	 * Removes the Issue from the database.
 	 * 
@@ -195,26 +195,33 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	 * 
 	 */
 	public Issue deleteIssue(Issue issue) throws SystemException {
-		
+
 		Indexer indexer = IndexerRegistryUtil.getIndexer(Issue.class);
-		
+
 		try {
 			indexer.delete(issue);
 		}
 		catch (SearchException se) {
 			System.out.println("Search Exception:" + se);
 		}
-		
+
 		return super.deleteIssue(issue);
 	}
-	
+
+	/**
+	 * Gets the Issue with the given issueNo. This method only returns a
+	 * matching Issue object if it's status is approved.
+	 * 
+	 * @return the approved Issue with the given issueNo.
+	 * 
+	 */
 	public Issue getApprovedIssueByIssueNo(int issueNo)
 		throws SystemException, NoSuchIssueException {
 
 		return issuePersistence.findByIssueNoAndStatus(
 				issueNo, WorkflowConstants.STATUS_APPROVED);
 	}
-	
+
 	/**
 	 * Gets a range of Issues that are approved.
 	 * 
@@ -222,10 +229,10 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Issue> getIssues(int start, int end) throws SystemException {
-		
+
 		return issuePersistence.findByStatus(WorkflowConstants.STATUS_APPROVED, start, end);
 	}
-	
+
 	/**
 	 * Gets the count of all issues that are approved.
 	 * 
@@ -233,10 +240,10 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	 */
 	@Override 
 	public int getIssuesCount() throws SystemException {
-		
+
 		return issuePersistence.countByStatus(WorkflowConstants.STATUS_APPROVED);
 	}
-	
+
 	/**
 	 * Gets the Issue matching the IssueNo.
 	 * 
@@ -246,7 +253,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	 */
 	public Issue getIssueByIssueNo(int issueNo) 
 		throws SystemException, NoSuchIssueException{
-		
+
 		return issuePersistence.findByIssueNo(issueNo);
 	}
 
@@ -261,10 +268,10 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 
 		List<Issue> issues = 
 			issuePersistence.findByStatus(WorkflowConstants.STATUS_APPROVED);
-		
+
 		Map<Integer, List<Issue>> issuesByYear 
 			= new LinkedHashMap<Integer, List<Issue>>();
-		
+
 		for (Issue issue : issues) {
 			int issueYear = issue.getIssueYear();
 
@@ -279,14 +286,20 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 			issuesThisYear.add(issue);
 			issuesByYear.put(issueYear, issuesThisYear);
 		}
-		
+
 		return issuesByYear;
 	}
 
+	/**
+	 * Gets the Issue with the specified journalArticleId.
+	 * 
+	 * @return the Issue with given journalArticleId.
+	 * 
+	 */
 	public Issue getIssueByJournalArticleId(String journalArticleId)
 		throws NoSuchIssueException, SystemException {
 
 		return issuePersistence.findByJournalArticleId(journalArticleId);
 	}
-	
+
 }

@@ -208,7 +208,7 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 
 	public void onAfterRemove(JournalArticle journalArticle) 
 		throws ModelListenerException {
-		
+
 		String structureName = StringPool.BLANK;
 		try {
 			structureName = getStructureName(journalArticle);
@@ -285,18 +285,18 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 	private static final long CLASS_NAME_ID =
 		ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class);
 
-	private static String ISSUE_NO = "Issue_Number";
-	private static String TITLE = "Title";
-	private static String NAME = "Name";
+	private static final String ISSUE_NO = "Issue_Number";
+	private static final String TITLE = "Title";
+	private static final String NAME = "Name";
 
-	private static String DESCRIPTION = "Description";
-	private static String ISSUE_DATE = "Issue_Date";
-	private static String BYLINE = "Byline";
+	private static final String DESCRIPTION = "Description";
+	private static final String ISSUE_DATE = "Issue_Date";
+	private static final String BYLINE = "Byline";
 
-	private static String AUTHOR = "Author";
-	private static String ORDER = "Order";
-	private static String CONTENT = "Content";
+	private static final String AUTHOR = "Author";
+	private static final String ORDER = "Order";
+	private static final String CONTENT = "Content";
 
-	private static String NEWSLETTER_ISSUE = "Newsletter Issue";
-	private static String NEWSLETTER_ARTICLE = "Newsletter Article";
+	private static final String NEWSLETTER_ISSUE = "Newsletter Issue";
+	private static final String NEWSLETTER_ARTICLE = "Newsletter Article";
 }

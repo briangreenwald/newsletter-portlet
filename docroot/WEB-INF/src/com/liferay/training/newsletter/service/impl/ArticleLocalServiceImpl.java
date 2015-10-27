@@ -243,6 +243,12 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 			issueNo, WorkflowConstants.STATUS_APPROVED);
 	}
 
+	/**
+	 * Gets the Article with the given journalArticleId.
+	 * 
+	 * @return the Article with the given journalArticleId.
+	 * 
+	 */
 	public Article getArticleByJournalArticleId(String journalArticleId) 
 		throws NoSuchArticleException, SystemException {
 
