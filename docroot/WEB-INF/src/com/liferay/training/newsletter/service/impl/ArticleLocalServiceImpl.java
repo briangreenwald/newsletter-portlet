@@ -243,7 +243,7 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		return articlePersistence.findByIssueNo(issueNo, WorkflowConstants.STATUS_APPROVED);
 	}
 	
-	private Article getArticleByJournalArticleId(String journalArticleId) 
+	public Article getArticleByJournalArticleId(String journalArticleId) 
 		throws NoSuchArticleException, SystemException {
 		
 		return articlePersistence.findByJournalArticleId(journalArticleId);

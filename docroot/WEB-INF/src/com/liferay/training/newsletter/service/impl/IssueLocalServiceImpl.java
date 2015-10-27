@@ -276,7 +276,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return issuesByYear;
 	}
 
-	private Issue getIssueByJournalArticleId(String journalArticleId)
+	public Issue getIssueByJournalArticleId(String journalArticleId)
 		throws NoSuchIssueException, SystemException {
 
 		return issuePersistence.findByJournalArticleId(journalArticleId);
