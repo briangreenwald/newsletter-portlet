@@ -59,11 +59,11 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	 * {@link com.liferay.training.newsletter.service.ArticleLocalServiceUtil} 
 	 * to access the article local service.
 	 */
-	
+
 	/**
 	 * Creates a new Article object and persists it to the database. 
 	 * 
-	 * @param journalArticleId the articleId of the JournalArticle that this
+	 * @param journalArticleId the articleId of the JournalArticle that the
 	 * Article is created from.
 	 * @param groupId the groupId of the Article.
 	 * @param companyId the companyId of the Article.
@@ -133,8 +133,8 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	 * associated JournalArticle changes and when a new version of said
 	 * JournalArticle is approved.
 	 * 
-	 * @param journalArticleId the articleId of the JournalArticle that this
-	 * Article is created from.
+	 * @param journalArticleId the articleId of the JournalArticle that the
+	 * Article was created from.
 	 * @param groupId the groupId of the Article.
 	 * @param companyId the companyId of the Article.
 	 * @param userId the userId of the Article's creator.

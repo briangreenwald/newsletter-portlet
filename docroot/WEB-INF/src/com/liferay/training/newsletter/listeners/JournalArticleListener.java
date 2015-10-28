@@ -71,7 +71,7 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 					// If this is the first version, create a new Issue object.
 					// Otherwise, update the existing issue associated with the
 					// JournalArticle
-					if (journalArticle.getVersion() == 1) {
+					if (journalArticle.getVersion() == FIRST_VERSION) {
 						IssueLocalServiceUtil.addIssue(
 							journalArticleId, groupId, companyId, userId, 
 							userName, issueNo, title, description, issueDate, 
@@ -99,7 +99,7 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 					// If this is the first version, create a new Article 
 					// object. Otherwise, update the existing article associated
 					// with the JournalArticle
-					if (journalArticle.getVersion() == 1) {
+					if (journalArticle.getVersion() == FIRST_VERSION) {
 						ArticleLocalServiceUtil.addArticle(
 							journalArticleId, groupId, companyId, userId, 
 							userName, issueNo, title, author, order, content, 
@@ -284,6 +284,8 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 
 	private static final long CLASS_NAME_ID =
 		ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class);
+	
+	private static final int FIRST_VERSION = 1;
 
 	private static final String ISSUE_NO = "Issue_Number";
 	private static final String TITLE = "Title";
@@ -299,4 +301,5 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 
 	private static final String NEWSLETTER_ISSUE = "Newsletter Issue";
 	private static final String NEWSLETTER_ARTICLE = "Newsletter Article";
+
 }

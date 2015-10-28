@@ -55,7 +55,7 @@
 	<liferay-ui:search-container-row
 		className="com.liferay.training.newsletter.model.Issue" keyProperty="issueId"
 		modelVar="issue" escapedModel="true">
-		
+
 		<c:set var="issueNo" value="${issue.getIssueNo()}" />
 		<c:set var="issueDate" value="${issue.getIssueDate()}" />
 		<fmt:formatDate value="${issueDate}" var="formattedDate" pattern="MMMM dd, yyyy" />

@@ -55,7 +55,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	/**
 	 * Creates a new Issue object and persists it to the database. 
 	 * 
-	 * @param journalIssueId the articleId of the JournalArticle that this
+	 * @param journalIssueId the articleId of the JournalArticle that the
 	 * Issue is created from.
 	 * @param groupId the groupId of the Issue.
 	 * @param companyId the companyId of the Issue.
@@ -126,8 +126,8 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	 * associated JournalArticle changes and when a new version of said
 	 * JournalArticle is approved.
 	 * 
-	 * @param journalIssueId the articleId of the JournalArticle that this
-	 * Issue is created from.
+	 * @param journalIssueId the articleId of the JournalArticle that the
+	 * Issue was created from.
 	 * @param groupId the groupId of the Issue.
 	 * @param companyId the companyId of the Issue.
 	 * @param userId the userId of the Issue's creator.
@@ -282,7 +282,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 			}
 			else {
 				issuesThisYear = new ArrayList<Issue>();
-			}	
+			}
 			issuesThisYear.add(issue);
 			issuesByYear.put(issueYear, issuesThisYear);
 		}

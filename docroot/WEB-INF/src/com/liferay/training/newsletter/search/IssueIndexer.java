@@ -27,7 +27,7 @@ public class IssueIndexer extends BaseIndexer {
 	public static final String[] CLASS_NAMES = { Issue.class.getName() };
 
 	public static final String PORTLET_ID = "newsletter_WAR_newsletterportlet";
-	
+
 	public String[] getClassNames() {
 
 		return CLASS_NAMES;
@@ -70,7 +70,7 @@ public class IssueIndexer extends BaseIndexer {
 		document.addKeyword(Field.SCOPE_GROUP_ID, scopeGroupId);
 		document.addKeyword(Field.COMPANY_ID, companyId);
 		document.addKeyword("issueNo", issueNo);
-		
+
 		String[] description = { issue.getTitle(), issue.getDescription() };
 		document.addText(Field.DESCRIPTION, description);
 
@@ -90,16 +90,16 @@ public class IssueIndexer extends BaseIndexer {
 
 		return document;
 	}
-	
+
 	@Override
 	protected Summary doGetSummary(
 		Document document, Locale locale, String snippet, 
 		PortletURL portletURL) {
 
 		Summary summary = createSummary(document);
-		
+
 		summary.setMaxContentLength(200);
-		
+
 		return summary;
 	}
 
@@ -107,9 +107,9 @@ public class IssueIndexer extends BaseIndexer {
 	protected void doReindex(Object obj) throws Exception {
 
 		Issue issue = (Issue) obj;
-		
+
 		String searchEngineId = SearchEngineUtil.getDefaultSearchEngineId();
-		
+
 		SearchEngineUtil.updateDocument(
 			searchEngineId, issue.getCompanyId(), getDocument(issue), false);
 	}
@@ -129,7 +129,7 @@ public class IssueIndexer extends BaseIndexer {
 
 		doReindexAll(companyId);
 	}
-	
+
 	@Override
 	protected String getPortletId(SearchContext searchContext) {
 
@@ -154,7 +154,7 @@ public class IssueIndexer extends BaseIndexer {
 		}
 
 		String searchEngineId = SearchEngineUtil.getDefaultSearchEngineId();
-		
+
 		SearchEngineUtil.updateDocuments(
 			searchEngineId, companyId, documents, false);
 	}
